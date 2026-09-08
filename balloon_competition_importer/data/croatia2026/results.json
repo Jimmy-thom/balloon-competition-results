@@ -1,0 +1,5410 @@
+[
+  {
+    "task_number": 1,
+    "task_name": "Pilot Declared Goal",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=D95F707C-6F25-B187-1801-5C5A9E9BC6C8",
+    "raw": {
+      "Rank": "1",
+      "Pilot": "#11 - KOSTRHUN, Jan Czech Republic",
+      "Result": "22.00",
+      "Points": "1000",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "1000",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 1,
+    "task_name": "Pilot Declared Goal",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=D95F707C-6F25-B187-1801-5C5A9E9BC6C8",
+    "raw": {
+      "Rank": "2",
+      "Pilot": "#15 - MOLNAR, Peter Hungary",
+      "Result": "32.00",
+      "Points": "981",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "981",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 1,
+    "task_name": "Pilot Declared Goal",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=D95F707C-6F25-B187-1801-5C5A9E9BC6C8",
+    "raw": {
+      "Rank": "3",
+      "Pilot": "#3 - SCAIFE, Matthew Australia",
+      "Result": "35.00",
+      "Points": "976",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "976",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 1,
+    "task_name": "Pilot Declared Goal",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=D95F707C-6F25-B187-1801-5C5A9E9BC6C8",
+    "raw": {
+      "Rank": "4",
+      "Pilot": "#1 - BINKS, Alana Australia",
+      "Result": "68.00",
+      "Points": "914",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "914",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 1,
+    "task_name": "Pilot Declared Goal",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=D95F707C-6F25-B187-1801-5C5A9E9BC6C8",
+    "raw": {
+      "Rank": "5",
+      "Pilot": "#8 - KUGLER, Bojan Croatia",
+      "Result": "74.00",
+      "Points": "903",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "903",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 1,
+    "task_name": "Pilot Declared Goal",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=D95F707C-6F25-B187-1801-5C5A9E9BC6C8",
+    "raw": {
+      "Rank": "6",
+      "Pilot": "#6 - SIMONER, Andreas Austria",
+      "Result": "81.00",
+      "Points": "890",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "890",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 1,
+    "task_name": "Pilot Declared Goal",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=D95F707C-6F25-B187-1801-5C5A9E9BC6C8",
+    "raw": {
+      "Rank": "7",
+      "Pilot": "#29 - BAREFORD, Dominic United Kingdom",
+      "Result": "117.00",
+      "Points": "823",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "823",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 1,
+    "task_name": "Pilot Declared Goal",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=D95F707C-6F25-B187-1801-5C5A9E9BC6C8",
+    "raw": {
+      "Rank": "8",
+      "Pilot": "#5 - MITTERMAIR, Lena Austria",
+      "Result": "179.00",
+      "Points": "708",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "708",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 1,
+    "task_name": "Pilot Declared Goal",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=D95F707C-6F25-B187-1801-5C5A9E9BC6C8",
+    "raw": {
+      "Rank": "8",
+      "Pilot": "#7 - DELEERSNYDER, Maarten Belgium",
+      "Result": "179.00",
+      "Points": "708",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "708",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 1,
+    "task_name": "Pilot Declared Goal",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=D95F707C-6F25-B187-1801-5C5A9E9BC6C8",
+    "raw": {
+      "Rank": "10",
+      "Pilot": "#2 - SAUNDERS, Edward Australia",
+      "Result": "183.00",
+      "Points": "700",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "700",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 1,
+    "task_name": "Pilot Declared Goal",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=D95F707C-6F25-B187-1801-5C5A9E9BC6C8",
+    "raw": {
+      "Rank": "11",
+      "Pilot": "#28 - OUDENAMPSEN, Jan The Netherlands",
+      "Result": "191.00",
+      "Points": "686",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "686",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 1,
+    "task_name": "Pilot Declared Goal",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=D95F707C-6F25-B187-1801-5C5A9E9BC6C8",
+    "raw": {
+      "Rank": "12",
+      "Pilot": "#25 - KAZLAUSKAS, Ignas Lithuania",
+      "Result": "235.00",
+      "Points": "604",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "604",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 1,
+    "task_name": "Pilot Declared Goal",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=D95F707C-6F25-B187-1801-5C5A9E9BC6C8",
+    "raw": {
+      "Rank": "13",
+      "Pilot": "#26 - TOULSON, Michael New Zealand",
+      "Result": "280.00",
+      "Points": "520",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "520",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 1,
+    "task_name": "Pilot Declared Goal",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=D95F707C-6F25-B187-1801-5C5A9E9BC6C8",
+    "raw": {
+      "Rank": "14",
+      "Pilot": "#4 - MAYERHOFER, Doris Austria",
+      "Result": "396.00",
+      "Points": "480",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "480",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 1,
+    "task_name": "Pilot Declared Goal",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=D95F707C-6F25-B187-1801-5C5A9E9BC6C8",
+    "raw": {
+      "Rank": "15",
+      "Pilot": "#23 - MOSCARA, Raffael Italy",
+      "Result": "421.00",
+      "Points": "440",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "440",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 1,
+    "task_name": "Pilot Declared Goal",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=D95F707C-6F25-B187-1801-5C5A9E9BC6C8",
+    "raw": {
+      "Rank": "16",
+      "Pilot": "#12 - BECZ, Rita Hungary",
+      "Result": "524.00",
+      "Points": "400",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "400",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 1,
+    "task_name": "Pilot Declared Goal",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=D95F707C-6F25-B187-1801-5C5A9E9BC6C8",
+    "raw": {
+      "Rank": "17",
+      "Pilot": "#9 - MIKLOUSIC, Igor Croatia",
+      "Result": "532.00",
+      "Points": "360",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "360",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 1,
+    "task_name": "Pilot Declared Goal",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=D95F707C-6F25-B187-1801-5C5A9E9BC6C8",
+    "raw": {
+      "Rank": "18",
+      "Pilot": "#30 - WALL, Cameron United States",
+      "Result": "548.00",
+      "Points": "320",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "320",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 1,
+    "task_name": "Pilot Declared Goal",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=D95F707C-6F25-B187-1801-5C5A9E9BC6C8",
+    "raw": {
+      "Rank": "19",
+      "Pilot": "#13 - GARAB, Szabolcs Hungary",
+      "Result": "569.00",
+      "Points": "280",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "280",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 1,
+    "task_name": "Pilot Declared Goal",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=D95F707C-6F25-B187-1801-5C5A9E9BC6C8",
+    "raw": {
+      "Rank": "20",
+      "Pilot": "#16 - NAGY, Balazs Hungary",
+      "Result": "763.00",
+      "Points": "240",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "240",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 1,
+    "task_name": "Pilot Declared Goal",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=D95F707C-6F25-B187-1801-5C5A9E9BC6C8",
+    "raw": {
+      "Rank": "21",
+      "Pilot": "#20 - PALOCZ, Viktor Hungary",
+      "Result": "881.00",
+      "Points": "200",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "200",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 1,
+    "task_name": "Pilot Declared Goal",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=D95F707C-6F25-B187-1801-5C5A9E9BC6C8",
+    "raw": {
+      "Rank": "22",
+      "Pilot": "#14 - KONECSNI, Janos Hungary",
+      "Result": "951.00",
+      "Points": "160",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "160",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 1,
+    "task_name": "Pilot Declared Goal",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=D95F707C-6F25-B187-1801-5C5A9E9BC6C8",
+    "raw": {
+      "Rank": "23",
+      "Pilot": "#27 - GAUCH, Cedric Switzerland",
+      "Result": "6,001.00",
+      "Points": "120",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "120",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 1,
+    "task_name": "Pilot Declared Goal",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=D95F707C-6F25-B187-1801-5C5A9E9BC6C8",
+    "raw": {
+      "Rank": "24",
+      "Pilot": "#10 - PETRIC-MIKLOUSIC, Marija Croatia",
+      "Result": "No Result",
+      "Points": "60",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "60",
+      "Notes": "No Loggermark 1, Invalid Loggergoal 1"
+    }
+  },
+  {
+    "task_number": 1,
+    "task_name": "Pilot Declared Goal",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=D95F707C-6F25-B187-1801-5C5A9E9BC6C8",
+    "raw": {
+      "Rank": "24",
+      "Pilot": "#17 - NAGY, Peter Hungary",
+      "Result": "No Result",
+      "Points": "60",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "60",
+      "Notes": "Invalid Loggergoal 1"
+    }
+  },
+  {
+    "task_number": 1,
+    "task_name": "Pilot Declared Goal",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=D95F707C-6F25-B187-1801-5C5A9E9BC6C8",
+    "raw": {
+      "Rank": "26",
+      "Pilot": "#24 - STEFANINI, Massimo Italy",
+      "Result": "No Flight",
+      "Points": "0",
+      "Penalty (T)": "-",
+      "Penalty (C)": "-",
+      "Score": "0",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 2,
+    "task_name": "Judge Declared Goal",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=0A961214-799C-BC68-38F4-F38504396B45",
+    "raw": {
+      "Rank": "1",
+      "Pilot": "#7 - DELEERSNYDER, Maarten Belgium",
+      "Result": "15.84",
+      "Points": "1000",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "1000",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 2,
+    "task_name": "Judge Declared Goal",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=0A961214-799C-BC68-38F4-F38504396B45",
+    "raw": {
+      "Rank": "2",
+      "Pilot": "#30 - WALL, Cameron United States",
+      "Result": "62.00",
+      "Points": "962",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "962",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 2,
+    "task_name": "Judge Declared Goal",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=0A961214-799C-BC68-38F4-F38504396B45",
+    "raw": {
+      "Rank": "3",
+      "Pilot": "#29 - BAREFORD, Dominic United Kingdom",
+      "Result": "108.00",
+      "Points": "924",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "924",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 2,
+    "task_name": "Judge Declared Goal",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=0A961214-799C-BC68-38F4-F38504396B45",
+    "raw": {
+      "Rank": "4",
+      "Pilot": "#26 - TOULSON, Michael New Zealand",
+      "Result": "116.00",
+      "Points": "918",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "918",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 2,
+    "task_name": "Judge Declared Goal",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=0A961214-799C-BC68-38F4-F38504396B45",
+    "raw": {
+      "Rank": "5",
+      "Pilot": "#17 - NAGY, Peter Hungary",
+      "Result": "214.00",
+      "Points": "837",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "837",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 2,
+    "task_name": "Judge Declared Goal",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=0A961214-799C-BC68-38F4-F38504396B45",
+    "raw": {
+      "Rank": "6",
+      "Pilot": "#15 - MOLNAR, Peter Hungary",
+      "Result": "386.00",
+      "Points": "696",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "696",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 2,
+    "task_name": "Judge Declared Goal",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=0A961214-799C-BC68-38F4-F38504396B45",
+    "raw": {
+      "Rank": "7",
+      "Pilot": "#5 - MITTERMAIR, Lena Austria",
+      "Result": "491.00",
+      "Points": "610",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "610",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 2,
+    "task_name": "Judge Declared Goal",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=0A961214-799C-BC68-38F4-F38504396B45",
+    "raw": {
+      "Rank": "8",
+      "Pilot": "#8 - KUGLER, Bojan Croatia",
+      "Result": "495.00",
+      "Points": "607",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "607",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 2,
+    "task_name": "Judge Declared Goal",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=0A961214-799C-BC68-38F4-F38504396B45",
+    "raw": {
+      "Rank": "9",
+      "Pilot": "#20 - PALOCZ, Viktor Hungary",
+      "Result": "496.00",
+      "Points": "606",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "606",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 2,
+    "task_name": "Judge Declared Goal",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=0A961214-799C-BC68-38F4-F38504396B45",
+    "raw": {
+      "Rank": "10",
+      "Pilot": "#27 - GAUCH, Cedric Switzerland",
+      "Result": "512.00",
+      "Points": "593",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "593",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 2,
+    "task_name": "Judge Declared Goal",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=0A961214-799C-BC68-38F4-F38504396B45",
+    "raw": {
+      "Rank": "11",
+      "Pilot": "#12 - BECZ, Rita Hungary",
+      "Result": "523.00",
+      "Points": "584",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "584",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 2,
+    "task_name": "Judge Declared Goal",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=0A961214-799C-BC68-38F4-F38504396B45",
+    "raw": {
+      "Rank": "12",
+      "Pilot": "#9 - MIKLOUSIC, Igor Croatia",
+      "Result": "599.00",
+      "Points": "522",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "522",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 2,
+    "task_name": "Judge Declared Goal",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=0A961214-799C-BC68-38F4-F38504396B45",
+    "raw": {
+      "Rank": "13",
+      "Pilot": "#16 - NAGY, Balazs Hungary",
+      "Result": "601.00",
+      "Points": "520",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "520",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 2,
+    "task_name": "Judge Declared Goal",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=0A961214-799C-BC68-38F4-F38504396B45",
+    "raw": {
+      "Rank": "14",
+      "Pilot": "#3 - SCAIFE, Matthew Australia",
+      "Result": "604.00",
+      "Points": "480",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "480",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 2,
+    "task_name": "Judge Declared Goal",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=0A961214-799C-BC68-38F4-F38504396B45",
+    "raw": {
+      "Rank": "15",
+      "Pilot": "#11 - KOSTRHUN, Jan Czech Republic",
+      "Result": "611.00",
+      "Points": "440",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "440",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 2,
+    "task_name": "Judge Declared Goal",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=0A961214-799C-BC68-38F4-F38504396B45",
+    "raw": {
+      "Rank": "16",
+      "Pilot": "#2 - SAUNDERS, Edward Australia",
+      "Result": "748.00",
+      "Points": "360",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "360",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 2,
+    "task_name": "Judge Declared Goal",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=0A961214-799C-BC68-38F4-F38504396B45",
+    "raw": {
+      "Rank": "17",
+      "Pilot": "#10 - PETRIC-MIKLOUSIC, Marija Croatia",
+      "Result": "664.00",
+      "Points": "400",
+      "Penalty (T)": "0",
+      "Penalty (C)": "80",
+      "Score": "320",
+      "Notes": "7.5 Flight in Blue PZ"
+    }
+  },
+  {
+    "task_number": 2,
+    "task_name": "Judge Declared Goal",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=0A961214-799C-BC68-38F4-F38504396B45",
+    "raw": {
+      "Rank": "17",
+      "Pilot": "#4 - MAYERHOFER, Doris Austria",
+      "Result": "845.00",
+      "Points": "320",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "320",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 2,
+    "task_name": "Judge Declared Goal",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=0A961214-799C-BC68-38F4-F38504396B45",
+    "raw": {
+      "Rank": "19",
+      "Pilot": "#13 - GARAB, Szabolcs Hungary",
+      "Result": "1,116.00",
+      "Points": "280",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "280",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 2,
+    "task_name": "Judge Declared Goal",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=0A961214-799C-BC68-38F4-F38504396B45",
+    "raw": {
+      "Rank": "20",
+      "Pilot": "#6 - SIMONER, Andreas Austria",
+      "Result": "1,606.00",
+      "Points": "240",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "240",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 2,
+    "task_name": "Judge Declared Goal",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=0A961214-799C-BC68-38F4-F38504396B45",
+    "raw": {
+      "Rank": "21",
+      "Pilot": "#1 - BINKS, Alana Australia",
+      "Result": "1,618.00",
+      "Points": "200",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "200",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 2,
+    "task_name": "Judge Declared Goal",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=0A961214-799C-BC68-38F4-F38504396B45",
+    "raw": {
+      "Rank": "22",
+      "Pilot": "#23 - MOSCARA, Raffael Italy",
+      "Result": "1,657.00",
+      "Points": "160",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "160",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 2,
+    "task_name": "Judge Declared Goal",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=0A961214-799C-BC68-38F4-F38504396B45",
+    "raw": {
+      "Rank": "23",
+      "Pilot": "#25 - KAZLAUSKAS, Ignas Lithuania",
+      "Result": "2,142.00",
+      "Points": "80",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "80",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 2,
+    "task_name": "Judge Declared Goal",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=0A961214-799C-BC68-38F4-F38504396B45",
+    "raw": {
+      "Rank": "24",
+      "Pilot": "#24 - STEFANINI, Massimo Italy",
+      "Result": "No Flight",
+      "Points": "0",
+      "Penalty (T)": "-",
+      "Penalty (C)": "-",
+      "Score": "0",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 2,
+    "task_name": "Judge Declared Goal",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=0A961214-799C-BC68-38F4-F38504396B45",
+    "raw": {
+      "Rank": "25",
+      "Pilot": "#14 - KONECSNI, Janos Hungary",
+      "Result": "2,111.00",
+      "Points": "120",
+      "Penalty (T)": "0",
+      "Penalty (C)": "230",
+      "Score": "-110",
+      "Notes": "7.5 Flight in Blue PZ"
+    }
+  },
+  {
+    "task_number": 2,
+    "task_name": "Judge Declared Goal",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=0A961214-799C-BC68-38F4-F38504396B45",
+    "raw": {
+      "Rank": "26",
+      "Pilot": "#28 - OUDENAMPSEN, Jan The Netherlands",
+      "Result": "No Flight",
+      "Points": "0",
+      "Penalty (T)": "-",
+      "Penalty (C)": "-",
+      "Score": "0",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 3,
+    "task_name": "Hesitation Waltz",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=FC756017-499F-D8CE-EB5A-D5005559F6C3",
+    "raw": {
+      "Rank": "1",
+      "Pilot": "#29 - BAREFORD, Dominic United Kingdom",
+      "Result": "75.00",
+      "Points": "1000",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "1000",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 3,
+    "task_name": "Hesitation Waltz",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=FC756017-499F-D8CE-EB5A-D5005559F6C3",
+    "raw": {
+      "Rank": "2",
+      "Pilot": "#23 - MOSCARA, Raffael Italy",
+      "Result": "322.00",
+      "Points": "932",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "932",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 3,
+    "task_name": "Hesitation Waltz",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=FC756017-499F-D8CE-EB5A-D5005559F6C3",
+    "raw": {
+      "Rank": "3",
+      "Pilot": "#7 - DELEERSNYDER, Maarten Belgium",
+      "Result": "1,016.00",
+      "Points": "743",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "743",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 3,
+    "task_name": "Hesitation Waltz",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=FC756017-499F-D8CE-EB5A-D5005559F6C3",
+    "raw": {
+      "Rank": "4",
+      "Pilot": "#26 - TOULSON, Michael New Zealand",
+      "Result": "1,112.00",
+      "Points": "717",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "717",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 3,
+    "task_name": "Hesitation Waltz",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=FC756017-499F-D8CE-EB5A-D5005559F6C3",
+    "raw": {
+      "Rank": "5",
+      "Pilot": "#30 - WALL, Cameron United States",
+      "Result": "860.00",
+      "Points": "785",
+      "Penalty (T)": "0",
+      "Penalty (C)": "110",
+      "Score": "675",
+      "Notes": "7.5 Flight in Blue PZ"
+    }
+  },
+  {
+    "task_number": 3,
+    "task_name": "Hesitation Waltz",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=FC756017-499F-D8CE-EB5A-D5005559F6C3",
+    "raw": {
+      "Rank": "6",
+      "Pilot": "#2 - SAUNDERS, Edward Australia",
+      "Result": "1,277.00",
+      "Points": "671",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "671",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 3,
+    "task_name": "Hesitation Waltz",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=FC756017-499F-D8CE-EB5A-D5005559F6C3",
+    "raw": {
+      "Rank": "7",
+      "Pilot": "#3 - SCAIFE, Matthew Australia",
+      "Result": "1,418.00",
+      "Points": "633",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "633",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 3,
+    "task_name": "Hesitation Waltz",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=FC756017-499F-D8CE-EB5A-D5005559F6C3",
+    "raw": {
+      "Rank": "8",
+      "Pilot": "#15 - MOLNAR, Peter Hungary",
+      "Result": "1,494.00",
+      "Points": "612",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "612",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 3,
+    "task_name": "Hesitation Waltz",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=FC756017-499F-D8CE-EB5A-D5005559F6C3",
+    "raw": {
+      "Rank": "9",
+      "Pilot": "#11 - KOSTRHUN, Jan Czech Republic",
+      "Result": "1,606.00",
+      "Points": "582",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "582",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 3,
+    "task_name": "Hesitation Waltz",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=FC756017-499F-D8CE-EB5A-D5005559F6C3",
+    "raw": {
+      "Rank": "10",
+      "Pilot": "#14 - KONECSNI, Janos Hungary",
+      "Result": "1,797.00",
+      "Points": "529",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "529",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 3,
+    "task_name": "Hesitation Waltz",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=FC756017-499F-D8CE-EB5A-D5005559F6C3",
+    "raw": {
+      "Rank": "11",
+      "Pilot": "#10 - PETRIC-MIKLOUSIC, Marija Croatia",
+      "Result": "1,831.00",
+      "Points": "520",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "520",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 3,
+    "task_name": "Hesitation Waltz",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=FC756017-499F-D8CE-EB5A-D5005559F6C3",
+    "raw": {
+      "Rank": "12",
+      "Pilot": "#1 - BINKS, Alana Australia",
+      "Result": "1,440.00",
+      "Points": "627",
+      "Penalty (T)": "0",
+      "Penalty (C)": "110",
+      "Score": "517",
+      "Notes": "7.5 Flight in Blue PZ"
+    }
+  },
+  {
+    "task_number": 3,
+    "task_name": "Hesitation Waltz",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=FC756017-499F-D8CE-EB5A-D5005559F6C3",
+    "raw": {
+      "Rank": "13",
+      "Pilot": "#13 - GARAB, Szabolcs Hungary",
+      "Result": "1,898.00",
+      "Points": "480",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "480",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 3,
+    "task_name": "Hesitation Waltz",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=FC756017-499F-D8CE-EB5A-D5005559F6C3",
+    "raw": {
+      "Rank": "14",
+      "Pilot": "#20 - PALOCZ, Viktor Hungary",
+      "Result": "1,736.00",
+      "Points": "546",
+      "Penalty (T)": "0",
+      "Penalty (C)": "70",
+      "Score": "476",
+      "Notes": "7.5 Flight in Blue PZ"
+    }
+  },
+  {
+    "task_number": 3,
+    "task_name": "Hesitation Waltz",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=FC756017-499F-D8CE-EB5A-D5005559F6C3",
+    "raw": {
+      "Rank": "15",
+      "Pilot": "#12 - BECZ, Rita Hungary",
+      "Result": "1,906.00",
+      "Points": "440",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "440",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 3,
+    "task_name": "Hesitation Waltz",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=FC756017-499F-D8CE-EB5A-D5005559F6C3",
+    "raw": {
+      "Rank": "16",
+      "Pilot": "#27 - GAUCH, Cedric Switzerland",
+      "Result": "1,911.00",
+      "Points": "400",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "400",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 3,
+    "task_name": "Hesitation Waltz",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=FC756017-499F-D8CE-EB5A-D5005559F6C3",
+    "raw": {
+      "Rank": "17",
+      "Pilot": "#25 - KAZLAUSKAS, Ignas Lithuania",
+      "Result": "2,003.00",
+      "Points": "360",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "360",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 3,
+    "task_name": "Hesitation Waltz",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=FC756017-499F-D8CE-EB5A-D5005559F6C3",
+    "raw": {
+      "Rank": "18",
+      "Pilot": "#6 - SIMONER, Andreas Austria",
+      "Result": "2,660.00",
+      "Points": "280",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "280",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 3,
+    "task_name": "Hesitation Waltz",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=FC756017-499F-D8CE-EB5A-D5005559F6C3",
+    "raw": {
+      "Rank": "19",
+      "Pilot": "#9 - MIKLOUSIC, Igor Croatia",
+      "Result": "2,684.00",
+      "Points": "240",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "240",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 3,
+    "task_name": "Hesitation Waltz",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=FC756017-499F-D8CE-EB5A-D5005559F6C3",
+    "raw": {
+      "Rank": "20",
+      "Pilot": "#8 - KUGLER, Bojan Croatia",
+      "Result": "2,884.00",
+      "Points": "200",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "200",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 3,
+    "task_name": "Hesitation Waltz",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=FC756017-499F-D8CE-EB5A-D5005559F6C3",
+    "raw": {
+      "Rank": "21",
+      "Pilot": "#5 - MITTERMAIR, Lena Austria",
+      "Result": "2,925.00",
+      "Points": "160",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "160",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 3,
+    "task_name": "Hesitation Waltz",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=FC756017-499F-D8CE-EB5A-D5005559F6C3",
+    "raw": {
+      "Rank": "22",
+      "Pilot": "#16 - NAGY, Balazs Hungary",
+      "Result": "3,032.00",
+      "Points": "120",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "120",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 3,
+    "task_name": "Hesitation Waltz",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=FC756017-499F-D8CE-EB5A-D5005559F6C3",
+    "raw": {
+      "Rank": "23",
+      "Pilot": "#4 - MAYERHOFER, Doris Austria",
+      "Result": "3,319.00",
+      "Points": "80",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "80",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 3,
+    "task_name": "Hesitation Waltz",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=FC756017-499F-D8CE-EB5A-D5005559F6C3",
+    "raw": {
+      "Rank": "24",
+      "Pilot": "#28 - OUDENAMPSEN, Jan The Netherlands",
+      "Result": "3,510.00",
+      "Points": "40",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "40",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 3,
+    "task_name": "Hesitation Waltz",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=FC756017-499F-D8CE-EB5A-D5005559F6C3",
+    "raw": {
+      "Rank": "25",
+      "Pilot": "#24 - STEFANINI, Massimo Italy",
+      "Result": "No Flight",
+      "Points": "0",
+      "Penalty (T)": "-",
+      "Penalty (C)": "-",
+      "Score": "0",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 3,
+    "task_name": "Hesitation Waltz",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=FC756017-499F-D8CE-EB5A-D5005559F6C3",
+    "raw": {
+      "Rank": "26",
+      "Pilot": "#17 - NAGY, Peter Hungary",
+      "Result": "2,145.00",
+      "Points": "320",
+      "Penalty (T)": "0",
+      "Penalty (C)": "890",
+      "Score": "-570",
+      "Notes": "7.5 Flight in Blue PZ"
+    }
+  },
+  {
+    "task_number": 4,
+    "task_name": "Fly In",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=86E2AA56-3F98-9E4B-72A1-A644137961E2",
+    "raw": {
+      "Rank": "1",
+      "Pilot": "#30 - WALL, Cameron United States",
+      "Result": "0.20",
+      "Points": "1000",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "1000",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 4,
+    "task_name": "Fly In",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=86E2AA56-3F98-9E4B-72A1-A644137961E2",
+    "raw": {
+      "Rank": "2",
+      "Pilot": "#11 - KOSTRHUN, Jan Czech Republic",
+      "Result": "1.26",
+      "Points": "982",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "982",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 4,
+    "task_name": "Fly In",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=86E2AA56-3F98-9E4B-72A1-A644137961E2",
+    "raw": {
+      "Rank": "3",
+      "Pilot": "#7 - DELEERSNYDER, Maarten Belgium",
+      "Result": "1.84",
+      "Points": "973",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "973",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 4,
+    "task_name": "Fly In",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=86E2AA56-3F98-9E4B-72A1-A644137961E2",
+    "raw": {
+      "Rank": "4",
+      "Pilot": "#3 - SCAIFE, Matthew Australia",
+      "Result": "1.97",
+      "Points": "971",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "971",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 4,
+    "task_name": "Fly In",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=86E2AA56-3F98-9E4B-72A1-A644137961E2",
+    "raw": {
+      "Rank": "5",
+      "Pilot": "#6 - SIMONER, Andreas Austria",
+      "Result": "3.79",
+      "Points": "940",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "940",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 4,
+    "task_name": "Fly In",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=86E2AA56-3F98-9E4B-72A1-A644137961E2",
+    "raw": {
+      "Rank": "6",
+      "Pilot": "#26 - TOULSON, Michael New Zealand",
+      "Result": "5.43",
+      "Points": "913",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "913",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 4,
+    "task_name": "Fly In",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=86E2AA56-3F98-9E4B-72A1-A644137961E2",
+    "raw": {
+      "Rank": "7",
+      "Pilot": "#27 - GAUCH, Cedric Switzerland",
+      "Result": "6.64",
+      "Points": "893",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "893",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 4,
+    "task_name": "Fly In",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=86E2AA56-3F98-9E4B-72A1-A644137961E2",
+    "raw": {
+      "Rank": "8",
+      "Pilot": "#14 - KONECSNI, Janos Hungary",
+      "Result": "8.08",
+      "Points": "869",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "869",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 4,
+    "task_name": "Fly In",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=86E2AA56-3F98-9E4B-72A1-A644137961E2",
+    "raw": {
+      "Rank": "9",
+      "Pilot": "#12 - BECZ, Rita Hungary",
+      "Result": "8.13",
+      "Points": "868",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "868",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 4,
+    "task_name": "Fly In",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=86E2AA56-3F98-9E4B-72A1-A644137961E2",
+    "raw": {
+      "Rank": "10",
+      "Pilot": "#2 - SAUNDERS, Edward Australia",
+      "Result": "9.20",
+      "Points": "850",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "850",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 4,
+    "task_name": "Fly In",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=86E2AA56-3F98-9E4B-72A1-A644137961E2",
+    "raw": {
+      "Rank": "11",
+      "Pilot": "#25 - KAZLAUSKAS, Ignas Lithuania",
+      "Result": "10.66",
+      "Points": "826",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "826",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 4,
+    "task_name": "Fly In",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=86E2AA56-3F98-9E4B-72A1-A644137961E2",
+    "raw": {
+      "Rank": "12",
+      "Pilot": "#4 - MAYERHOFER, Doris Austria",
+      "Result": "17.73",
+      "Points": "709",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "709",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 4,
+    "task_name": "Fly In",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=86E2AA56-3F98-9E4B-72A1-A644137961E2",
+    "raw": {
+      "Rank": "13",
+      "Pilot": "#29 - BAREFORD, Dominic United Kingdom",
+      "Result": "28.00",
+      "Points": "538",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "538",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 4,
+    "task_name": "Fly In",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=86E2AA56-3F98-9E4B-72A1-A644137961E2",
+    "raw": {
+      "Rank": "14",
+      "Pilot": "#10 - PETRIC-MIKLOUSIC, Marija Croatia",
+      "Result": "33.00",
+      "Points": "500",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "500",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 4,
+    "task_name": "Fly In",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=86E2AA56-3F98-9E4B-72A1-A644137961E2",
+    "raw": {
+      "Rank": "15",
+      "Pilot": "#1 - BINKS, Alana Australia",
+      "Result": "38.00",
+      "Points": "462",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "462",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 4,
+    "task_name": "Fly In",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=86E2AA56-3F98-9E4B-72A1-A644137961E2",
+    "raw": {
+      "Rank": "16",
+      "Pilot": "#24 - STEFANINI, Massimo Italy",
+      "Result": "75.00",
+      "Points": "423",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "423",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 4,
+    "task_name": "Fly In",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=86E2AA56-3F98-9E4B-72A1-A644137961E2",
+    "raw": {
+      "Rank": "17",
+      "Pilot": "#17 - NAGY, Peter Hungary",
+      "Result": "89.00",
+      "Points": "385",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "385",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 4,
+    "task_name": "Fly In",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=86E2AA56-3F98-9E4B-72A1-A644137961E2",
+    "raw": {
+      "Rank": "18",
+      "Pilot": "#23 - MOSCARA, Raffael Italy",
+      "Result": "95.00",
+      "Points": "346",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "346",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 4,
+    "task_name": "Fly In",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=86E2AA56-3F98-9E4B-72A1-A644137961E2",
+    "raw": {
+      "Rank": "19",
+      "Pilot": "#9 - MIKLOUSIC, Igor Croatia",
+      "Result": "145.00",
+      "Points": "308",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "308",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 4,
+    "task_name": "Fly In",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=86E2AA56-3F98-9E4B-72A1-A644137961E2",
+    "raw": {
+      "Rank": "20",
+      "Pilot": "#8 - KUGLER, Bojan Croatia",
+      "Result": "157.00",
+      "Points": "269",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "269",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 4,
+    "task_name": "Fly In",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=86E2AA56-3F98-9E4B-72A1-A644137961E2",
+    "raw": {
+      "Rank": "21",
+      "Pilot": "#15 - MOLNAR, Peter Hungary",
+      "Result": "180.00",
+      "Points": "231",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "231",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 4,
+    "task_name": "Fly In",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=86E2AA56-3F98-9E4B-72A1-A644137961E2",
+    "raw": {
+      "Rank": "22",
+      "Pilot": "#20 - PALOCZ, Viktor Hungary",
+      "Result": "237.00",
+      "Points": "192",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "192",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 4,
+    "task_name": "Fly In",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=86E2AA56-3F98-9E4B-72A1-A644137961E2",
+    "raw": {
+      "Rank": "23",
+      "Pilot": "#28 - OUDENAMPSEN, Jan The Netherlands",
+      "Result": "290.00",
+      "Points": "154",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "154",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 4,
+    "task_name": "Fly In",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=86E2AA56-3F98-9E4B-72A1-A644137961E2",
+    "raw": {
+      "Rank": "24",
+      "Pilot": "#13 - GARAB, Szabolcs Hungary",
+      "Result": "308.00",
+      "Points": "115",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "115",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 4,
+    "task_name": "Fly In",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=86E2AA56-3F98-9E4B-72A1-A644137961E2",
+    "raw": {
+      "Rank": "25",
+      "Pilot": "#5 - MITTERMAIR, Lena Austria",
+      "Result": "510.00",
+      "Points": "77",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "77",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 4,
+    "task_name": "Fly In",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=86E2AA56-3F98-9E4B-72A1-A644137961E2",
+    "raw": {
+      "Rank": "26",
+      "Pilot": "#16 - NAGY, Balazs Hungary",
+      "Result": "702.00",
+      "Points": "38",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "38",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 5,
+    "task_name": "3D Shape Task",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=5EB68299-6469-6BDD-BCFD-78FB72598CC5",
+    "raw": {
+      "Rank": "1",
+      "Pilot": "#29 - BAREFORD, Dominic United Kingdom",
+      "Result": "20,848.00",
+      "Points": "1000",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "1000",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 5,
+    "task_name": "3D Shape Task",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=5EB68299-6469-6BDD-BCFD-78FB72598CC5",
+    "raw": {
+      "Rank": "2",
+      "Pilot": "#1 - BINKS, Alana Australia",
+      "Result": "20,834.00",
+      "Points": "999",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "999",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 5,
+    "task_name": "3D Shape Task",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=5EB68299-6469-6BDD-BCFD-78FB72598CC5",
+    "raw": {
+      "Rank": "3",
+      "Pilot": "#25 - KAZLAUSKAS, Ignas Lithuania",
+      "Result": "19,770.00",
+      "Points": "949",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "949",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 5,
+    "task_name": "3D Shape Task",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=5EB68299-6469-6BDD-BCFD-78FB72598CC5",
+    "raw": {
+      "Rank": "4",
+      "Pilot": "#11 - KOSTRHUN, Jan Czech Republic",
+      "Result": "19,219.00",
+      "Points": "923",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "923",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 5,
+    "task_name": "3D Shape Task",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=5EB68299-6469-6BDD-BCFD-78FB72598CC5",
+    "raw": {
+      "Rank": "5",
+      "Pilot": "#3 - SCAIFE, Matthew Australia",
+      "Result": "18,810.00",
+      "Points": "904",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "904",
+      "Notes": "Task finished by loggermark 2"
+    }
+  },
+  {
+    "task_number": 5,
+    "task_name": "3D Shape Task",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=5EB68299-6469-6BDD-BCFD-78FB72598CC5",
+    "raw": {
+      "Rank": "6",
+      "Pilot": "#9 - MIKLOUSIC, Igor Croatia",
+      "Result": "16,049.00",
+      "Points": "774",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "774",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 5,
+    "task_name": "3D Shape Task",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=5EB68299-6469-6BDD-BCFD-78FB72598CC5",
+    "raw": {
+      "Rank": "7",
+      "Pilot": "#13 - GARAB, Szabolcs Hungary",
+      "Result": "16,016.00",
+      "Points": "772",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "772",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 5,
+    "task_name": "3D Shape Task",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=5EB68299-6469-6BDD-BCFD-78FB72598CC5",
+    "raw": {
+      "Rank": "8",
+      "Pilot": "#15 - MOLNAR, Peter Hungary",
+      "Result": "14,057.00",
+      "Points": "680",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "680",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 5,
+    "task_name": "3D Shape Task",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=5EB68299-6469-6BDD-BCFD-78FB72598CC5",
+    "raw": {
+      "Rank": "9",
+      "Pilot": "#7 - DELEERSNYDER, Maarten Belgium",
+      "Result": "14,013.00",
+      "Points": "678",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "678",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 5,
+    "task_name": "3D Shape Task",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=5EB68299-6469-6BDD-BCFD-78FB72598CC5",
+    "raw": {
+      "Rank": "10",
+      "Pilot": "#27 - GAUCH, Cedric Switzerland",
+      "Result": "13,679.00",
+      "Points": "662",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "662",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 5,
+    "task_name": "3D Shape Task",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=5EB68299-6469-6BDD-BCFD-78FB72598CC5",
+    "raw": {
+      "Rank": "11",
+      "Pilot": "#30 - WALL, Cameron United States",
+      "Result": "11,932.00",
+      "Points": "580",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "580",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 5,
+    "task_name": "3D Shape Task",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=5EB68299-6469-6BDD-BCFD-78FB72598CC5",
+    "raw": {
+      "Rank": "12",
+      "Pilot": "#2 - SAUNDERS, Edward Australia",
+      "Result": "11,080.00",
+      "Points": "540",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "540",
+      "Notes": "Task finished by loggermark 2"
+    }
+  },
+  {
+    "task_number": 5,
+    "task_name": "3D Shape Task",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=5EB68299-6469-6BDD-BCFD-78FB72598CC5",
+    "raw": {
+      "Rank": "13",
+      "Pilot": "#8 - KUGLER, Bojan Croatia",
+      "Result": "11,047.00",
+      "Points": "538",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "538",
+      "Notes": "Task started after loggermark 1"
+    }
+  },
+  {
+    "task_number": 5,
+    "task_name": "3D Shape Task",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=5EB68299-6469-6BDD-BCFD-78FB72598CC5",
+    "raw": {
+      "Rank": "14",
+      "Pilot": "#6 - SIMONER, Andreas Austria",
+      "Result": "10,630.00",
+      "Points": "500",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "500",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 5,
+    "task_name": "3D Shape Task",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=5EB68299-6469-6BDD-BCFD-78FB72598CC5",
+    "raw": {
+      "Rank": "15",
+      "Pilot": "#28 - OUDENAMPSEN, Jan The Netherlands",
+      "Result": "10,373.00",
+      "Points": "462",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "462",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 5,
+    "task_name": "3D Shape Task",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=5EB68299-6469-6BDD-BCFD-78FB72598CC5",
+    "raw": {
+      "Rank": "16",
+      "Pilot": "#5 - MITTERMAIR, Lena Austria",
+      "Result": "9,935.00",
+      "Points": "423",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "423",
+      "Notes": "Task finished by loggermark 2"
+    }
+  },
+  {
+    "task_number": 5,
+    "task_name": "3D Shape Task",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=5EB68299-6469-6BDD-BCFD-78FB72598CC5",
+    "raw": {
+      "Rank": "17",
+      "Pilot": "#14 - KONECSNI, Janos Hungary",
+      "Result": "9,212.00",
+      "Points": "385",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "385",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 5,
+    "task_name": "3D Shape Task",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=5EB68299-6469-6BDD-BCFD-78FB72598CC5",
+    "raw": {
+      "Rank": "18",
+      "Pilot": "#17 - NAGY, Peter Hungary",
+      "Result": "8,543.00",
+      "Points": "346",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "346",
+      "Notes": "Task started after loggermark 1"
+    }
+  },
+  {
+    "task_number": 5,
+    "task_name": "3D Shape Task",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=5EB68299-6469-6BDD-BCFD-78FB72598CC5",
+    "raw": {
+      "Rank": "19",
+      "Pilot": "#12 - BECZ, Rita Hungary",
+      "Result": "7,786.00",
+      "Points": "308",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "308",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 5,
+    "task_name": "3D Shape Task",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=5EB68299-6469-6BDD-BCFD-78FB72598CC5",
+    "raw": {
+      "Rank": "20",
+      "Pilot": "#4 - MAYERHOFER, Doris Austria",
+      "Result": "7,546.00",
+      "Points": "269",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "269",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 5,
+    "task_name": "3D Shape Task",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=5EB68299-6469-6BDD-BCFD-78FB72598CC5",
+    "raw": {
+      "Rank": "21",
+      "Pilot": "#23 - MOSCARA, Raffael Italy",
+      "Result": "5,632.00",
+      "Points": "231",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "231",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 5,
+    "task_name": "3D Shape Task",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=5EB68299-6469-6BDD-BCFD-78FB72598CC5",
+    "raw": {
+      "Rank": "22",
+      "Pilot": "#20 - PALOCZ, Viktor Hungary",
+      "Result": "5,620.00",
+      "Points": "192",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "192",
+      "Notes": "Task finished by loggermark 2"
+    }
+  },
+  {
+    "task_number": 5,
+    "task_name": "3D Shape Task",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=5EB68299-6469-6BDD-BCFD-78FB72598CC5",
+    "raw": {
+      "Rank": "23",
+      "Pilot": "#16 - NAGY, Balazs Hungary",
+      "Result": "4,781.00",
+      "Points": "154",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "154",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 5,
+    "task_name": "3D Shape Task",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=5EB68299-6469-6BDD-BCFD-78FB72598CC5",
+    "raw": {
+      "Rank": "24",
+      "Pilot": "#10 - PETRIC-MIKLOUSIC, Marija Croatia",
+      "Result": "2,562.00",
+      "Points": "115",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "115",
+      "Notes": "Task finished by loggermark 2"
+    }
+  },
+  {
+    "task_number": 5,
+    "task_name": "3D Shape Task",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=5EB68299-6469-6BDD-BCFD-78FB72598CC5",
+    "raw": {
+      "Rank": "25",
+      "Pilot": "#24 - STEFANINI, Massimo Italy",
+      "Result": "No Result",
+      "Points": "58",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "58",
+      "Notes": "No trackpoints in 3D shape"
+    }
+  },
+  {
+    "task_number": 5,
+    "task_name": "3D Shape Task",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=5EB68299-6469-6BDD-BCFD-78FB72598CC5",
+    "raw": {
+      "Rank": "25",
+      "Pilot": "#26 - TOULSON, Michael New Zealand",
+      "Result": "No Result",
+      "Points": "58",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "58",
+      "Notes": "Distance DP1 to LG1 less than 3km"
+    }
+  },
+  {
+    "task_number": 6,
+    "task_name": "Land Run",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=A8290689-FC49-BD0B-B2BB-E9107091B4EF",
+    "raw": {
+      "Rank": "1",
+      "Pilot": "#15 - MOLNAR, Peter Hungary",
+      "Result": "19.30",
+      "Points": "1000",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "1000",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 6,
+    "task_name": "Land Run",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=A8290689-FC49-BD0B-B2BB-E9107091B4EF",
+    "raw": {
+      "Rank": "2",
+      "Pilot": "#29 - BAREFORD, Dominic United Kingdom",
+      "Result": "17.40",
+      "Points": "911",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "911",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 6,
+    "task_name": "Land Run",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=A8290689-FC49-BD0B-B2BB-E9107091B4EF",
+    "raw": {
+      "Rank": "3",
+      "Pilot": "#2 - SAUNDERS, Edward Australia",
+      "Result": "15.60",
+      "Points": "827",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "827",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 6,
+    "task_name": "Land Run",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=A8290689-FC49-BD0B-B2BB-E9107091B4EF",
+    "raw": {
+      "Rank": "4",
+      "Pilot": "#11 - KOSTRHUN, Jan Czech Republic",
+      "Result": "15.10",
+      "Points": "804",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "804",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 6,
+    "task_name": "Land Run",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=A8290689-FC49-BD0B-B2BB-E9107091B4EF",
+    "raw": {
+      "Rank": "5",
+      "Pilot": "#1 - BINKS, Alana Australia",
+      "Result": "14.70",
+      "Points": "785",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "785",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 6,
+    "task_name": "Land Run",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=A8290689-FC49-BD0B-B2BB-E9107091B4EF",
+    "raw": {
+      "Rank": "6",
+      "Pilot": "#25 - KAZLAUSKAS, Ignas Lithuania",
+      "Result": "13.70",
+      "Points": "739",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "739",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 6,
+    "task_name": "Land Run",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=A8290689-FC49-BD0B-B2BB-E9107091B4EF",
+    "raw": {
+      "Rank": "7",
+      "Pilot": "#7 - DELEERSNYDER, Maarten Belgium",
+      "Result": "13.30",
+      "Points": "720",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "720",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 6,
+    "task_name": "Land Run",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=A8290689-FC49-BD0B-B2BB-E9107091B4EF",
+    "raw": {
+      "Rank": "8",
+      "Pilot": "#13 - GARAB, Szabolcs Hungary",
+      "Result": "13.00",
+      "Points": "706",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "706",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 6,
+    "task_name": "Land Run",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=A8290689-FC49-BD0B-B2BB-E9107091B4EF",
+    "raw": {
+      "Rank": "9",
+      "Pilot": "#30 - WALL, Cameron United States",
+      "Result": "12.90",
+      "Points": "701",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "701",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 6,
+    "task_name": "Land Run",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=A8290689-FC49-BD0B-B2BB-E9107091B4EF",
+    "raw": {
+      "Rank": "10",
+      "Pilot": "#27 - GAUCH, Cedric Switzerland",
+      "Result": "11.60",
+      "Points": "641",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "641",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 6,
+    "task_name": "Land Run",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=A8290689-FC49-BD0B-B2BB-E9107091B4EF",
+    "raw": {
+      "Rank": "11",
+      "Pilot": "#8 - KUGLER, Bojan Croatia",
+      "Result": "11.30",
+      "Points": "627",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "627",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 6,
+    "task_name": "Land Run",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=A8290689-FC49-BD0B-B2BB-E9107091B4EF",
+    "raw": {
+      "Rank": "12",
+      "Pilot": "#14 - KONECSNI, Janos Hungary",
+      "Result": "10.80",
+      "Points": "603",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "603",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 6,
+    "task_name": "Land Run",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=A8290689-FC49-BD0B-B2BB-E9107091B4EF",
+    "raw": {
+      "Rank": "13",
+      "Pilot": "#3 - SCAIFE, Matthew Australia",
+      "Result": "9.40",
+      "Points": "538",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "538",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 6,
+    "task_name": "Land Run",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=A8290689-FC49-BD0B-B2BB-E9107091B4EF",
+    "raw": {
+      "Rank": "14",
+      "Pilot": "#17 - NAGY, Peter Hungary",
+      "Result": "8.00",
+      "Points": "500",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "500",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 6,
+    "task_name": "Land Run",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=A8290689-FC49-BD0B-B2BB-E9107091B4EF",
+    "raw": {
+      "Rank": "15",
+      "Pilot": "#9 - MIKLOUSIC, Igor Croatia",
+      "Result": "7.20",
+      "Points": "462",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "462",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 6,
+    "task_name": "Land Run",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=A8290689-FC49-BD0B-B2BB-E9107091B4EF",
+    "raw": {
+      "Rank": "16",
+      "Pilot": "#12 - BECZ, Rita Hungary",
+      "Result": "6.60",
+      "Points": "423",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "423",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 6,
+    "task_name": "Land Run",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=A8290689-FC49-BD0B-B2BB-E9107091B4EF",
+    "raw": {
+      "Rank": "17",
+      "Pilot": "#6 - SIMONER, Andreas Austria",
+      "Result": "6.20",
+      "Points": "385",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "385",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 6,
+    "task_name": "Land Run",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=A8290689-FC49-BD0B-B2BB-E9107091B4EF",
+    "raw": {
+      "Rank": "18",
+      "Pilot": "#26 - TOULSON, Michael New Zealand",
+      "Result": "5.60",
+      "Points": "346",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "346",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 6,
+    "task_name": "Land Run",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=A8290689-FC49-BD0B-B2BB-E9107091B4EF",
+    "raw": {
+      "Rank": "19",
+      "Pilot": "#5 - MITTERMAIR, Lena Austria",
+      "Result": "4.70",
+      "Points": "308",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "308",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 6,
+    "task_name": "Land Run",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=A8290689-FC49-BD0B-B2BB-E9107091B4EF",
+    "raw": {
+      "Rank": "20",
+      "Pilot": "#4 - MAYERHOFER, Doris Austria",
+      "Result": "4.10",
+      "Points": "269",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "269",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 6,
+    "task_name": "Land Run",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=A8290689-FC49-BD0B-B2BB-E9107091B4EF",
+    "raw": {
+      "Rank": "21",
+      "Pilot": "#28 - OUDENAMPSEN, Jan The Netherlands",
+      "Result": "3.70",
+      "Points": "231",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "231",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 6,
+    "task_name": "Land Run",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=A8290689-FC49-BD0B-B2BB-E9107091B4EF",
+    "raw": {
+      "Rank": "22",
+      "Pilot": "#16 - NAGY, Balazs Hungary",
+      "Result": "2.50",
+      "Points": "192",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "192",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 6,
+    "task_name": "Land Run",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=A8290689-FC49-BD0B-B2BB-E9107091B4EF",
+    "raw": {
+      "Rank": "23",
+      "Pilot": "#23 - MOSCARA, Raffael Italy",
+      "Result": "2.30",
+      "Points": "154",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "154",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 6,
+    "task_name": "Land Run",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=A8290689-FC49-BD0B-B2BB-E9107091B4EF",
+    "raw": {
+      "Rank": "24",
+      "Pilot": "#10 - PETRIC-MIKLOUSIC, Marija Croatia",
+      "Result": "1.60",
+      "Points": "115",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "115",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 6,
+    "task_name": "Land Run",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=A8290689-FC49-BD0B-B2BB-E9107091B4EF",
+    "raw": {
+      "Rank": "25",
+      "Pilot": "#20 - PALOCZ, Viktor Hungary",
+      "Result": "No Result",
+      "Points": "58",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "58",
+      "Notes": "Time LM2 to LM4 greater than 30min"
+    }
+  },
+  {
+    "task_number": 6,
+    "task_name": "Land Run",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=A8290689-FC49-BD0B-B2BB-E9107091B4EF",
+    "raw": {
+      "Rank": "25",
+      "Pilot": "#24 - STEFANINI, Massimo Italy",
+      "Result": "No Result",
+      "Points": "58",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "58",
+      "Notes": "Time LM2 to LM4 greater than 30min"
+    }
+  },
+  {
+    "task_number": 7,
+    "task_name": "Fly On",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=12FD7536-9B39-26DE-A3F9-713EDF1CD321",
+    "raw": {
+      "Rank": "1",
+      "Pilot": "#3 - SCAIFE, Matthew Australia",
+      "Result": "0.52",
+      "Points": "1000",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "1000",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 7,
+    "task_name": "Fly On",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=12FD7536-9B39-26DE-A3F9-713EDF1CD321",
+    "raw": {
+      "Rank": "2",
+      "Pilot": "#29 - BAREFORD, Dominic United Kingdom",
+      "Result": "0.93",
+      "Points": "980",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "980",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 7,
+    "task_name": "Fly On",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=12FD7536-9B39-26DE-A3F9-713EDF1CD321",
+    "raw": {
+      "Rank": "3",
+      "Pilot": "#8 - KUGLER, Bojan Croatia",
+      "Result": "2.23",
+      "Points": "915",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "915",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 7,
+    "task_name": "Fly On",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=12FD7536-9B39-26DE-A3F9-713EDF1CD321",
+    "raw": {
+      "Rank": "4",
+      "Pilot": "#7 - DELEERSNYDER, Maarten Belgium",
+      "Result": "4.67",
+      "Points": "793",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "793",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 7,
+    "task_name": "Fly On",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=12FD7536-9B39-26DE-A3F9-713EDF1CD321",
+    "raw": {
+      "Rank": "5",
+      "Pilot": "#13 - GARAB, Szabolcs Hungary",
+      "Result": "4.91",
+      "Points": "781",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "781",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 7,
+    "task_name": "Fly On",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=12FD7536-9B39-26DE-A3F9-713EDF1CD321",
+    "raw": {
+      "Rank": "6",
+      "Pilot": "#26 - TOULSON, Michael New Zealand",
+      "Result": "5.75",
+      "Points": "739",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "739",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 7,
+    "task_name": "Fly On",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=12FD7536-9B39-26DE-A3F9-713EDF1CD321",
+    "raw": {
+      "Rank": "7",
+      "Pilot": "#6 - SIMONER, Andreas Austria",
+      "Result": "8.00",
+      "Points": "627",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "627",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 7,
+    "task_name": "Fly On",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=12FD7536-9B39-26DE-A3F9-713EDF1CD321",
+    "raw": {
+      "Rank": "8",
+      "Pilot": "#11 - KOSTRHUN, Jan Czech Republic",
+      "Result": "8.03",
+      "Points": "626",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "626",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 7,
+    "task_name": "Fly On",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=12FD7536-9B39-26DE-A3F9-713EDF1CD321",
+    "raw": {
+      "Rank": "9",
+      "Pilot": "#12 - BECZ, Rita Hungary",
+      "Result": "8.60",
+      "Points": "597",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "597",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 7,
+    "task_name": "Fly On",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=12FD7536-9B39-26DE-A3F9-713EDF1CD321",
+    "raw": {
+      "Rank": "10",
+      "Pilot": "#14 - KONECSNI, Janos Hungary",
+      "Result": "9.32",
+      "Points": "561",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "561",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 7,
+    "task_name": "Fly On",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=12FD7536-9B39-26DE-A3F9-713EDF1CD321",
+    "raw": {
+      "Rank": "11",
+      "Pilot": "#4 - MAYERHOFER, Doris Austria",
+      "Result": "9.42",
+      "Points": "556",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "556",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 7,
+    "task_name": "Fly On",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=12FD7536-9B39-26DE-A3F9-713EDF1CD321",
+    "raw": {
+      "Rank": "12",
+      "Pilot": "#1 - BINKS, Alana Australia",
+      "Result": "9.57",
+      "Points": "549",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "549",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 7,
+    "task_name": "Fly On",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=12FD7536-9B39-26DE-A3F9-713EDF1CD321",
+    "raw": {
+      "Rank": "13",
+      "Pilot": "#25 - KAZLAUSKAS, Ignas Lithuania",
+      "Result": "9.79",
+      "Points": "538",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "538",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 7,
+    "task_name": "Fly On",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=12FD7536-9B39-26DE-A3F9-713EDF1CD321",
+    "raw": {
+      "Rank": "14",
+      "Pilot": "#20 - PALOCZ, Viktor Hungary",
+      "Result": "10.21",
+      "Points": "500",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "500",
+      "Notes": "Warning R6.10 Balloon Live flight not stopped after landing"
+    }
+  },
+  {
+    "task_number": 7,
+    "task_name": "Fly On",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=12FD7536-9B39-26DE-A3F9-713EDF1CD321",
+    "raw": {
+      "Rank": "15",
+      "Pilot": "#16 - NAGY, Balazs Hungary",
+      "Result": "13.94",
+      "Points": "462",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "462",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 7,
+    "task_name": "Fly On",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=12FD7536-9B39-26DE-A3F9-713EDF1CD321",
+    "raw": {
+      "Rank": "16",
+      "Pilot": "#30 - WALL, Cameron United States",
+      "Result": "14.78",
+      "Points": "423",
+      "Penalty (T)": "0",
+      "Penalty (C)": "10",
+      "Score": "413",
+      "Notes": "R7.5 Flight in Blue PZ - Blue PZ"
+    }
+  },
+  {
+    "task_number": 7,
+    "task_name": "Fly On",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=12FD7536-9B39-26DE-A3F9-713EDF1CD321",
+    "raw": {
+      "Rank": "17",
+      "Pilot": "#15 - MOLNAR, Peter Hungary",
+      "Result": "14.80",
+      "Points": "385",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "385",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 7,
+    "task_name": "Fly On",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=12FD7536-9B39-26DE-A3F9-713EDF1CD321",
+    "raw": {
+      "Rank": "18",
+      "Pilot": "#27 - GAUCH, Cedric Switzerland",
+      "Result": "22.59",
+      "Points": "346",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "346",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 7,
+    "task_name": "Fly On",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=12FD7536-9B39-26DE-A3F9-713EDF1CD321",
+    "raw": {
+      "Rank": "19",
+      "Pilot": "#2 - SAUNDERS, Edward Australia",
+      "Result": "43.45",
+      "Points": "308",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "308",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 7,
+    "task_name": "Fly On",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=12FD7536-9B39-26DE-A3F9-713EDF1CD321",
+    "raw": {
+      "Rank": "20",
+      "Pilot": "#9 - MIKLOUSIC, Igor Croatia",
+      "Result": "45.84",
+      "Points": "269",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "269",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 7,
+    "task_name": "Fly On",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=12FD7536-9B39-26DE-A3F9-713EDF1CD321",
+    "raw": {
+      "Rank": "21",
+      "Pilot": "#17 - NAGY, Peter Hungary",
+      "Result": "71.19",
+      "Points": "231",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "231",
+      "Notes": "Warning R6.3.2 late flight report form 1h 34min"
+    }
+  },
+  {
+    "task_number": 7,
+    "task_name": "Fly On",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=12FD7536-9B39-26DE-A3F9-713EDF1CD321",
+    "raw": {
+      "Rank": "22",
+      "Pilot": "#5 - MITTERMAIR, Lena Austria",
+      "Result": "106.19",
+      "Points": "192",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "192",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 7,
+    "task_name": "Fly On",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=12FD7536-9B39-26DE-A3F9-713EDF1CD321",
+    "raw": {
+      "Rank": "23",
+      "Pilot": "#24 - STEFANINI, Massimo Italy",
+      "Result": "408.32",
+      "Points": "115",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "115",
+      "Notes": "Warning R6.1 Wrong loggergoal used, scored to LG5; Warning R6.3.2 flight report form not submitted"
+    }
+  },
+  {
+    "task_number": 7,
+    "task_name": "Fly On",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=12FD7536-9B39-26DE-A3F9-713EDF1CD321",
+    "raw": {
+      "Rank": "24",
+      "Pilot": "#10 - PETRIC-MIKLOUSIC, Marija Croatia",
+      "Result": "155.03",
+      "Points": "154",
+      "Penalty (T)": "50",
+      "Penalty (C)": "0",
+      "Score": "104",
+      "Notes": "R13.3 Distance declaration point to loggergoal 2,5 % less than 1000m; Warning R6.3.2 late flight report form 55min"
+    }
+  },
+  {
+    "task_number": 7,
+    "task_name": "Fly On",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=12FD7536-9B39-26DE-A3F9-713EDF1CD321",
+    "raw": {
+      "Rank": "25",
+      "Pilot": "#28 - OUDENAMPSEN, Jan The Netherlands",
+      "Result": "2,205.20",
+      "Points": "77",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "77",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 7,
+    "task_name": "Fly On",
+    "status": "FINAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=12FD7536-9B39-26DE-A3F9-713EDF1CD321",
+    "raw": {
+      "Rank": "26",
+      "Pilot": "#23 - MOSCARA, Raffael Italy",
+      "Result": "No Result",
+      "Points": "38",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "38",
+      "Notes": "Loggermark 5 out of scoring period"
+    }
+  },
+  {
+    "task_number": 8,
+    "task_name": "Pilot Declared Goal",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=CC6C6A14-F689-2552-A279-0D9BE1912E1C",
+    "raw": {
+      "Rank": "1",
+      "Pilot": "#30 - WALL, Cameron United States",
+      "Result": "2.00",
+      "Points": "1000",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "1000",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 8,
+    "task_name": "Pilot Declared Goal",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=CC6C6A14-F689-2552-A279-0D9BE1912E1C",
+    "raw": {
+      "Rank": "2",
+      "Pilot": "#7 - DELEERSNYDER, Maarten Belgium",
+      "Result": "8.00",
+      "Points": "937",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "937",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 8,
+    "task_name": "Pilot Declared Goal",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=CC6C6A14-F689-2552-A279-0D9BE1912E1C",
+    "raw": {
+      "Rank": "2",
+      "Pilot": "#16 - NAGY, Balazs Hungary",
+      "Result": "8.00",
+      "Points": "937",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "937",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 8,
+    "task_name": "Pilot Declared Goal",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=CC6C6A14-F689-2552-A279-0D9BE1912E1C",
+    "raw": {
+      "Rank": "4",
+      "Pilot": "#13 - GARAB, Szabolcs Hungary",
+      "Result": "10.00",
+      "Points": "916",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "916",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 8,
+    "task_name": "Pilot Declared Goal",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=CC6C6A14-F689-2552-A279-0D9BE1912E1C",
+    "raw": {
+      "Rank": "5",
+      "Pilot": "#20 - PALOCZ, Viktor Hungary",
+      "Result": "11.00",
+      "Points": "906",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "906",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 8,
+    "task_name": "Pilot Declared Goal",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=CC6C6A14-F689-2552-A279-0D9BE1912E1C",
+    "raw": {
+      "Rank": "6",
+      "Pilot": "#29 - BAREFORD, Dominic United Kingdom",
+      "Result": "14.00",
+      "Points": "874",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "874",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 8,
+    "task_name": "Pilot Declared Goal",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=CC6C6A14-F689-2552-A279-0D9BE1912E1C",
+    "raw": {
+      "Rank": "7",
+      "Pilot": "#2 - SAUNDERS, Edward Australia",
+      "Result": "15.00",
+      "Points": "864",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "864",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 8,
+    "task_name": "Pilot Declared Goal",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=CC6C6A14-F689-2552-A279-0D9BE1912E1C",
+    "raw": {
+      "Rank": "8",
+      "Pilot": "#3 - SCAIFE, Matthew Australia",
+      "Result": "20.00",
+      "Points": "811",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "811",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 8,
+    "task_name": "Pilot Declared Goal",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=CC6C6A14-F689-2552-A279-0D9BE1912E1C",
+    "raw": {
+      "Rank": "9",
+      "Pilot": "#15 - MOLNAR, Peter Hungary",
+      "Result": "29.00",
+      "Points": "717",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "717",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 8,
+    "task_name": "Pilot Declared Goal",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=CC6C6A14-F689-2552-A279-0D9BE1912E1C",
+    "raw": {
+      "Rank": "10",
+      "Pilot": "#1 - BINKS, Alana Australia",
+      "Result": "32.00",
+      "Points": "685",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "685",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 8,
+    "task_name": "Pilot Declared Goal",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=CC6C6A14-F689-2552-A279-0D9BE1912E1C",
+    "raw": {
+      "Rank": "11",
+      "Pilot": "#23 - MOSCARA, Raffael Italy",
+      "Result": "37.00",
+      "Points": "633",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "633",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 8,
+    "task_name": "Pilot Declared Goal",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=CC6C6A14-F689-2552-A279-0D9BE1912E1C",
+    "raw": {
+      "Rank": "12",
+      "Pilot": "#28 - OUDENAMPSEN, Jan The Netherlands",
+      "Result": "42.00",
+      "Points": "580",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "580",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 8,
+    "task_name": "Pilot Declared Goal",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=CC6C6A14-F689-2552-A279-0D9BE1912E1C",
+    "raw": {
+      "Rank": "13",
+      "Pilot": "#5 - MITTERMAIR, Lena Austria",
+      "Result": "46.00",
+      "Points": "538",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "538",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 8,
+    "task_name": "Pilot Declared Goal",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=CC6C6A14-F689-2552-A279-0D9BE1912E1C",
+    "raw": {
+      "Rank": "14",
+      "Pilot": "#12 - BECZ, Rita Hungary",
+      "Result": "53.00",
+      "Points": "500",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "500",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 8,
+    "task_name": "Pilot Declared Goal",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=CC6C6A14-F689-2552-A279-0D9BE1912E1C",
+    "raw": {
+      "Rank": "15",
+      "Pilot": "#27 - GAUCH, Cedric Switzerland",
+      "Result": "63.00",
+      "Points": "462",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "462",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 8,
+    "task_name": "Pilot Declared Goal",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=CC6C6A14-F689-2552-A279-0D9BE1912E1C",
+    "raw": {
+      "Rank": "16",
+      "Pilot": "#8 - KUGLER, Bojan Croatia",
+      "Result": "68.00",
+      "Points": "423",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "423",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 8,
+    "task_name": "Pilot Declared Goal",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=CC6C6A14-F689-2552-A279-0D9BE1912E1C",
+    "raw": {
+      "Rank": "17",
+      "Pilot": "#17 - NAGY, Peter Hungary",
+      "Result": "94.00",
+      "Points": "385",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "385",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 8,
+    "task_name": "Pilot Declared Goal",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=CC6C6A14-F689-2552-A279-0D9BE1912E1C",
+    "raw": {
+      "Rank": "18",
+      "Pilot": "#11 - KOSTRHUN, Jan Czech Republic",
+      "Result": "118.00",
+      "Points": "346",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "346",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 8,
+    "task_name": "Pilot Declared Goal",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=CC6C6A14-F689-2552-A279-0D9BE1912E1C",
+    "raw": {
+      "Rank": "19",
+      "Pilot": "#10 - PETRIC-MIKLOUSIC, Marija Croatia",
+      "Result": "126.00",
+      "Points": "308",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "308",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 8,
+    "task_name": "Pilot Declared Goal",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=CC6C6A14-F689-2552-A279-0D9BE1912E1C",
+    "raw": {
+      "Rank": "20",
+      "Pilot": "#14 - KONECSNI, Janos Hungary",
+      "Result": "146.00",
+      "Points": "269",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "269",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 8,
+    "task_name": "Pilot Declared Goal",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=CC6C6A14-F689-2552-A279-0D9BE1912E1C",
+    "raw": {
+      "Rank": "21",
+      "Pilot": "#26 - TOULSON, Michael New Zealand",
+      "Result": "154.00",
+      "Points": "231",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "231",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 8,
+    "task_name": "Pilot Declared Goal",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=CC6C6A14-F689-2552-A279-0D9BE1912E1C",
+    "raw": {
+      "Rank": "22",
+      "Pilot": "#9 - MIKLOUSIC, Igor Croatia",
+      "Result": "172.00",
+      "Points": "192",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "192",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 8,
+    "task_name": "Pilot Declared Goal",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=CC6C6A14-F689-2552-A279-0D9BE1912E1C",
+    "raw": {
+      "Rank": "23",
+      "Pilot": "#4 - MAYERHOFER, Doris Austria",
+      "Result": "255.00",
+      "Points": "154",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "154",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 8,
+    "task_name": "Pilot Declared Goal",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=CC6C6A14-F689-2552-A279-0D9BE1912E1C",
+    "raw": {
+      "Rank": "24",
+      "Pilot": "#25 - KAZLAUSKAS, Ignas Lithuania",
+      "Result": "256.00",
+      "Points": "115",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "115",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 8,
+    "task_name": "Pilot Declared Goal",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=CC6C6A14-F689-2552-A279-0D9BE1912E1C",
+    "raw": {
+      "Rank": "25",
+      "Pilot": "#6 - SIMONER, Andreas Austria",
+      "Result": "274.00",
+      "Points": "77",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "77",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 8,
+    "task_name": "Pilot Declared Goal",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=CC6C6A14-F689-2552-A279-0D9BE1912E1C",
+    "raw": {
+      "Rank": "26",
+      "Pilot": "#24 - STEFANINI, Massimo Italy",
+      "Result": "No Result",
+      "Points": "38",
+      "Penalty (T)": "200",
+      "Penalty (C)": "0",
+      "Score": "0",
+      "Notes": "R9.9 Late Launch (4 minutes); R15.1 No goal altitude declared"
+    }
+  },
+  {
+    "task_number": 9,
+    "task_name": "Fly In",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=AA25CCD8-47E3-B6EE-B486-F69997759F56",
+    "raw": {
+      "Rank": "1",
+      "Pilot": "#25 - KAZLAUSKAS, Ignas Lithuania",
+      "Result": "2.69",
+      "Points": "1000",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "1000",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 9,
+    "task_name": "Fly In",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=AA25CCD8-47E3-B6EE-B486-F69997759F56",
+    "raw": {
+      "Rank": "2",
+      "Pilot": "#29 - BAREFORD, Dominic United Kingdom",
+      "Result": "4.81",
+      "Points": "994",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "994",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 9,
+    "task_name": "Fly In",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=AA25CCD8-47E3-B6EE-B486-F69997759F56",
+    "raw": {
+      "Rank": "3",
+      "Pilot": "#23 - MOSCARA, Raffael Italy",
+      "Result": "7.15",
+      "Points": "987",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "987",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 9,
+    "task_name": "Fly In",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=AA25CCD8-47E3-B6EE-B486-F69997759F56",
+    "raw": {
+      "Rank": "4",
+      "Pilot": "#26 - TOULSON, Michael New Zealand",
+      "Result": "9.79",
+      "Points": "980",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "980",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 9,
+    "task_name": "Fly In",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=AA25CCD8-47E3-B6EE-B486-F69997759F56",
+    "raw": {
+      "Rank": "5",
+      "Pilot": "#1 - BINKS, Alana Australia",
+      "Result": "12.47",
+      "Points": "973",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "973",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 9,
+    "task_name": "Fly In",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=AA25CCD8-47E3-B6EE-B486-F69997759F56",
+    "raw": {
+      "Rank": "6",
+      "Pilot": "#10 - PETRIC-MIKLOUSIC, Marija Croatia",
+      "Result": "15.43",
+      "Points": "964",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "964",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 9,
+    "task_name": "Fly In",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=AA25CCD8-47E3-B6EE-B486-F69997759F56",
+    "raw": {
+      "Rank": "7",
+      "Pilot": "#9 - MIKLOUSIC, Igor Croatia",
+      "Result": "16.25",
+      "Points": "962",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "962",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 9,
+    "task_name": "Fly In",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=AA25CCD8-47E3-B6EE-B486-F69997759F56",
+    "raw": {
+      "Rank": "8",
+      "Pilot": "#4 - MAYERHOFER, Doris Austria",
+      "Result": "34.00",
+      "Points": "912",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "912",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 9,
+    "task_name": "Fly In",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=AA25CCD8-47E3-B6EE-B486-F69997759F56",
+    "raw": {
+      "Rank": "9",
+      "Pilot": "#3 - SCAIFE, Matthew Australia",
+      "Result": "39.00",
+      "Points": "898",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "898",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 9,
+    "task_name": "Fly In",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=AA25CCD8-47E3-B6EE-B486-F69997759F56",
+    "raw": {
+      "Rank": "10",
+      "Pilot": "#27 - GAUCH, Cedric Switzerland",
+      "Result": "59.00",
+      "Points": "842",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "842",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 9,
+    "task_name": "Fly In",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=AA25CCD8-47E3-B6EE-B486-F69997759F56",
+    "raw": {
+      "Rank": "11",
+      "Pilot": "#28 - OUDENAMPSEN, Jan The Netherlands",
+      "Result": "66.00",
+      "Points": "822",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "822",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 9,
+    "task_name": "Fly In",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=AA25CCD8-47E3-B6EE-B486-F69997759F56",
+    "raw": {
+      "Rank": "12",
+      "Pilot": "#5 - MITTERMAIR, Lena Austria",
+      "Result": "74.00",
+      "Points": "799",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "799",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 9,
+    "task_name": "Fly In",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=AA25CCD8-47E3-B6EE-B486-F69997759F56",
+    "raw": {
+      "Rank": "13",
+      "Pilot": "#6 - SIMONER, Andreas Austria",
+      "Result": "167.00",
+      "Points": "538",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "538",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 9,
+    "task_name": "Fly In",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=AA25CCD8-47E3-B6EE-B486-F69997759F56",
+    "raw": {
+      "Rank": "14",
+      "Pilot": "#8 - KUGLER, Bojan Croatia",
+      "Result": "177.00",
+      "Points": "500",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "500",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 9,
+    "task_name": "Fly In",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=AA25CCD8-47E3-B6EE-B486-F69997759F56",
+    "raw": {
+      "Rank": "15",
+      "Pilot": "#2 - SAUNDERS, Edward Australia",
+      "Result": "209.00",
+      "Points": "462",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "462",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 9,
+    "task_name": "Fly In",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=AA25CCD8-47E3-B6EE-B486-F69997759F56",
+    "raw": {
+      "Rank": "16",
+      "Pilot": "#30 - WALL, Cameron United States",
+      "Result": "222.00",
+      "Points": "423",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "423",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 9,
+    "task_name": "Fly In",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=AA25CCD8-47E3-B6EE-B486-F69997759F56",
+    "raw": {
+      "Rank": "17",
+      "Pilot": "#11 - KOSTRHUN, Jan Czech Republic",
+      "Result": "417.00",
+      "Points": "385",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "385",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 9,
+    "task_name": "Fly In",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=AA25CCD8-47E3-B6EE-B486-F69997759F56",
+    "raw": {
+      "Rank": "18",
+      "Pilot": "#7 - DELEERSNYDER, Maarten Belgium",
+      "Result": "424.00",
+      "Points": "346",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "346",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 9,
+    "task_name": "Fly In",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=AA25CCD8-47E3-B6EE-B486-F69997759F56",
+    "raw": {
+      "Rank": "19",
+      "Pilot": "#15 - MOLNAR, Peter Hungary",
+      "Result": "485.00",
+      "Points": "308",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "308",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 9,
+    "task_name": "Fly In",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=AA25CCD8-47E3-B6EE-B486-F69997759F56",
+    "raw": {
+      "Rank": "20",
+      "Pilot": "#13 - GARAB, Szabolcs Hungary",
+      "Result": "820.00",
+      "Points": "269",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "269",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 9,
+    "task_name": "Fly In",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=AA25CCD8-47E3-B6EE-B486-F69997759F56",
+    "raw": {
+      "Rank": "21",
+      "Pilot": "#14 - KONECSNI, Janos Hungary",
+      "Result": "846.00",
+      "Points": "231",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "231",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 9,
+    "task_name": "Fly In",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=AA25CCD8-47E3-B6EE-B486-F69997759F56",
+    "raw": {
+      "Rank": "22",
+      "Pilot": "#17 - NAGY, Peter Hungary",
+      "Result": "1,173.00",
+      "Points": "192",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "192",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 9,
+    "task_name": "Fly In",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=AA25CCD8-47E3-B6EE-B486-F69997759F56",
+    "raw": {
+      "Rank": "23",
+      "Pilot": "#12 - BECZ, Rita Hungary",
+      "Result": "1,272.00",
+      "Points": "154",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "154",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 9,
+    "task_name": "Fly In",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=AA25CCD8-47E3-B6EE-B486-F69997759F56",
+    "raw": {
+      "Rank": "24",
+      "Pilot": "#20 - PALOCZ, Viktor Hungary",
+      "Result": "1,344.00",
+      "Points": "115",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "115",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 9,
+    "task_name": "Fly In",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=AA25CCD8-47E3-B6EE-B486-F69997759F56",
+    "raw": {
+      "Rank": "25",
+      "Pilot": "#16 - NAGY, Balazs Hungary",
+      "Result": "1,688.00",
+      "Points": "77",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "77",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 9,
+    "task_name": "Fly In",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=AA25CCD8-47E3-B6EE-B486-F69997759F56",
+    "raw": {
+      "Rank": "26",
+      "Pilot": "#24 - STEFANINI, Massimo Italy",
+      "Result": "4,352.00",
+      "Points": "38",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "38",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 10,
+    "task_name": "Pilot Declared Goal",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=83A725F3-765F-4054-B551-D3B1C4330D47",
+    "raw": {
+      "Rank": "1",
+      "Pilot": "#7 - DELEERSNYDER, Maarten Belgium",
+      "Result": "7.00",
+      "Points": "1000",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "1000",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 10,
+    "task_name": "Pilot Declared Goal",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=83A725F3-765F-4054-B551-D3B1C4330D47",
+    "raw": {
+      "Rank": "2",
+      "Pilot": "#2 - SAUNDERS, Edward Australia",
+      "Result": "13.00",
+      "Points": "960",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "960",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 10,
+    "task_name": "Pilot Declared Goal",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=83A725F3-765F-4054-B551-D3B1C4330D47",
+    "raw": {
+      "Rank": "3",
+      "Pilot": "#3 - SCAIFE, Matthew Australia",
+      "Result": "16.00",
+      "Points": "941",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "941",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 10,
+    "task_name": "Pilot Declared Goal",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=83A725F3-765F-4054-B551-D3B1C4330D47",
+    "raw": {
+      "Rank": "4",
+      "Pilot": "#29 - BAREFORD, Dominic United Kingdom",
+      "Result": "17.00",
+      "Points": "934",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "934",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 10,
+    "task_name": "Pilot Declared Goal",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=83A725F3-765F-4054-B551-D3B1C4330D47",
+    "raw": {
+      "Rank": "5",
+      "Pilot": "#27 - GAUCH, Cedric Switzerland",
+      "Result": "19.00",
+      "Points": "921",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "921",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 10,
+    "task_name": "Pilot Declared Goal",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=83A725F3-765F-4054-B551-D3B1C4330D47",
+    "raw": {
+      "Rank": "6",
+      "Pilot": "#8 - KUGLER, Bojan Croatia",
+      "Result": "29.00",
+      "Points": "855",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "855",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 10,
+    "task_name": "Pilot Declared Goal",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=83A725F3-765F-4054-B551-D3B1C4330D47",
+    "raw": {
+      "Rank": "7",
+      "Pilot": "#11 - KOSTRHUN, Jan Czech Republic",
+      "Result": "30.00",
+      "Points": "848",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "848",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 10,
+    "task_name": "Pilot Declared Goal",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=83A725F3-765F-4054-B551-D3B1C4330D47",
+    "raw": {
+      "Rank": "8",
+      "Pilot": "#9 - MIKLOUSIC, Igor Croatia",
+      "Result": "34.00",
+      "Points": "822",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "822",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 10,
+    "task_name": "Pilot Declared Goal",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=83A725F3-765F-4054-B551-D3B1C4330D47",
+    "raw": {
+      "Rank": "9",
+      "Pilot": "#26 - TOULSON, Michael New Zealand",
+      "Result": "41.00",
+      "Points": "776",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "776",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 10,
+    "task_name": "Pilot Declared Goal",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=83A725F3-765F-4054-B551-D3B1C4330D47",
+    "raw": {
+      "Rank": "10",
+      "Pilot": "#5 - MITTERMAIR, Lena Austria",
+      "Result": "45.00",
+      "Points": "749",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "749",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 10,
+    "task_name": "Pilot Declared Goal",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=83A725F3-765F-4054-B551-D3B1C4330D47",
+    "raw": {
+      "Rank": "11",
+      "Pilot": "#10 - PETRIC-MIKLOUSIC, Marija Croatia",
+      "Result": "74.00",
+      "Points": "558",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "558",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 10,
+    "task_name": "Pilot Declared Goal",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=83A725F3-765F-4054-B551-D3B1C4330D47",
+    "raw": {
+      "Rank": "12",
+      "Pilot": "#25 - KAZLAUSKAS, Ignas Lithuania",
+      "Result": "75.00",
+      "Points": "551",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "551",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 10,
+    "task_name": "Pilot Declared Goal",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=83A725F3-765F-4054-B551-D3B1C4330D47",
+    "raw": {
+      "Rank": "13",
+      "Pilot": "#30 - WALL, Cameron United States",
+      "Result": "77.00",
+      "Points": "538",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "538",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 10,
+    "task_name": "Pilot Declared Goal",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=83A725F3-765F-4054-B551-D3B1C4330D47",
+    "raw": {
+      "Rank": "14",
+      "Pilot": "#23 - MOSCARA, Raffael Italy",
+      "Result": "83.00",
+      "Points": "500",
+      "Penalty (T)": "25",
+      "Penalty (C)": "0",
+      "Score": "475",
+      "Notes": "R8.4.7 Scored to loggermark 2"
+    }
+  },
+  {
+    "task_number": 10,
+    "task_name": "Pilot Declared Goal",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=83A725F3-765F-4054-B551-D3B1C4330D47",
+    "raw": {
+      "Rank": "15",
+      "Pilot": "#1 - BINKS, Alana Australia",
+      "Result": "87.00",
+      "Points": "462",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "462",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 10,
+    "task_name": "Pilot Declared Goal",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=83A725F3-765F-4054-B551-D3B1C4330D47",
+    "raw": {
+      "Rank": "16",
+      "Pilot": "#17 - NAGY, Peter Hungary",
+      "Result": "107.00",
+      "Points": "423",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "423",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 10,
+    "task_name": "Pilot Declared Goal",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=83A725F3-765F-4054-B551-D3B1C4330D47",
+    "raw": {
+      "Rank": "17",
+      "Pilot": "#4 - MAYERHOFER, Doris Austria",
+      "Result": "121.00",
+      "Points": "385",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "385",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 10,
+    "task_name": "Pilot Declared Goal",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=83A725F3-765F-4054-B551-D3B1C4330D47",
+    "raw": {
+      "Rank": "18",
+      "Pilot": "#15 - MOLNAR, Peter Hungary",
+      "Result": "140.00",
+      "Points": "346",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "346",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 10,
+    "task_name": "Pilot Declared Goal",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=83A725F3-765F-4054-B551-D3B1C4330D47",
+    "raw": {
+      "Rank": "19",
+      "Pilot": "#13 - GARAB, Szabolcs Hungary",
+      "Result": "171.00",
+      "Points": "308",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "308",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 10,
+    "task_name": "Pilot Declared Goal",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=83A725F3-765F-4054-B551-D3B1C4330D47",
+    "raw": {
+      "Rank": "20",
+      "Pilot": "#12 - BECZ, Rita Hungary",
+      "Result": "206.00",
+      "Points": "269",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "269",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 10,
+    "task_name": "Pilot Declared Goal",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=83A725F3-765F-4054-B551-D3B1C4330D47",
+    "raw": {
+      "Rank": "21",
+      "Pilot": "#14 - KONECSNI, Janos Hungary",
+      "Result": "229.00",
+      "Points": "231",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "231",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 10,
+    "task_name": "Pilot Declared Goal",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=83A725F3-765F-4054-B551-D3B1C4330D47",
+    "raw": {
+      "Rank": "22",
+      "Pilot": "#16 - NAGY, Balazs Hungary",
+      "Result": "305.00",
+      "Points": "192",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "192",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 10,
+    "task_name": "Pilot Declared Goal",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=83A725F3-765F-4054-B551-D3B1C4330D47",
+    "raw": {
+      "Rank": "23",
+      "Pilot": "#6 - SIMONER, Andreas Austria",
+      "Result": "308.00",
+      "Points": "154",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "154",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 10,
+    "task_name": "Pilot Declared Goal",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=83A725F3-765F-4054-B551-D3B1C4330D47",
+    "raw": {
+      "Rank": "24",
+      "Pilot": "#20 - PALOCZ, Viktor Hungary",
+      "Result": "345.00",
+      "Points": "115",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "115",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 10,
+    "task_name": "Pilot Declared Goal",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=83A725F3-765F-4054-B551-D3B1C4330D47",
+    "raw": {
+      "Rank": "25",
+      "Pilot": "#24 - STEFANINI, Massimo Italy",
+      "Result": "No Result",
+      "Points": "58",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "58",
+      "Notes": "R15.1 No goal altitude declared"
+    }
+  },
+  {
+    "task_number": 10,
+    "task_name": "Pilot Declared Goal",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=83A725F3-765F-4054-B551-D3B1C4330D47",
+    "raw": {
+      "Rank": "25",
+      "Pilot": "#28 - OUDENAMPSEN, Jan The Netherlands",
+      "Result": "No Result",
+      "Points": "58",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "58",
+      "Notes": "R15.1 Distance loggergoal to T9 less than 1km"
+    }
+  },
+  {
+    "task_number": 11,
+    "task_name": "Calculated Rate of Approach Task",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=AEA1619F-0CDA-ADC0-F406-BE519B6D2B26",
+    "raw": {
+      "Rank": "1",
+      "Pilot": "#29 - BAREFORD, Dominic United Kingdom",
+      "Result": "1.17",
+      "Points": "1000",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "1000",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 11,
+    "task_name": "Calculated Rate of Approach Task",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=AEA1619F-0CDA-ADC0-F406-BE519B6D2B26",
+    "raw": {
+      "Rank": "2",
+      "Pilot": "#28 - OUDENAMPSEN, Jan The Netherlands",
+      "Result": "9.64",
+      "Points": "894",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "894",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 11,
+    "task_name": "Calculated Rate of Approach Task",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=AEA1619F-0CDA-ADC0-F406-BE519B6D2B26",
+    "raw": {
+      "Rank": "3",
+      "Pilot": "#15 - MOLNAR, Peter Hungary",
+      "Result": "15.71",
+      "Points": "818",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "818",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 11,
+    "task_name": "Calculated Rate of Approach Task",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=AEA1619F-0CDA-ADC0-F406-BE519B6D2B26",
+    "raw": {
+      "Rank": "4",
+      "Pilot": "#3 - SCAIFE, Matthew Australia",
+      "Result": "16.50",
+      "Points": "808",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "808",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 11,
+    "task_name": "Calculated Rate of Approach Task",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=AEA1619F-0CDA-ADC0-F406-BE519B6D2B26",
+    "raw": {
+      "Rank": "5",
+      "Pilot": "#9 - MIKLOUSIC, Igor Croatia",
+      "Result": "17.47",
+      "Points": "796",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "796",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 11,
+    "task_name": "Calculated Rate of Approach Task",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=AEA1619F-0CDA-ADC0-F406-BE519B6D2B26",
+    "raw": {
+      "Rank": "6",
+      "Pilot": "#2 - SAUNDERS, Edward Australia",
+      "Result": "17.58",
+      "Points": "794",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "794",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 11,
+    "task_name": "Calculated Rate of Approach Task",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=AEA1619F-0CDA-ADC0-F406-BE519B6D2B26",
+    "raw": {
+      "Rank": "7",
+      "Pilot": "#12 - BECZ, Rita Hungary",
+      "Result": "20.00",
+      "Points": "764",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "764",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 11,
+    "task_name": "Calculated Rate of Approach Task",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=AEA1619F-0CDA-ADC0-F406-BE519B6D2B26",
+    "raw": {
+      "Rank": "8",
+      "Pilot": "#25 - KAZLAUSKAS, Ignas Lithuania",
+      "Result": "22.00",
+      "Points": "739",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "739",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 11,
+    "task_name": "Calculated Rate of Approach Task",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=AEA1619F-0CDA-ADC0-F406-BE519B6D2B26",
+    "raw": {
+      "Rank": "9",
+      "Pilot": "#7 - DELEERSNYDER, Maarten Belgium",
+      "Result": "24.00",
+      "Points": "714",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "714",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 11,
+    "task_name": "Calculated Rate of Approach Task",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=AEA1619F-0CDA-ADC0-F406-BE519B6D2B26",
+    "raw": {
+      "Rank": "9",
+      "Pilot": "#23 - MOSCARA, Raffael Italy",
+      "Result": "24.00",
+      "Points": "714",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "714",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 11,
+    "task_name": "Calculated Rate of Approach Task",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=AEA1619F-0CDA-ADC0-F406-BE519B6D2B26",
+    "raw": {
+      "Rank": "11",
+      "Pilot": "#13 - GARAB, Szabolcs Hungary",
+      "Result": "27.00",
+      "Points": "676",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "676",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 11,
+    "task_name": "Calculated Rate of Approach Task",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=AEA1619F-0CDA-ADC0-F406-BE519B6D2B26",
+    "raw": {
+      "Rank": "12",
+      "Pilot": "#1 - BINKS, Alana Australia",
+      "Result": "34.00",
+      "Points": "588",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "588",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 11,
+    "task_name": "Calculated Rate of Approach Task",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=AEA1619F-0CDA-ADC0-F406-BE519B6D2B26",
+    "raw": {
+      "Rank": "13",
+      "Pilot": "#26 - TOULSON, Michael New Zealand",
+      "Result": "38.00",
+      "Points": "538",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "538",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 11,
+    "task_name": "Calculated Rate of Approach Task",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=AEA1619F-0CDA-ADC0-F406-BE519B6D2B26",
+    "raw": {
+      "Rank": "14",
+      "Pilot": "#17 - NAGY, Peter Hungary",
+      "Result": "45.00",
+      "Points": "500",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "500",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 11,
+    "task_name": "Calculated Rate of Approach Task",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=AEA1619F-0CDA-ADC0-F406-BE519B6D2B26",
+    "raw": {
+      "Rank": "15",
+      "Pilot": "#20 - PALOCZ, Viktor Hungary",
+      "Result": "46.00",
+      "Points": "462",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "462",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 11,
+    "task_name": "Calculated Rate of Approach Task",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=AEA1619F-0CDA-ADC0-F406-BE519B6D2B26",
+    "raw": {
+      "Rank": "16",
+      "Pilot": "#6 - SIMONER, Andreas Austria",
+      "Result": "73.00",
+      "Points": "423",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "423",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 11,
+    "task_name": "Calculated Rate of Approach Task",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=AEA1619F-0CDA-ADC0-F406-BE519B6D2B26",
+    "raw": {
+      "Rank": "17",
+      "Pilot": "#4 - MAYERHOFER, Doris Austria",
+      "Result": "95.00",
+      "Points": "385",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "385",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 11,
+    "task_name": "Calculated Rate of Approach Task",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=AEA1619F-0CDA-ADC0-F406-BE519B6D2B26",
+    "raw": {
+      "Rank": "18",
+      "Pilot": "#11 - KOSTRHUN, Jan Czech Republic",
+      "Result": "99.00",
+      "Points": "346",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "346",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 11,
+    "task_name": "Calculated Rate of Approach Task",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=AEA1619F-0CDA-ADC0-F406-BE519B6D2B26",
+    "raw": {
+      "Rank": "19",
+      "Pilot": "#27 - GAUCH, Cedric Switzerland",
+      "Result": "111.00",
+      "Points": "308",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "308",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 11,
+    "task_name": "Calculated Rate of Approach Task",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=AEA1619F-0CDA-ADC0-F406-BE519B6D2B26",
+    "raw": {
+      "Rank": "20",
+      "Pilot": "#5 - MITTERMAIR, Lena Austria",
+      "Result": "126.00",
+      "Points": "269",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "269",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 11,
+    "task_name": "Calculated Rate of Approach Task",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=AEA1619F-0CDA-ADC0-F406-BE519B6D2B26",
+    "raw": {
+      "Rank": "21",
+      "Pilot": "#30 - WALL, Cameron United States",
+      "Result": "225.00",
+      "Points": "231",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "231",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 11,
+    "task_name": "Calculated Rate of Approach Task",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=AEA1619F-0CDA-ADC0-F406-BE519B6D2B26",
+    "raw": {
+      "Rank": "22",
+      "Pilot": "#8 - KUGLER, Bojan Croatia",
+      "Result": "233.00",
+      "Points": "192",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "192",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 11,
+    "task_name": "Calculated Rate of Approach Task",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=AEA1619F-0CDA-ADC0-F406-BE519B6D2B26",
+    "raw": {
+      "Rank": "23",
+      "Pilot": "#10 - PETRIC-MIKLOUSIC, Marija Croatia",
+      "Result": "477.00",
+      "Points": "154",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "154",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 11,
+    "task_name": "Calculated Rate of Approach Task",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=AEA1619F-0CDA-ADC0-F406-BE519B6D2B26",
+    "raw": {
+      "Rank": "24",
+      "Pilot": "#14 - KONECSNI, Janos Hungary",
+      "Result": "512.00",
+      "Points": "115",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "115",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 11,
+    "task_name": "Calculated Rate of Approach Task",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=AEA1619F-0CDA-ADC0-F406-BE519B6D2B26",
+    "raw": {
+      "Rank": "25",
+      "Pilot": "#16 - NAGY, Balazs Hungary",
+      "Result": "582.00",
+      "Points": "77",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "77",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 11,
+    "task_name": "Calculated Rate of Approach Task",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=AEA1619F-0CDA-ADC0-F406-BE519B6D2B26",
+    "raw": {
+      "Rank": "26",
+      "Pilot": "#24 - STEFANINI, Massimo Italy",
+      "Result": "4,288.00",
+      "Points": "38",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "38",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 12,
+    "task_name": "Fly On",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=B4B729E1-E398-90D7-EAC5-F66D9638A1D0",
+    "raw": {
+      "Rank": "1",
+      "Pilot": "#25 - KAZLAUSKAS, Ignas Lithuania",
+      "Result": "14.00",
+      "Points": "1000",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "1000",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 12,
+    "task_name": "Fly On",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=B4B729E1-E398-90D7-EAC5-F66D9638A1D0",
+    "raw": {
+      "Rank": "2",
+      "Pilot": "#14 - KONECSNI, Janos Hungary",
+      "Result": "17.00",
+      "Points": "981",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "981",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 12,
+    "task_name": "Fly On",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=B4B729E1-E398-90D7-EAC5-F66D9638A1D0",
+    "raw": {
+      "Rank": "3",
+      "Pilot": "#30 - WALL, Cameron United States",
+      "Result": "19.00",
+      "Points": "968",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "968",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 12,
+    "task_name": "Fly On",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=B4B729E1-E398-90D7-EAC5-F66D9638A1D0",
+    "raw": {
+      "Rank": "4",
+      "Pilot": "#27 - GAUCH, Cedric Switzerland",
+      "Result": "22.00",
+      "Points": "949",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "949",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 12,
+    "task_name": "Fly On",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=B4B729E1-E398-90D7-EAC5-F66D9638A1D0",
+    "raw": {
+      "Rank": "5",
+      "Pilot": "#7 - DELEERSNYDER, Maarten Belgium",
+      "Result": "24.00",
+      "Points": "937",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "937",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 12,
+    "task_name": "Fly On",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=B4B729E1-E398-90D7-EAC5-F66D9638A1D0",
+    "raw": {
+      "Rank": "6",
+      "Pilot": "#26 - TOULSON, Michael New Zealand",
+      "Result": "25.00",
+      "Points": "930",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "930",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 12,
+    "task_name": "Fly On",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=B4B729E1-E398-90D7-EAC5-F66D9638A1D0",
+    "raw": {
+      "Rank": "7",
+      "Pilot": "#11 - KOSTRHUN, Jan Czech Republic",
+      "Result": "28.00",
+      "Points": "911",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "911",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 12,
+    "task_name": "Fly On",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=B4B729E1-E398-90D7-EAC5-F66D9638A1D0",
+    "raw": {
+      "Rank": "8",
+      "Pilot": "#29 - BAREFORD, Dominic United Kingdom",
+      "Result": "30.00",
+      "Points": "899",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "899",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 12,
+    "task_name": "Fly On",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=B4B729E1-E398-90D7-EAC5-F66D9638A1D0",
+    "raw": {
+      "Rank": "9",
+      "Pilot": "#28 - OUDENAMPSEN, Jan The Netherlands",
+      "Result": "34.00",
+      "Points": "873",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "873",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 12,
+    "task_name": "Fly On",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=B4B729E1-E398-90D7-EAC5-F66D9638A1D0",
+    "raw": {
+      "Rank": "10",
+      "Pilot": "#15 - MOLNAR, Peter Hungary",
+      "Result": "66.00",
+      "Points": "671",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "671",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 12,
+    "task_name": "Fly On",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=B4B729E1-E398-90D7-EAC5-F66D9638A1D0",
+    "raw": {
+      "Rank": "11",
+      "Pilot": "#1 - BINKS, Alana Australia",
+      "Result": "67.00",
+      "Points": "665",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "665",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 12,
+    "task_name": "Fly On",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=B4B729E1-E398-90D7-EAC5-F66D9638A1D0",
+    "raw": {
+      "Rank": "12",
+      "Pilot": "#9 - MIKLOUSIC, Igor Croatia",
+      "Result": "82.00",
+      "Points": "570",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "570",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 12,
+    "task_name": "Fly On",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=B4B729E1-E398-90D7-EAC5-F66D9638A1D0",
+    "raw": {
+      "Rank": "13",
+      "Pilot": "#13 - GARAB, Szabolcs Hungary",
+      "Result": "87.00",
+      "Points": "538",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "538",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 12,
+    "task_name": "Fly On",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=B4B729E1-E398-90D7-EAC5-F66D9638A1D0",
+    "raw": {
+      "Rank": "14",
+      "Pilot": "#2 - SAUNDERS, Edward Australia",
+      "Result": "88.00",
+      "Points": "500",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "500",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 12,
+    "task_name": "Fly On",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=B4B729E1-E398-90D7-EAC5-F66D9638A1D0",
+    "raw": {
+      "Rank": "15",
+      "Pilot": "#8 - KUGLER, Bojan Croatia",
+      "Result": "93.00",
+      "Points": "462",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "462",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 12,
+    "task_name": "Fly On",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=B4B729E1-E398-90D7-EAC5-F66D9638A1D0",
+    "raw": {
+      "Rank": "16",
+      "Pilot": "#4 - MAYERHOFER, Doris Austria",
+      "Result": "130.00",
+      "Points": "423",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "423",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 12,
+    "task_name": "Fly On",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=B4B729E1-E398-90D7-EAC5-F66D9638A1D0",
+    "raw": {
+      "Rank": "17",
+      "Pilot": "#10 - PETRIC-MIKLOUSIC, Marija Croatia",
+      "Result": "150.00",
+      "Points": "385",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "385",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 12,
+    "task_name": "Fly On",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=B4B729E1-E398-90D7-EAC5-F66D9638A1D0",
+    "raw": {
+      "Rank": "18",
+      "Pilot": "#12 - BECZ, Rita Hungary",
+      "Result": "157.00",
+      "Points": "346",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "346",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 12,
+    "task_name": "Fly On",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=B4B729E1-E398-90D7-EAC5-F66D9638A1D0",
+    "raw": {
+      "Rank": "19",
+      "Pilot": "#6 - SIMONER, Andreas Austria",
+      "Result": "159.00",
+      "Points": "308",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "308",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 12,
+    "task_name": "Fly On",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=B4B729E1-E398-90D7-EAC5-F66D9638A1D0",
+    "raw": {
+      "Rank": "20",
+      "Pilot": "#3 - SCAIFE, Matthew Australia",
+      "Result": "310.00",
+      "Points": "269",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "269",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 12,
+    "task_name": "Fly On",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=B4B729E1-E398-90D7-EAC5-F66D9638A1D0",
+    "raw": {
+      "Rank": "21",
+      "Pilot": "#20 - PALOCZ, Viktor Hungary",
+      "Result": "480.00",
+      "Points": "231",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "231",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 12,
+    "task_name": "Fly On",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=B4B729E1-E398-90D7-EAC5-F66D9638A1D0",
+    "raw": {
+      "Rank": "22",
+      "Pilot": "#17 - NAGY, Peter Hungary",
+      "Result": "543.00",
+      "Points": "192",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "192",
+      "Notes": "Alt difference DP to LG more than 25% less than 500ft, scored to previous declaration"
+    }
+  },
+  {
+    "task_number": 12,
+    "task_name": "Fly On",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=B4B729E1-E398-90D7-EAC5-F66D9638A1D0",
+    "raw": {
+      "Rank": "23",
+      "Pilot": "#5 - MITTERMAIR, Lena Austria",
+      "Result": "575.00",
+      "Points": "154",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "154",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 12,
+    "task_name": "Fly On",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=B4B729E1-E398-90D7-EAC5-F66D9638A1D0",
+    "raw": {
+      "Rank": "24",
+      "Pilot": "#16 - NAGY, Balazs Hungary",
+      "Result": "No Result",
+      "Points": "77",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "77",
+      "Notes": "R15.5 No valid goal declared on gridline 3000N"
+    }
+  },
+  {
+    "task_number": 12,
+    "task_name": "Fly On",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=B4B729E1-E398-90D7-EAC5-F66D9638A1D0",
+    "raw": {
+      "Rank": "24",
+      "Pilot": "#23 - MOSCARA, Raffael Italy",
+      "Result": "No Result",
+      "Points": "77",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "77",
+      "Notes": "R13.3 Distance declaration point to loggergoal 3  42,9 % less than 1500m"
+    }
+  },
+  {
+    "task_number": 12,
+    "task_name": "Fly On",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=B4B729E1-E398-90D7-EAC5-F66D9638A1D0",
+    "raw": {
+      "Rank": "24",
+      "Pilot": "#24 - STEFANINI, Massimo Italy",
+      "Result": "No Result",
+      "Points": "77",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "77",
+      "Notes": "R15.5 No goal declared"
+    }
+  },
+  {
+    "task_number": 13,
+    "task_name": "Hesitation Waltz",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=DCD1F70F-BDD9-1611-E75A-C322B6649E71",
+    "raw": {
+      "Rank": "1",
+      "Pilot": "#3 - SCAIFE, Matthew Australia",
+      "Result": "2.06",
+      "Points": "1000",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "1000",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 13,
+    "task_name": "Hesitation Waltz",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=DCD1F70F-BDD9-1611-E75A-C322B6649E71",
+    "raw": {
+      "Rank": "2",
+      "Pilot": "#29 - BAREFORD, Dominic United Kingdom",
+      "Result": "4.83",
+      "Points": "977",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "977",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 13,
+    "task_name": "Hesitation Waltz",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=DCD1F70F-BDD9-1611-E75A-C322B6649E71",
+    "raw": {
+      "Rank": "3",
+      "Pilot": "#1 - BINKS, Alana Australia",
+      "Result": "5.08",
+      "Points": "975",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "975",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 13,
+    "task_name": "Hesitation Waltz",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=DCD1F70F-BDD9-1611-E75A-C322B6649E71",
+    "raw": {
+      "Rank": "4",
+      "Pilot": "#9 - MIKLOUSIC, Igor Croatia",
+      "Result": "6.71",
+      "Points": "961",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "961",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 13,
+    "task_name": "Hesitation Waltz",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=DCD1F70F-BDD9-1611-E75A-C322B6649E71",
+    "raw": {
+      "Rank": "5",
+      "Pilot": "#16 - NAGY, Balazs Hungary",
+      "Result": "7.31",
+      "Points": "956",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "956",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 13,
+    "task_name": "Hesitation Waltz",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=DCD1F70F-BDD9-1611-E75A-C322B6649E71",
+    "raw": {
+      "Rank": "6",
+      "Pilot": "#6 - SIMONER, Andreas Austria",
+      "Result": "8.83",
+      "Points": "943",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "943",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 13,
+    "task_name": "Hesitation Waltz",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=DCD1F70F-BDD9-1611-E75A-C322B6649E71",
+    "raw": {
+      "Rank": "7",
+      "Pilot": "#4 - MAYERHOFER, Doris Austria",
+      "Result": "9.47",
+      "Points": "938",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "938",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 13,
+    "task_name": "Hesitation Waltz",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=DCD1F70F-BDD9-1611-E75A-C322B6649E71",
+    "raw": {
+      "Rank": "8",
+      "Pilot": "#27 - GAUCH, Cedric Switzerland",
+      "Result": "11.00",
+      "Points": "925",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "925",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 13,
+    "task_name": "Hesitation Waltz",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=DCD1F70F-BDD9-1611-E75A-C322B6649E71",
+    "raw": {
+      "Rank": "9",
+      "Pilot": "#14 - KONECSNI, Janos Hungary",
+      "Result": "12.75",
+      "Points": "910",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "910",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 13,
+    "task_name": "Hesitation Waltz",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=DCD1F70F-BDD9-1611-E75A-C322B6649E71",
+    "raw": {
+      "Rank": "10",
+      "Pilot": "#13 - GARAB, Szabolcs Hungary",
+      "Result": "13.35",
+      "Points": "905",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "905",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 13,
+    "task_name": "Hesitation Waltz",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=DCD1F70F-BDD9-1611-E75A-C322B6649E71",
+    "raw": {
+      "Rank": "11",
+      "Pilot": "#2 - SAUNDERS, Edward Australia",
+      "Result": "16.79",
+      "Points": "876",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "876",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 13,
+    "task_name": "Hesitation Waltz",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=DCD1F70F-BDD9-1611-E75A-C322B6649E71",
+    "raw": {
+      "Rank": "12",
+      "Pilot": "#8 - KUGLER, Bojan Croatia",
+      "Result": "27.53",
+      "Points": "786",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "786",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 13,
+    "task_name": "Hesitation Waltz",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=DCD1F70F-BDD9-1611-E75A-C322B6649E71",
+    "raw": {
+      "Rank": "13",
+      "Pilot": "#15 - MOLNAR, Peter Hungary",
+      "Result": "57.00",
+      "Points": "538",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "538",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 13,
+    "task_name": "Hesitation Waltz",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=DCD1F70F-BDD9-1611-E75A-C322B6649E71",
+    "raw": {
+      "Rank": "14",
+      "Pilot": "#20 - PALOCZ, Viktor Hungary",
+      "Result": "61.00",
+      "Points": "500",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "500",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 13,
+    "task_name": "Hesitation Waltz",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=DCD1F70F-BDD9-1611-E75A-C322B6649E71",
+    "raw": {
+      "Rank": "15",
+      "Pilot": "#12 - BECZ, Rita Hungary",
+      "Result": "95.00",
+      "Points": "462",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "462",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 13,
+    "task_name": "Hesitation Waltz",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=DCD1F70F-BDD9-1611-E75A-C322B6649E71",
+    "raw": {
+      "Rank": "16",
+      "Pilot": "#5 - MITTERMAIR, Lena Austria",
+      "Result": "105.00",
+      "Points": "423",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "423",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 13,
+    "task_name": "Hesitation Waltz",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=DCD1F70F-BDD9-1611-E75A-C322B6649E71",
+    "raw": {
+      "Rank": "17",
+      "Pilot": "#28 - OUDENAMPSEN, Jan The Netherlands",
+      "Result": "113.00",
+      "Points": "385",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "385",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 13,
+    "task_name": "Hesitation Waltz",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=DCD1F70F-BDD9-1611-E75A-C322B6649E71",
+    "raw": {
+      "Rank": "18",
+      "Pilot": "#26 - TOULSON, Michael New Zealand",
+      "Result": "118.00",
+      "Points": "346",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "346",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 13,
+    "task_name": "Hesitation Waltz",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=DCD1F70F-BDD9-1611-E75A-C322B6649E71",
+    "raw": {
+      "Rank": "19",
+      "Pilot": "#17 - NAGY, Peter Hungary",
+      "Result": "126.00",
+      "Points": "308",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "308",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 13,
+    "task_name": "Hesitation Waltz",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=DCD1F70F-BDD9-1611-E75A-C322B6649E71",
+    "raw": {
+      "Rank": "20",
+      "Pilot": "#7 - DELEERSNYDER, Maarten Belgium",
+      "Result": "138.00",
+      "Points": "269",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "269",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 13,
+    "task_name": "Hesitation Waltz",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=DCD1F70F-BDD9-1611-E75A-C322B6649E71",
+    "raw": {
+      "Rank": "21",
+      "Pilot": "#11 - KOSTRHUN, Jan Czech Republic",
+      "Result": "204.00",
+      "Points": "231",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "231",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 13,
+    "task_name": "Hesitation Waltz",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=DCD1F70F-BDD9-1611-E75A-C322B6649E71",
+    "raw": {
+      "Rank": "22",
+      "Pilot": "#23 - MOSCARA, Raffael Italy",
+      "Result": "225.00",
+      "Points": "192",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "192",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 13,
+    "task_name": "Hesitation Waltz",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=DCD1F70F-BDD9-1611-E75A-C322B6649E71",
+    "raw": {
+      "Rank": "23",
+      "Pilot": "#25 - KAZLAUSKAS, Ignas Lithuania",
+      "Result": "281.00",
+      "Points": "154",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "154",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 13,
+    "task_name": "Hesitation Waltz",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=DCD1F70F-BDD9-1611-E75A-C322B6649E71",
+    "raw": {
+      "Rank": "24",
+      "Pilot": "#10 - PETRIC-MIKLOUSIC, Marija Croatia",
+      "Result": "287.00",
+      "Points": "115",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "115",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 13,
+    "task_name": "Hesitation Waltz",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=DCD1F70F-BDD9-1611-E75A-C322B6649E71",
+    "raw": {
+      "Rank": "25",
+      "Pilot": "#30 - WALL, Cameron United States",
+      "Result": "447.00",
+      "Points": "77",
+      "Penalty (T)": "0",
+      "Penalty (C)": "0",
+      "Score": "77",
+      "Notes": ""
+    }
+  },
+  {
+    "task_number": 13,
+    "task_name": "Hesitation Waltz",
+    "status": "PROVISIONAL",
+    "source_url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=DCD1F70F-BDD9-1611-E75A-C322B6649E71",
+    "raw": {
+      "Rank": "26",
+      "Pilot": "#24 - STEFANINI, Massimo Italy",
+      "Result": "10,848.00",
+      "Points": "38",
+      "Penalty (T)": "50",
+      "Penalty (C)": "0",
+      "Score": "0",
+      "Notes": "R6.3.2 No flight report form submitted"
+    }
+  }
+]

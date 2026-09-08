@@ -1,0 +1,79 @@
+{
+  "source": "supplied Croatia 2026 importer output",
+  "result_rows": 338,
+  "unique_pilots_in_results": 26,
+  "tasks": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13
+  ],
+  "rows_per_task": {
+    "1": 26,
+    "2": 26,
+    "3": 26,
+    "4": 26,
+    "5": 26,
+    "6": 26,
+    "7": 26,
+    "8": 26,
+    "9": 26,
+    "10": 26,
+    "11": 26,
+    "12": 26,
+    "13": 26
+  },
+  "errors": 0,
+  "expected_result_rows": 338,
+  "official_top_10": [
+    {
+      "pilot": "#29 - BAREFORD, Dominic United Kingdom",
+      "total": 6176
+    },
+    {
+      "pilot": "#7 - DELEERSNYDER, Maarten Belgium",
+      "total": 5615
+    },
+    {
+      "pilot": "#3 - SCAIFE, Matthew Australia",
+      "total": 5502
+    },
+    {
+      "pilot": "#11 - KOSTRHUN, Jan Czech Republic",
+      "total": 5357
+    },
+    {
+      "pilot": "#30 - WALL, Cameron United States",
+      "total": 4651
+    },
+    {
+      "pilot": "#15 - MOLNAR, Peter Hungary",
+      "total": 4585
+    },
+    {
+      "pilot": "#1 - BINKS, Alana Australia",
+      "total": 4426
+    },
+    {
+      "pilot": "#2 - SAUNDERS, Edward Australia",
+      "total": 4256
+    },
+    {
+      "pilot": "#26 - TOULSON, Michael New Zealand",
+      "total": 4211
+    },
+    {
+      "pilot": "#25 - KAZLAUSKAS, Ignas Lithuania",
+      "total": 4096
+    }
+  ]
+}

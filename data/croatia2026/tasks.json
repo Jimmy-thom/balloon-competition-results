@@ -1,0 +1,106 @@
+[
+  {
+    "number": 1,
+    "name": "Pilot Declared Goal",
+    "status": "FINAL",
+    "flight": "Flight 1",
+    "date": "3 Sep 2026 PM",
+    "url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=D95F707C-6F25-B187-1801-5C5A9E9BC6C8"
+  },
+  {
+    "number": 2,
+    "name": "Judge Declared Goal",
+    "status": "FINAL",
+    "flight": "Flight 1",
+    "date": "3 Sep 2026 PM",
+    "url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=0A961214-799C-BC68-38F4-F38504396B45"
+  },
+  {
+    "number": 3,
+    "name": "Hesitation Waltz",
+    "status": "FINAL",
+    "flight": "Flight 1",
+    "date": "3 Sep 2026 PM",
+    "url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=FC756017-499F-D8CE-EB5A-D5005559F6C3"
+  },
+  {
+    "number": 4,
+    "name": "Fly In",
+    "status": "FINAL",
+    "flight": "Flight 2",
+    "date": "4 Sep 2026 AM",
+    "url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=86E2AA56-3F98-9E4B-72A1-A644137961E2"
+  },
+  {
+    "number": 5,
+    "name": "3D Shape Task",
+    "status": "FINAL",
+    "flight": "Flight 2",
+    "date": "4 Sep 2026 AM",
+    "url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=5EB68299-6469-6BDD-BCFD-78FB72598CC5"
+  },
+  {
+    "number": 6,
+    "name": "Land Run",
+    "status": "FINAL",
+    "flight": "Flight 2",
+    "date": "4 Sep 2026 AM",
+    "url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=A8290689-FC49-BD0B-B2BB-E9107091B4EF"
+  },
+  {
+    "number": 7,
+    "name": "Fly On",
+    "status": "FINAL",
+    "flight": "Flight 2",
+    "date": "4 Sep 2026 AM",
+    "url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=12FD7536-9B39-26DE-A3F9-713EDF1CD321"
+  },
+  {
+    "number": 8,
+    "name": "Pilot Declared Goal",
+    "status": "PROVISIONAL",
+    "flight": "Flight 3",
+    "date": "5 Sep 2026 AM",
+    "url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=CC6C6A14-F689-2552-A279-0D9BE1912E1C"
+  },
+  {
+    "number": 9,
+    "name": "Fly In",
+    "status": "PROVISIONAL",
+    "flight": "Flight 3",
+    "date": "5 Sep 2026 AM",
+    "url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=AA25CCD8-47E3-B6EE-B486-F69997759F56"
+  },
+  {
+    "number": 10,
+    "name": "Pilot Declared Goal",
+    "status": "PROVISIONAL",
+    "flight": "Flight 3",
+    "date": "5 Sep 2026 AM",
+    "url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=83A725F3-765F-4054-B551-D3B1C4330D47"
+  },
+  {
+    "number": 11,
+    "name": "Calculated Rate of Approach Task",
+    "status": "PROVISIONAL",
+    "flight": "Flight 3",
+    "date": "5 Sep 2026 AM",
+    "url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=AEA1619F-0CDA-ADC0-F406-BE519B6D2B26"
+  },
+  {
+    "number": 12,
+    "name": "Fly On",
+    "status": "PROVISIONAL",
+    "flight": "Flight 3",
+    "date": "5 Sep 2026 AM",
+    "url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=B4B729E1-E398-90D7-EAC5-F66D9638A1D0"
+  },
+  {
+    "number": 13,
+    "name": "Hesitation Waltz",
+    "status": "PROVISIONAL",
+    "flight": "Flight 3",
+    "date": "5 Sep 2026 AM",
+    "url": "https://watchmefly.net/events/event.php?v=tr&eid=1B0DDC36-FC10-B14F-2A59-A0D95CCE1D12&tid=DCD1F70F-BDD9-1611-E75A-C322B6649E71"
+  }
+]

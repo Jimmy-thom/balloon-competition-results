@@ -1,0 +1,5376 @@
+{
+  "official": {
+    "task_numbers": [
+      2,
+      3,
+      5,
+      6,
+      7,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16
+    ],
+    "rows": [
+      {
+        "position": 1,
+        "competition_number": 29,
+        "pilot": "BAREFORD, Dominic",
+        "country": "Austria",
+        "total": 9619,
+        "tasks": {
+          "2": 924,
+          "3": 1000,
+          "5": 1000,
+          "6": 911,
+          "7": 980,
+          "9": 994,
+          "10": 934,
+          "11": 1000,
+          "12": 899,
+          "13": 977,
+          "14": null,
+          "15": null,
+          "16": null
+        }
+      },
+      {
+        "position": 2,
+        "competition_number": 3,
+        "pilot": "REMEIKA, Virginijus",
+        "country": "Slovenia",
+        "total": 7471,
+        "tasks": {
+          "2": 480,
+          "3": 633,
+          "5": 904,
+          "6": 538,
+          "7": 1000,
+          "9": 898,
+          "10": 941,
+          "11": 808,
+          "12": 269,
+          "13": 1000,
+          "14": null,
+          "15": null,
+          "16": null
+        }
+      },
+      {
+        "position": 3,
+        "competition_number": 7,
+        "pilot": "KRALJ, Darko",
+        "country": "United Kingdom",
+        "total": 7200,
+        "tasks": {
+          "2": 1000,
+          "3": 743,
+          "5": 678,
+          "6": 720,
+          "7": 793,
+          "9": 346,
+          "10": 1000,
+          "11": 714,
+          "12": 937,
+          "13": 269,
+          "14": null,
+          "15": null,
+          "16": null
+        }
+      },
+      {
+        "position": 4,
+        "competition_number": 1,
+        "pilot": "FLAGGL, Irene",
+        "country": "Lithuania",
+        "total": 6713,
+        "tasks": {
+          "2": 200,
+          "3": 517,
+          "5": 999,
+          "6": 785,
+          "7": 549,
+          "9": 973,
+          "10": 462,
+          "11": 588,
+          "12": 665,
+          "13": 975,
+          "14": null,
+          "15": null,
+          "16": null
+        }
+      },
+      {
+        "position": 5,
+        "competition_number": 27,
+        "pilot": "GAUCH, Cedric",
+        "country": "United Kingdom",
+        "total": 6587,
+        "tasks": {
+          "2": 593,
+          "3": 400,
+          "5": 662,
+          "6": 641,
+          "7": 346,
+          "9": 842,
+          "10": 921,
+          "11": 308,
+          "12": 949,
+          "13": 925,
+          "14": null,
+          "15": null,
+          "16": null
+        }
+      },
+      {
+        "position": 6,
+        "competition_number": 9,
+        "pilot": "GREATRIX, Jonathan",
+        "country": "United Kingdom",
+        "total": 6378,
+        "tasks": {
+          "2": 522,
+          "3": 240,
+          "5": 774,
+          "6": 462,
+          "7": 269,
+          "9": 962,
+          "10": 822,
+          "11": 796,
+          "12": 570,
+          "13": 961,
+          "14": null,
+          "15": null,
+          "16": null
+        }
+      },
+      {
+        "position": 7,
+        "competition_number": 26,
+        "pilot": "TOULSON, Michael",
+        "country": "United Kingdom",
+        "total": 6348,
+        "tasks": {
+          "2": 918,
+          "3": 717,
+          "5": 58,
+          "6": 346,
+          "7": 739,
+          "9": 980,
+          "10": 776,
+          "11": 538,
+          "12": 930,
+          "13": 346,
+          "14": null,
+          "15": null,
+          "16": null
+        }
+      },
+      {
+        "position": 8,
+        "competition_number": 2,
+        "pilot": "NIKOLIć, Drazen",
+        "country": "Slovenia",
+        "total": 6298,
+        "tasks": {
+          "2": 360,
+          "3": 671,
+          "5": 540,
+          "6": 827,
+          "7": 308,
+          "9": 462,
+          "10": 960,
+          "11": 794,
+          "12": 500,
+          "13": 876,
+          "14": null,
+          "15": null,
+          "16": null
+        }
+      },
+      {
+        "position": 9,
+        "competition_number": 25,
+        "pilot": "KAZLAUSKAS, Ignas",
+        "country": "The Netherlands",
+        "total": 6110,
+        "tasks": {
+          "2": 80,
+          "3": 360,
+          "5": 949,
+          "6": 739,
+          "7": 538,
+          "9": 1000,
+          "10": 551,
+          "11": 739,
+          "12": 1000,
+          "13": 154,
+          "14": null,
+          "15": null,
+          "16": null
+        }
+      },
+      {
+        "position": 10,
+        "competition_number": 11,
+        "pilot": "KOSTRHUN, Jan",
+        "country": "Hungary",
+        "total": 6096,
+        "tasks": {
+          "2": 440,
+          "3": 582,
+          "5": 923,
+          "6": 804,
+          "7": 626,
+          "9": 385,
+          "10": 848,
+          "11": 346,
+          "12": 911,
+          "13": 231,
+          "14": null,
+          "15": null,
+          "16": null
+        }
+      },
+      {
+        "position": 11,
+        "competition_number": 15,
+        "pilot": "MOLNAR, Peter",
+        "country": "Hungary",
+        "total": 6054,
+        "tasks": {
+          "2": 696,
+          "3": 612,
+          "5": 680,
+          "6": 1000,
+          "7": 385,
+          "9": 308,
+          "10": 346,
+          "11": 818,
+          "12": 671,
+          "13": 538,
+          "14": null,
+          "15": null,
+          "16": null
+        }
+      },
+      {
+        "position": 12,
+        "competition_number": 13,
+        "pilot": "GARAB, Szabolcs",
+        "country": "Hungary",
+        "total": 5715,
+        "tasks": {
+          "2": 280,
+          "3": 480,
+          "5": 772,
+          "6": 706,
+          "7": 781,
+          "9": 269,
+          "10": 308,
+          "11": 676,
+          "12": 538,
+          "13": 905,
+          "14": null,
+          "15": null,
+          "16": null
+        }
+      },
+      {
+        "position": 13,
+        "competition_number": 8,
+        "pilot": "SVAGELJ, Rados",
+        "country": "United Kingdom",
+        "total": 5682,
+        "tasks": {
+          "2": 607,
+          "3": 200,
+          "5": 538,
+          "6": 627,
+          "7": 915,
+          "9": 500,
+          "10": 855,
+          "11": 192,
+          "12": 462,
+          "13": 786,
+          "14": null,
+          "15": null,
+          "16": null
+        }
+      },
+      {
+        "position": 14,
+        "competition_number": 30,
+        "pilot": "WALL, Cameron",
+        "country": "Croatia",
+        "total": 5568,
+        "tasks": {
+          "2": 962,
+          "3": 675,
+          "5": 580,
+          "6": 701,
+          "7": 413,
+          "9": 423,
+          "10": 538,
+          "11": 231,
+          "12": 968,
+          "13": 77,
+          "14": null,
+          "15": null,
+          "16": null
+        }
+      },
+      {
+        "position": 15,
+        "competition_number": 4,
+        "pilot": "PAUNOVSKI, Borche",
+        "country": "Slovenia",
+        "total": 4537,
+        "tasks": {
+          "2": 320,
+          "3": 80,
+          "5": 269,
+          "6": 269,
+          "7": 556,
+          "9": 912,
+          "10": 385,
+          "11": 385,
+          "12": 423,
+          "13": 938,
+          "14": null,
+          "15": null,
+          "16": null
+        }
+      },
+      {
+        "position": 16,
+        "competition_number": 14,
+        "pilot": "KONECSNI, Janos",
+        "country": "Hungary",
+        "total": 4436,
+        "tasks": {
+          "2": -110,
+          "3": 529,
+          "5": 385,
+          "6": 603,
+          "7": 561,
+          "9": 231,
+          "10": 231,
+          "11": 115,
+          "12": 981,
+          "13": 910,
+          "14": null,
+          "15": null,
+          "16": null
+        }
+      },
+      {
+        "position": 17,
+        "competition_number": 6,
+        "pilot": "DIVJAK, Igor",
+        "country": "United Kingdom",
+        "total": 4398,
+        "tasks": {
+          "2": 240,
+          "3": 280,
+          "5": 500,
+          "6": 385,
+          "7": 627,
+          "9": 538,
+          "10": 154,
+          "11": 423,
+          "12": 308,
+          "13": 943,
+          "14": null,
+          "15": null,
+          "16": null
+        }
+      },
+      {
+        "position": 18,
+        "competition_number": 12,
+        "pilot": "BECZ, Rita",
+        "country": "Hungary",
+        "total": 4347,
+        "tasks": {
+          "2": 584,
+          "3": 440,
+          "5": 308,
+          "6": 423,
+          "7": 597,
+          "9": 154,
+          "10": 269,
+          "11": 764,
+          "12": 346,
+          "13": 462,
+          "14": null,
+          "15": null,
+          "16": null
+        }
+      },
+      {
+        "position": 19,
+        "competition_number": 5,
+        "pilot": "BOJANOVIČ, Jernej",
+        "country": "Slovenia",
+        "total": 4087,
+        "tasks": {
+          "2": 610,
+          "3": 160,
+          "5": 423,
+          "6": 308,
+          "7": 192,
+          "9": 799,
+          "10": 749,
+          "11": 269,
+          "12": 154,
+          "13": 423,
+          "14": null,
+          "15": null,
+          "16": null
+        }
+      },
+      {
+        "position": 20,
+        "competition_number": 23,
+        "pilot": "MOSCARA, Raffael",
+        "country": "New Zealand",
+        "total": 3960,
+        "tasks": {
+          "2": 160,
+          "3": 932,
+          "5": 231,
+          "6": 154,
+          "7": 38,
+          "9": 987,
+          "10": 475,
+          "11": 714,
+          "12": 77,
+          "13": 192,
+          "14": null,
+          "15": null,
+          "16": null
+        }
+      },
+      {
+        "position": 21,
+        "competition_number": 28,
+        "pilot": "OUDENAMPSEN, Jan",
+        "country": "United States",
+        "total": 3842,
+        "tasks": {
+          "2": 0,
+          "3": 40,
+          "5": 462,
+          "6": 231,
+          "7": 77,
+          "9": 822,
+          "10": 58,
+          "11": 894,
+          "12": 873,
+          "13": 385,
+          "14": null,
+          "15": null,
+          "16": null
+        }
+      },
+      {
+        "position": 22,
+        "competition_number": 10,
+        "pilot": "SCAIFE, Graeme",
+        "country": "United Kingdom",
+        "total": 3350,
+        "tasks": {
+          "2": 320,
+          "3": 520,
+          "5": 115,
+          "6": 115,
+          "7": 104,
+          "9": 964,
+          "10": 558,
+          "11": 154,
+          "12": 385,
+          "13": 115,
+          "14": null,
+          "15": null,
+          "16": null
+        }
+      },
+      {
+        "position": 23,
+        "competition_number": 20,
+        "pilot": "PALOCZ, Viktor",
+        "country": "Lithuania",
+        "total": 3255,
+        "tasks": {
+          "2": 606,
+          "3": 476,
+          "5": 192,
+          "6": 58,
+          "7": 500,
+          "9": 115,
+          "10": 115,
+          "11": 462,
+          "12": 231,
+          "13": 500,
+          "14": null,
+          "15": null,
+          "16": null
+        }
+      },
+      {
+        "position": 24,
+        "competition_number": 17,
+        "pilot": "NAGY, Peter",
+        "country": "Italy",
+        "total": 2959,
+        "tasks": {
+          "2": 837,
+          "3": -570,
+          "5": 346,
+          "6": 500,
+          "7": 231,
+          "9": 192,
+          "10": 423,
+          "11": 500,
+          "12": 192,
+          "13": 308,
+          "14": null,
+          "15": null,
+          "16": null
+        }
+      },
+      {
+        "position": 25,
+        "competition_number": 16,
+        "pilot": "NAGY, Balazs",
+        "country": "Italy",
+        "total": 2827,
+        "tasks": {
+          "2": 520,
+          "3": 120,
+          "5": 154,
+          "6": 192,
+          "7": 462,
+          "9": 77,
+          "10": 192,
+          "11": 77,
+          "12": 77,
+          "13": 956,
+          "14": null,
+          "15": null,
+          "16": null
+        }
+      },
+      {
+        "position": 26,
+        "competition_number": 24,
+        "pilot": "STEFANINI, Massimo",
+        "country": "Switzerland",
+        "total": 442,
+        "tasks": {
+          "2": 0,
+          "3": 0,
+          "5": 58,
+          "6": 58,
+          "7": 115,
+          "9": 38,
+          "10": 58,
+          "11": 38,
+          "12": 77,
+          "13": 0,
+          "14": null,
+          "15": null,
+          "16": null
+        }
+      }
+    ]
+  },
+  "all_results": {
+    "task_numbers": [
+      2,
+      3,
+      5,
+      6,
+      7,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16
+    ],
+    "rows": [
+      {
+        "position": 1,
+        "competition_number": 29,
+        "pilot": "BAREFORD, Dominic",
+        "country": "Austria",
+        "total": 12065,
+        "tasks": {
+          "2": 924,
+          "3": 1000,
+          "5": 1000,
+          "6": 911,
+          "7": 980,
+          "9": 994,
+          "10": 934,
+          "11": 1000,
+          "12": 899,
+          "13": 977,
+          "14": 1000,
+          "15": 646,
+          "16": 800
+        }
+      },
+      {
+        "position": 2,
+        "competition_number": 3,
+        "pilot": "REMEIKA, Virginijus",
+        "country": "Slovenia",
+        "total": 9833,
+        "tasks": {
+          "2": 480,
+          "3": 633,
+          "5": 904,
+          "6": 538,
+          "7": 1000,
+          "9": 898,
+          "10": 941,
+          "11": 808,
+          "12": 269,
+          "13": 1000,
+          "14": 916,
+          "15": 646,
+          "16": 800
+        }
+      },
+      {
+        "position": 3,
+        "competition_number": 7,
+        "pilot": "KRALJ, Darko",
+        "country": "United Kingdom",
+        "total": 9566,
+        "tasks": {
+          "2": 1000,
+          "3": 743,
+          "5": 678,
+          "6": 720,
+          "7": 793,
+          "9": 346,
+          "10": 1000,
+          "11": 714,
+          "12": 937,
+          "13": 269,
+          "14": 920,
+          "15": 646,
+          "16": 800
+        }
+      },
+      {
+        "position": 4,
+        "competition_number": 27,
+        "pilot": "GAUCH, Cedric",
+        "country": "United Kingdom",
+        "total": 9026,
+        "tasks": {
+          "2": 593,
+          "3": 400,
+          "5": 662,
+          "6": 641,
+          "7": 346,
+          "9": 842,
+          "10": 921,
+          "11": 308,
+          "12": 949,
+          "13": 925,
+          "14": 993,
+          "15": 646,
+          "16": 800
+        }
+      },
+      {
+        "position": 5,
+        "competition_number": 2,
+        "pilot": "NIKOLIć, Drazen",
+        "country": "Slovenia",
+        "total": 8999,
+        "tasks": {
+          "2": 360,
+          "3": 671,
+          "5": 540,
+          "6": 827,
+          "7": 308,
+          "9": 462,
+          "10": 960,
+          "11": 794,
+          "12": 500,
+          "13": 876,
+          "14": 944,
+          "15": 957,
+          "16": 800
+        }
+      },
+      {
+        "position": 6,
+        "competition_number": 1,
+        "pilot": "FLAGGL, Irene",
+        "country": "Lithuania",
+        "total": 8914,
+        "tasks": {
+          "2": 200,
+          "3": 517,
+          "5": 999,
+          "6": 785,
+          "7": 549,
+          "9": 973,
+          "10": 462,
+          "11": 588,
+          "12": 665,
+          "13": 975,
+          "14": 755,
+          "15": 646,
+          "16": 800
+        }
+      },
+      {
+        "position": 7,
+        "competition_number": 25,
+        "pilot": "KAZLAUSKAS, Ignas",
+        "country": "The Netherlands",
+        "total": 8549,
+        "tasks": {
+          "2": 80,
+          "3": 360,
+          "5": 949,
+          "6": 739,
+          "7": 538,
+          "9": 1000,
+          "10": 551,
+          "11": 739,
+          "12": 1000,
+          "13": 154,
+          "14": 993,
+          "15": 646,
+          "16": 800
+        }
+      },
+      {
+        "position": 8,
+        "competition_number": 9,
+        "pilot": "GREATRIX, Jonathan",
+        "country": "United Kingdom",
+        "total": 8312,
+        "tasks": {
+          "2": 522,
+          "3": 240,
+          "5": 774,
+          "6": 462,
+          "7": 269,
+          "9": 962,
+          "10": 822,
+          "11": 796,
+          "12": 570,
+          "13": 961,
+          "14": 154,
+          "15": 980,
+          "16": 800
+        }
+      },
+      {
+        "position": 9,
+        "competition_number": 11,
+        "pilot": "KOSTRHUN, Jan",
+        "country": "Hungary",
+        "total": 8231,
+        "tasks": {
+          "2": 440,
+          "3": 582,
+          "5": 923,
+          "6": 804,
+          "7": 626,
+          "9": 385,
+          "10": 848,
+          "11": 346,
+          "12": 911,
+          "13": 231,
+          "14": 689,
+          "15": 646,
+          "16": 800
+        }
+      },
+      {
+        "position": 10,
+        "competition_number": 15,
+        "pilot": "MOLNAR, Peter",
+        "country": "Hungary",
+        "total": 8165,
+        "tasks": {
+          "2": 696,
+          "3": 612,
+          "5": 680,
+          "6": 1000,
+          "7": 385,
+          "9": 308,
+          "10": 346,
+          "11": 818,
+          "12": 671,
+          "13": 538,
+          "14": 665,
+          "15": 646,
+          "16": 800
+        }
+      },
+      {
+        "position": 11,
+        "competition_number": 26,
+        "pilot": "TOULSON, Michael",
+        "country": "United Kingdom",
+        "total": 8063,
+        "tasks": {
+          "2": 918,
+          "3": 717,
+          "5": 58,
+          "6": 346,
+          "7": 739,
+          "9": 980,
+          "10": 776,
+          "11": 538,
+          "12": 930,
+          "13": 346,
+          "14": 269,
+          "15": 646,
+          "16": 800
+        }
+      },
+      {
+        "position": 12,
+        "competition_number": 8,
+        "pilot": "SVAGELJ, Rados",
+        "country": "United Kingdom",
+        "total": 7883,
+        "tasks": {
+          "2": 607,
+          "3": 200,
+          "5": 538,
+          "6": 627,
+          "7": 915,
+          "9": 500,
+          "10": 855,
+          "11": 192,
+          "12": 462,
+          "13": 786,
+          "14": 423,
+          "15": 978,
+          "16": 800
+        }
+      },
+      {
+        "position": 13,
+        "competition_number": 30,
+        "pilot": "WALL, Cameron",
+        "country": "Croatia",
+        "total": 7759,
+        "tasks": {
+          "2": 962,
+          "3": 675,
+          "5": 580,
+          "6": 701,
+          "7": 413,
+          "9": 423,
+          "10": 538,
+          "11": 231,
+          "12": 968,
+          "13": 77,
+          "14": 745,
+          "15": 646,
+          "16": 800
+        }
+      },
+      {
+        "position": 14,
+        "competition_number": 13,
+        "pilot": "GARAB, Szabolcs",
+        "country": "Hungary",
+        "total": 7661,
+        "tasks": {
+          "2": 280,
+          "3": 480,
+          "5": 772,
+          "6": 706,
+          "7": 781,
+          "9": 269,
+          "10": 308,
+          "11": 676,
+          "12": 538,
+          "13": 905,
+          "14": 500,
+          "15": 646,
+          "16": 800
+        }
+      },
+      {
+        "position": 15,
+        "competition_number": 14,
+        "pilot": "KONECSNI, Janos",
+        "country": "Hungary",
+        "total": 6774,
+        "tasks": {
+          "2": -110,
+          "3": 529,
+          "5": 385,
+          "6": 603,
+          "7": 561,
+          "9": 231,
+          "10": 231,
+          "11": 115,
+          "12": 981,
+          "13": 910,
+          "14": 538,
+          "15": 1000,
+          "16": 800
+        }
+      },
+      {
+        "position": 16,
+        "competition_number": 4,
+        "pilot": "PAUNOVSKI, Borche",
+        "country": "Slovenia",
+        "total": 6645,
+        "tasks": {
+          "2": 320,
+          "3": 80,
+          "5": 269,
+          "6": 269,
+          "7": 556,
+          "9": 912,
+          "10": 385,
+          "11": 385,
+          "12": 423,
+          "13": 938,
+          "14": 462,
+          "15": 646,
+          "16": 1000
+        }
+      },
+      {
+        "position": 17,
+        "competition_number": 6,
+        "pilot": "DIVJAK, Igor",
+        "country": "United Kingdom",
+        "total": 6382,
+        "tasks": {
+          "2": 240,
+          "3": 280,
+          "5": 500,
+          "6": 385,
+          "7": 627,
+          "9": 538,
+          "10": 154,
+          "11": 423,
+          "12": 308,
+          "13": 943,
+          "14": 538,
+          "15": 646,
+          "16": 800
+        }
+      },
+      {
+        "position": 18,
+        "competition_number": 28,
+        "pilot": "OUDENAMPSEN, Jan",
+        "country": "United States",
+        "total": 6269,
+        "tasks": {
+          "2": 0,
+          "3": 40,
+          "5": 462,
+          "6": 231,
+          "7": 77,
+          "9": 822,
+          "10": 58,
+          "11": 894,
+          "12": 873,
+          "13": 385,
+          "14": 981,
+          "15": 646,
+          "16": 800
+        }
+      },
+      {
+        "position": 19,
+        "competition_number": 12,
+        "pilot": "BECZ, Rita",
+        "country": "Hungary",
+        "total": 6024,
+        "tasks": {
+          "2": 584,
+          "3": 440,
+          "5": 308,
+          "6": 423,
+          "7": 597,
+          "9": 154,
+          "10": 269,
+          "11": 764,
+          "12": 346,
+          "13": 462,
+          "14": 231,
+          "15": 646,
+          "16": 800
+        }
+      },
+      {
+        "position": 20,
+        "competition_number": 23,
+        "pilot": "MOSCARA, Raffael",
+        "country": "New Zealand",
+        "total": 5714,
+        "tasks": {
+          "2": 160,
+          "3": 932,
+          "5": 231,
+          "6": 154,
+          "7": 38,
+          "9": 987,
+          "10": 475,
+          "11": 714,
+          "12": 77,
+          "13": 192,
+          "14": 308,
+          "15": 646,
+          "16": 800
+        }
+      },
+      {
+        "position": 21,
+        "competition_number": 5,
+        "pilot": "BOJANOVIČ, Jernej",
+        "country": "Slovenia",
+        "total": 5648,
+        "tasks": {
+          "2": 610,
+          "3": 160,
+          "5": 423,
+          "6": 308,
+          "7": 192,
+          "9": 799,
+          "10": 749,
+          "11": 269,
+          "12": 154,
+          "13": 423,
+          "14": 115,
+          "15": 646,
+          "16": 800
+        }
+      },
+      {
+        "position": 22,
+        "competition_number": 20,
+        "pilot": "PALOCZ, Viktor",
+        "country": "Lithuania",
+        "total": 5047,
+        "tasks": {
+          "2": 606,
+          "3": 476,
+          "5": 192,
+          "6": 58,
+          "7": 500,
+          "9": 115,
+          "10": 115,
+          "11": 462,
+          "12": 231,
+          "13": 500,
+          "14": 346,
+          "15": 646,
+          "16": 800
+        }
+      },
+      {
+        "position": 23,
+        "competition_number": 10,
+        "pilot": "SCAIFE, Graeme",
+        "country": "United Kingdom",
+        "total": 4823,
+        "tasks": {
+          "2": 320,
+          "3": 520,
+          "5": 115,
+          "6": 115,
+          "7": 104,
+          "9": 964,
+          "10": 558,
+          "11": 154,
+          "12": 385,
+          "13": 115,
+          "14": 77,
+          "15": 646,
+          "16": 750
+        }
+      },
+      {
+        "position": 24,
+        "competition_number": 17,
+        "pilot": "NAGY, Peter",
+        "country": "Italy",
+        "total": 4790,
+        "tasks": {
+          "2": 837,
+          "3": -570,
+          "5": 346,
+          "6": 500,
+          "7": 231,
+          "9": 192,
+          "10": 423,
+          "11": 500,
+          "12": 192,
+          "13": 308,
+          "14": 385,
+          "15": 646,
+          "16": 800
+        }
+      },
+      {
+        "position": 25,
+        "competition_number": 16,
+        "pilot": "NAGY, Balazs",
+        "country": "Italy",
+        "total": 4665,
+        "tasks": {
+          "2": 520,
+          "3": 120,
+          "5": 154,
+          "6": 192,
+          "7": 462,
+          "9": 77,
+          "10": 192,
+          "11": 77,
+          "12": 77,
+          "13": 956,
+          "14": 192,
+          "15": 846,
+          "16": 800
+        }
+      },
+      {
+        "position": 26,
+        "competition_number": 24,
+        "pilot": "STEFANINI, Massimo",
+        "country": "Switzerland",
+        "total": 1926,
+        "tasks": {
+          "2": 0,
+          "3": 0,
+          "5": 58,
+          "6": 58,
+          "7": 115,
+          "9": 38,
+          "10": 58,
+          "11": 38,
+          "12": 77,
+          "13": 0,
+          "14": 38,
+          "15": 646,
+          "16": 800
+        }
+      }
+    ]
+  },
+  "progression": {
+    "official": [
+      {
+        "through_task": 2,
+        "rows": [
+          {
+            "position": 1,
+            "competition_number": 7,
+            "pilot": "KRALJ, Darko",
+            "total": 1000
+          },
+          {
+            "position": 2,
+            "competition_number": 30,
+            "pilot": "WALL, Cameron",
+            "total": 962
+          },
+          {
+            "position": 3,
+            "competition_number": 29,
+            "pilot": "BAREFORD, Dominic",
+            "total": 924
+          },
+          {
+            "position": 4,
+            "competition_number": 26,
+            "pilot": "TOULSON, Michael",
+            "total": 918
+          },
+          {
+            "position": 5,
+            "competition_number": 17,
+            "pilot": "NAGY, Peter",
+            "total": 837
+          },
+          {
+            "position": 6,
+            "competition_number": 15,
+            "pilot": "MOLNAR, Peter",
+            "total": 696
+          },
+          {
+            "position": 7,
+            "competition_number": 5,
+            "pilot": "BOJANOVIČ, Jernej",
+            "total": 610
+          },
+          {
+            "position": 8,
+            "competition_number": 8,
+            "pilot": "SVAGELJ, Rados",
+            "total": 607
+          },
+          {
+            "position": 9,
+            "competition_number": 20,
+            "pilot": "PALOCZ, Viktor",
+            "total": 606
+          },
+          {
+            "position": 10,
+            "competition_number": 27,
+            "pilot": "GAUCH, Cedric",
+            "total": 593
+          },
+          {
+            "position": 11,
+            "competition_number": 12,
+            "pilot": "BECZ, Rita",
+            "total": 584
+          },
+          {
+            "position": 12,
+            "competition_number": 9,
+            "pilot": "GREATRIX, Jonathan",
+            "total": 522
+          },
+          {
+            "position": 13,
+            "competition_number": 16,
+            "pilot": "NAGY, Balazs",
+            "total": 520
+          },
+          {
+            "position": 14,
+            "competition_number": 3,
+            "pilot": "REMEIKA, Virginijus",
+            "total": 480
+          },
+          {
+            "position": 15,
+            "competition_number": 11,
+            "pilot": "KOSTRHUN, Jan",
+            "total": 440
+          },
+          {
+            "position": 16,
+            "competition_number": 2,
+            "pilot": "NIKOLIć, Drazen",
+            "total": 360
+          },
+          {
+            "position": 17,
+            "competition_number": 4,
+            "pilot": "PAUNOVSKI, Borche",
+            "total": 320
+          },
+          {
+            "position": 18,
+            "competition_number": 10,
+            "pilot": "SCAIFE, Graeme",
+            "total": 320
+          },
+          {
+            "position": 19,
+            "competition_number": 13,
+            "pilot": "GARAB, Szabolcs",
+            "total": 280
+          },
+          {
+            "position": 20,
+            "competition_number": 6,
+            "pilot": "DIVJAK, Igor",
+            "total": 240
+          },
+          {
+            "position": 21,
+            "competition_number": 1,
+            "pilot": "FLAGGL, Irene",
+            "total": 200
+          },
+          {
+            "position": 22,
+            "competition_number": 23,
+            "pilot": "MOSCARA, Raffael",
+            "total": 160
+          },
+          {
+            "position": 23,
+            "competition_number": 25,
+            "pilot": "KAZLAUSKAS, Ignas",
+            "total": 80
+          },
+          {
+            "position": 24,
+            "competition_number": 28,
+            "pilot": "OUDENAMPSEN, Jan",
+            "total": 0
+          },
+          {
+            "position": 25,
+            "competition_number": 24,
+            "pilot": "STEFANINI, Massimo",
+            "total": 0
+          },
+          {
+            "position": 26,
+            "competition_number": 14,
+            "pilot": "KONECSNI, Janos",
+            "total": -110
+          }
+        ]
+      },
+      {
+        "through_task": 3,
+        "rows": [
+          {
+            "position": 1,
+            "competition_number": 29,
+            "pilot": "BAREFORD, Dominic",
+            "total": 1924
+          },
+          {
+            "position": 2,
+            "competition_number": 7,
+            "pilot": "KRALJ, Darko",
+            "total": 1743
+          },
+          {
+            "position": 3,
+            "competition_number": 30,
+            "pilot": "WALL, Cameron",
+            "total": 1637
+          },
+          {
+            "position": 4,
+            "competition_number": 26,
+            "pilot": "TOULSON, Michael",
+            "total": 1635
+          },
+          {
+            "position": 5,
+            "competition_number": 15,
+            "pilot": "MOLNAR, Peter",
+            "total": 1308
+          },
+          {
+            "position": 6,
+            "competition_number": 3,
+            "pilot": "REMEIKA, Virginijus",
+            "total": 1113
+          },
+          {
+            "position": 7,
+            "competition_number": 23,
+            "pilot": "MOSCARA, Raffael",
+            "total": 1092
+          },
+          {
+            "position": 8,
+            "competition_number": 20,
+            "pilot": "PALOCZ, Viktor",
+            "total": 1082
+          },
+          {
+            "position": 9,
+            "competition_number": 2,
+            "pilot": "NIKOLIć, Drazen",
+            "total": 1031
+          },
+          {
+            "position": 10,
+            "competition_number": 12,
+            "pilot": "BECZ, Rita",
+            "total": 1024
+          },
+          {
+            "position": 11,
+            "competition_number": 11,
+            "pilot": "KOSTRHUN, Jan",
+            "total": 1022
+          },
+          {
+            "position": 12,
+            "competition_number": 27,
+            "pilot": "GAUCH, Cedric",
+            "total": 993
+          },
+          {
+            "position": 13,
+            "competition_number": 10,
+            "pilot": "SCAIFE, Graeme",
+            "total": 840
+          },
+          {
+            "position": 14,
+            "competition_number": 8,
+            "pilot": "SVAGELJ, Rados",
+            "total": 807
+          },
+          {
+            "position": 15,
+            "competition_number": 5,
+            "pilot": "BOJANOVIČ, Jernej",
+            "total": 770
+          },
+          {
+            "position": 16,
+            "competition_number": 9,
+            "pilot": "GREATRIX, Jonathan",
+            "total": 762
+          },
+          {
+            "position": 17,
+            "competition_number": 13,
+            "pilot": "GARAB, Szabolcs",
+            "total": 760
+          },
+          {
+            "position": 18,
+            "competition_number": 1,
+            "pilot": "FLAGGL, Irene",
+            "total": 717
+          },
+          {
+            "position": 19,
+            "competition_number": 16,
+            "pilot": "NAGY, Balazs",
+            "total": 640
+          },
+          {
+            "position": 20,
+            "competition_number": 6,
+            "pilot": "DIVJAK, Igor",
+            "total": 520
+          },
+          {
+            "position": 21,
+            "competition_number": 25,
+            "pilot": "KAZLAUSKAS, Ignas",
+            "total": 440
+          },
+          {
+            "position": 22,
+            "competition_number": 14,
+            "pilot": "KONECSNI, Janos",
+            "total": 419
+          },
+          {
+            "position": 23,
+            "competition_number": 4,
+            "pilot": "PAUNOVSKI, Borche",
+            "total": 400
+          },
+          {
+            "position": 24,
+            "competition_number": 17,
+            "pilot": "NAGY, Peter",
+            "total": 267
+          },
+          {
+            "position": 25,
+            "competition_number": 28,
+            "pilot": "OUDENAMPSEN, Jan",
+            "total": 40
+          },
+          {
+            "position": 26,
+            "competition_number": 24,
+            "pilot": "STEFANINI, Massimo",
+            "total": 0
+          }
+        ]
+      },
+      {
+        "through_task": 5,
+        "rows": [
+          {
+            "position": 1,
+            "competition_number": 29,
+            "pilot": "BAREFORD, Dominic",
+            "total": 2924
+          },
+          {
+            "position": 2,
+            "competition_number": 7,
+            "pilot": "KRALJ, Darko",
+            "total": 2421
+          },
+          {
+            "position": 3,
+            "competition_number": 30,
+            "pilot": "WALL, Cameron",
+            "total": 2217
+          },
+          {
+            "position": 4,
+            "competition_number": 3,
+            "pilot": "REMEIKA, Virginijus",
+            "total": 2017
+          },
+          {
+            "position": 5,
+            "competition_number": 15,
+            "pilot": "MOLNAR, Peter",
+            "total": 1988
+          },
+          {
+            "position": 6,
+            "competition_number": 11,
+            "pilot": "KOSTRHUN, Jan",
+            "total": 1945
+          },
+          {
+            "position": 7,
+            "competition_number": 1,
+            "pilot": "FLAGGL, Irene",
+            "total": 1716
+          },
+          {
+            "position": 8,
+            "competition_number": 26,
+            "pilot": "TOULSON, Michael",
+            "total": 1693
+          },
+          {
+            "position": 9,
+            "competition_number": 27,
+            "pilot": "GAUCH, Cedric",
+            "total": 1655
+          },
+          {
+            "position": 10,
+            "competition_number": 2,
+            "pilot": "NIKOLIć, Drazen",
+            "total": 1571
+          },
+          {
+            "position": 11,
+            "competition_number": 9,
+            "pilot": "GREATRIX, Jonathan",
+            "total": 1536
+          },
+          {
+            "position": 12,
+            "competition_number": 13,
+            "pilot": "GARAB, Szabolcs",
+            "total": 1532
+          },
+          {
+            "position": 13,
+            "competition_number": 25,
+            "pilot": "KAZLAUSKAS, Ignas",
+            "total": 1389
+          },
+          {
+            "position": 14,
+            "competition_number": 8,
+            "pilot": "SVAGELJ, Rados",
+            "total": 1345
+          },
+          {
+            "position": 15,
+            "competition_number": 12,
+            "pilot": "BECZ, Rita",
+            "total": 1332
+          },
+          {
+            "position": 16,
+            "competition_number": 23,
+            "pilot": "MOSCARA, Raffael",
+            "total": 1323
+          },
+          {
+            "position": 17,
+            "competition_number": 20,
+            "pilot": "PALOCZ, Viktor",
+            "total": 1274
+          },
+          {
+            "position": 18,
+            "competition_number": 5,
+            "pilot": "BOJANOVIČ, Jernej",
+            "total": 1193
+          },
+          {
+            "position": 19,
+            "competition_number": 6,
+            "pilot": "DIVJAK, Igor",
+            "total": 1020
+          },
+          {
+            "position": 20,
+            "competition_number": 10,
+            "pilot": "SCAIFE, Graeme",
+            "total": 955
+          },
+          {
+            "position": 21,
+            "competition_number": 14,
+            "pilot": "KONECSNI, Janos",
+            "total": 804
+          },
+          {
+            "position": 22,
+            "competition_number": 16,
+            "pilot": "NAGY, Balazs",
+            "total": 794
+          },
+          {
+            "position": 23,
+            "competition_number": 4,
+            "pilot": "PAUNOVSKI, Borche",
+            "total": 669
+          },
+          {
+            "position": 24,
+            "competition_number": 17,
+            "pilot": "NAGY, Peter",
+            "total": 613
+          },
+          {
+            "position": 25,
+            "competition_number": 28,
+            "pilot": "OUDENAMPSEN, Jan",
+            "total": 502
+          },
+          {
+            "position": 26,
+            "competition_number": 24,
+            "pilot": "STEFANINI, Massimo",
+            "total": 58
+          }
+        ]
+      },
+      {
+        "through_task": 6,
+        "rows": [
+          {
+            "position": 1,
+            "competition_number": 29,
+            "pilot": "BAREFORD, Dominic",
+            "total": 3835
+          },
+          {
+            "position": 2,
+            "competition_number": 7,
+            "pilot": "KRALJ, Darko",
+            "total": 3141
+          },
+          {
+            "position": 3,
+            "competition_number": 15,
+            "pilot": "MOLNAR, Peter",
+            "total": 2988
+          },
+          {
+            "position": 4,
+            "competition_number": 30,
+            "pilot": "WALL, Cameron",
+            "total": 2918
+          },
+          {
+            "position": 5,
+            "competition_number": 11,
+            "pilot": "KOSTRHUN, Jan",
+            "total": 2749
+          },
+          {
+            "position": 6,
+            "competition_number": 3,
+            "pilot": "REMEIKA, Virginijus",
+            "total": 2555
+          },
+          {
+            "position": 7,
+            "competition_number": 1,
+            "pilot": "FLAGGL, Irene",
+            "total": 2501
+          },
+          {
+            "position": 8,
+            "competition_number": 2,
+            "pilot": "NIKOLIć, Drazen",
+            "total": 2398
+          },
+          {
+            "position": 9,
+            "competition_number": 27,
+            "pilot": "GAUCH, Cedric",
+            "total": 2296
+          },
+          {
+            "position": 10,
+            "competition_number": 13,
+            "pilot": "GARAB, Szabolcs",
+            "total": 2238
+          },
+          {
+            "position": 11,
+            "competition_number": 25,
+            "pilot": "KAZLAUSKAS, Ignas",
+            "total": 2128
+          },
+          {
+            "position": 12,
+            "competition_number": 26,
+            "pilot": "TOULSON, Michael",
+            "total": 2039
+          },
+          {
+            "position": 13,
+            "competition_number": 9,
+            "pilot": "GREATRIX, Jonathan",
+            "total": 1998
+          },
+          {
+            "position": 14,
+            "competition_number": 8,
+            "pilot": "SVAGELJ, Rados",
+            "total": 1972
+          },
+          {
+            "position": 15,
+            "competition_number": 12,
+            "pilot": "BECZ, Rita",
+            "total": 1755
+          },
+          {
+            "position": 16,
+            "competition_number": 5,
+            "pilot": "BOJANOVIČ, Jernej",
+            "total": 1501
+          },
+          {
+            "position": 17,
+            "competition_number": 23,
+            "pilot": "MOSCARA, Raffael",
+            "total": 1477
+          },
+          {
+            "position": 18,
+            "competition_number": 14,
+            "pilot": "KONECSNI, Janos",
+            "total": 1407
+          },
+          {
+            "position": 19,
+            "competition_number": 6,
+            "pilot": "DIVJAK, Igor",
+            "total": 1405
+          },
+          {
+            "position": 20,
+            "competition_number": 20,
+            "pilot": "PALOCZ, Viktor",
+            "total": 1332
+          },
+          {
+            "position": 21,
+            "competition_number": 17,
+            "pilot": "NAGY, Peter",
+            "total": 1113
+          },
+          {
+            "position": 22,
+            "competition_number": 10,
+            "pilot": "SCAIFE, Graeme",
+            "total": 1070
+          },
+          {
+            "position": 23,
+            "competition_number": 16,
+            "pilot": "NAGY, Balazs",
+            "total": 986
+          },
+          {
+            "position": 24,
+            "competition_number": 4,
+            "pilot": "PAUNOVSKI, Borche",
+            "total": 938
+          },
+          {
+            "position": 25,
+            "competition_number": 28,
+            "pilot": "OUDENAMPSEN, Jan",
+            "total": 733
+          },
+          {
+            "position": 26,
+            "competition_number": 24,
+            "pilot": "STEFANINI, Massimo",
+            "total": 116
+          }
+        ]
+      },
+      {
+        "through_task": 7,
+        "rows": [
+          {
+            "position": 1,
+            "competition_number": 29,
+            "pilot": "BAREFORD, Dominic",
+            "total": 4815
+          },
+          {
+            "position": 2,
+            "competition_number": 7,
+            "pilot": "KRALJ, Darko",
+            "total": 3934
+          },
+          {
+            "position": 3,
+            "competition_number": 3,
+            "pilot": "REMEIKA, Virginijus",
+            "total": 3555
+          },
+          {
+            "position": 4,
+            "competition_number": 11,
+            "pilot": "KOSTRHUN, Jan",
+            "total": 3375
+          },
+          {
+            "position": 5,
+            "competition_number": 15,
+            "pilot": "MOLNAR, Peter",
+            "total": 3373
+          },
+          {
+            "position": 6,
+            "competition_number": 30,
+            "pilot": "WALL, Cameron",
+            "total": 3331
+          },
+          {
+            "position": 7,
+            "competition_number": 1,
+            "pilot": "FLAGGL, Irene",
+            "total": 3050
+          },
+          {
+            "position": 8,
+            "competition_number": 13,
+            "pilot": "GARAB, Szabolcs",
+            "total": 3019
+          },
+          {
+            "position": 9,
+            "competition_number": 8,
+            "pilot": "SVAGELJ, Rados",
+            "total": 2887
+          },
+          {
+            "position": 10,
+            "competition_number": 26,
+            "pilot": "TOULSON, Michael",
+            "total": 2778
+          },
+          {
+            "position": 11,
+            "competition_number": 2,
+            "pilot": "NIKOLIć, Drazen",
+            "total": 2706
+          },
+          {
+            "position": 12,
+            "competition_number": 25,
+            "pilot": "KAZLAUSKAS, Ignas",
+            "total": 2666
+          },
+          {
+            "position": 13,
+            "competition_number": 27,
+            "pilot": "GAUCH, Cedric",
+            "total": 2642
+          },
+          {
+            "position": 14,
+            "competition_number": 12,
+            "pilot": "BECZ, Rita",
+            "total": 2352
+          },
+          {
+            "position": 15,
+            "competition_number": 9,
+            "pilot": "GREATRIX, Jonathan",
+            "total": 2267
+          },
+          {
+            "position": 16,
+            "competition_number": 6,
+            "pilot": "DIVJAK, Igor",
+            "total": 2032
+          },
+          {
+            "position": 17,
+            "competition_number": 14,
+            "pilot": "KONECSNI, Janos",
+            "total": 1968
+          },
+          {
+            "position": 18,
+            "competition_number": 20,
+            "pilot": "PALOCZ, Viktor",
+            "total": 1832
+          },
+          {
+            "position": 19,
+            "competition_number": 5,
+            "pilot": "BOJANOVIČ, Jernej",
+            "total": 1693
+          },
+          {
+            "position": 20,
+            "competition_number": 23,
+            "pilot": "MOSCARA, Raffael",
+            "total": 1515
+          },
+          {
+            "position": 21,
+            "competition_number": 4,
+            "pilot": "PAUNOVSKI, Borche",
+            "total": 1494
+          },
+          {
+            "position": 22,
+            "competition_number": 16,
+            "pilot": "NAGY, Balazs",
+            "total": 1448
+          },
+          {
+            "position": 23,
+            "competition_number": 17,
+            "pilot": "NAGY, Peter",
+            "total": 1344
+          },
+          {
+            "position": 24,
+            "competition_number": 10,
+            "pilot": "SCAIFE, Graeme",
+            "total": 1174
+          },
+          {
+            "position": 25,
+            "competition_number": 28,
+            "pilot": "OUDENAMPSEN, Jan",
+            "total": 810
+          },
+          {
+            "position": 26,
+            "competition_number": 24,
+            "pilot": "STEFANINI, Massimo",
+            "total": 231
+          }
+        ]
+      },
+      {
+        "through_task": 9,
+        "rows": [
+          {
+            "position": 1,
+            "competition_number": 29,
+            "pilot": "BAREFORD, Dominic",
+            "total": 5809
+          },
+          {
+            "position": 2,
+            "competition_number": 3,
+            "pilot": "REMEIKA, Virginijus",
+            "total": 4453
+          },
+          {
+            "position": 3,
+            "competition_number": 7,
+            "pilot": "KRALJ, Darko",
+            "total": 4280
+          },
+          {
+            "position": 4,
+            "competition_number": 1,
+            "pilot": "FLAGGL, Irene",
+            "total": 4023
+          },
+          {
+            "position": 5,
+            "competition_number": 11,
+            "pilot": "KOSTRHUN, Jan",
+            "total": 3760
+          },
+          {
+            "position": 6,
+            "competition_number": 26,
+            "pilot": "TOULSON, Michael",
+            "total": 3758
+          },
+          {
+            "position": 7,
+            "competition_number": 30,
+            "pilot": "WALL, Cameron",
+            "total": 3754
+          },
+          {
+            "position": 8,
+            "competition_number": 15,
+            "pilot": "MOLNAR, Peter",
+            "total": 3681
+          },
+          {
+            "position": 9,
+            "competition_number": 25,
+            "pilot": "KAZLAUSKAS, Ignas",
+            "total": 3666
+          },
+          {
+            "position": 10,
+            "competition_number": 27,
+            "pilot": "GAUCH, Cedric",
+            "total": 3484
+          },
+          {
+            "position": 11,
+            "competition_number": 8,
+            "pilot": "SVAGELJ, Rados",
+            "total": 3387
+          },
+          {
+            "position": 12,
+            "competition_number": 13,
+            "pilot": "GARAB, Szabolcs",
+            "total": 3288
+          },
+          {
+            "position": 13,
+            "competition_number": 9,
+            "pilot": "GREATRIX, Jonathan",
+            "total": 3229
+          },
+          {
+            "position": 14,
+            "competition_number": 2,
+            "pilot": "NIKOLIć, Drazen",
+            "total": 3168
+          },
+          {
+            "position": 15,
+            "competition_number": 6,
+            "pilot": "DIVJAK, Igor",
+            "total": 2570
+          },
+          {
+            "position": 16,
+            "competition_number": 12,
+            "pilot": "BECZ, Rita",
+            "total": 2506
+          },
+          {
+            "position": 17,
+            "competition_number": 23,
+            "pilot": "MOSCARA, Raffael",
+            "total": 2502
+          },
+          {
+            "position": 18,
+            "competition_number": 5,
+            "pilot": "BOJANOVIČ, Jernej",
+            "total": 2492
+          },
+          {
+            "position": 19,
+            "competition_number": 4,
+            "pilot": "PAUNOVSKI, Borche",
+            "total": 2406
+          },
+          {
+            "position": 20,
+            "competition_number": 14,
+            "pilot": "KONECSNI, Janos",
+            "total": 2199
+          },
+          {
+            "position": 21,
+            "competition_number": 10,
+            "pilot": "SCAIFE, Graeme",
+            "total": 2138
+          },
+          {
+            "position": 22,
+            "competition_number": 20,
+            "pilot": "PALOCZ, Viktor",
+            "total": 1947
+          },
+          {
+            "position": 23,
+            "competition_number": 28,
+            "pilot": "OUDENAMPSEN, Jan",
+            "total": 1632
+          },
+          {
+            "position": 24,
+            "competition_number": 17,
+            "pilot": "NAGY, Peter",
+            "total": 1536
+          },
+          {
+            "position": 25,
+            "competition_number": 16,
+            "pilot": "NAGY, Balazs",
+            "total": 1525
+          },
+          {
+            "position": 26,
+            "competition_number": 24,
+            "pilot": "STEFANINI, Massimo",
+            "total": 269
+          }
+        ]
+      },
+      {
+        "through_task": 10,
+        "rows": [
+          {
+            "position": 1,
+            "competition_number": 29,
+            "pilot": "BAREFORD, Dominic",
+            "total": 6743
+          },
+          {
+            "position": 2,
+            "competition_number": 3,
+            "pilot": "REMEIKA, Virginijus",
+            "total": 5394
+          },
+          {
+            "position": 3,
+            "competition_number": 7,
+            "pilot": "KRALJ, Darko",
+            "total": 5280
+          },
+          {
+            "position": 4,
+            "competition_number": 11,
+            "pilot": "KOSTRHUN, Jan",
+            "total": 4608
+          },
+          {
+            "position": 5,
+            "competition_number": 26,
+            "pilot": "TOULSON, Michael",
+            "total": 4534
+          },
+          {
+            "position": 6,
+            "competition_number": 1,
+            "pilot": "FLAGGL, Irene",
+            "total": 4485
+          },
+          {
+            "position": 7,
+            "competition_number": 27,
+            "pilot": "GAUCH, Cedric",
+            "total": 4405
+          },
+          {
+            "position": 8,
+            "competition_number": 30,
+            "pilot": "WALL, Cameron",
+            "total": 4292
+          },
+          {
+            "position": 9,
+            "competition_number": 8,
+            "pilot": "SVAGELJ, Rados",
+            "total": 4242
+          },
+          {
+            "position": 10,
+            "competition_number": 25,
+            "pilot": "KAZLAUSKAS, Ignas",
+            "total": 4217
+          },
+          {
+            "position": 11,
+            "competition_number": 2,
+            "pilot": "NIKOLIć, Drazen",
+            "total": 4128
+          },
+          {
+            "position": 12,
+            "competition_number": 9,
+            "pilot": "GREATRIX, Jonathan",
+            "total": 4051
+          },
+          {
+            "position": 13,
+            "competition_number": 15,
+            "pilot": "MOLNAR, Peter",
+            "total": 4027
+          },
+          {
+            "position": 14,
+            "competition_number": 13,
+            "pilot": "GARAB, Szabolcs",
+            "total": 3596
+          },
+          {
+            "position": 15,
+            "competition_number": 5,
+            "pilot": "BOJANOVIČ, Jernej",
+            "total": 3241
+          },
+          {
+            "position": 16,
+            "competition_number": 23,
+            "pilot": "MOSCARA, Raffael",
+            "total": 2977
+          },
+          {
+            "position": 17,
+            "competition_number": 4,
+            "pilot": "PAUNOVSKI, Borche",
+            "total": 2791
+          },
+          {
+            "position": 18,
+            "competition_number": 12,
+            "pilot": "BECZ, Rita",
+            "total": 2775
+          },
+          {
+            "position": 19,
+            "competition_number": 6,
+            "pilot": "DIVJAK, Igor",
+            "total": 2724
+          },
+          {
+            "position": 20,
+            "competition_number": 10,
+            "pilot": "SCAIFE, Graeme",
+            "total": 2696
+          },
+          {
+            "position": 21,
+            "competition_number": 14,
+            "pilot": "KONECSNI, Janos",
+            "total": 2430
+          },
+          {
+            "position": 22,
+            "competition_number": 20,
+            "pilot": "PALOCZ, Viktor",
+            "total": 2062
+          },
+          {
+            "position": 23,
+            "competition_number": 17,
+            "pilot": "NAGY, Peter",
+            "total": 1959
+          },
+          {
+            "position": 24,
+            "competition_number": 16,
+            "pilot": "NAGY, Balazs",
+            "total": 1717
+          },
+          {
+            "position": 25,
+            "competition_number": 28,
+            "pilot": "OUDENAMPSEN, Jan",
+            "total": 1690
+          },
+          {
+            "position": 26,
+            "competition_number": 24,
+            "pilot": "STEFANINI, Massimo",
+            "total": 327
+          }
+        ]
+      },
+      {
+        "through_task": 11,
+        "rows": [
+          {
+            "position": 1,
+            "competition_number": 29,
+            "pilot": "BAREFORD, Dominic",
+            "total": 7743
+          },
+          {
+            "position": 2,
+            "competition_number": 3,
+            "pilot": "REMEIKA, Virginijus",
+            "total": 6202
+          },
+          {
+            "position": 3,
+            "competition_number": 7,
+            "pilot": "KRALJ, Darko",
+            "total": 5994
+          },
+          {
+            "position": 4,
+            "competition_number": 1,
+            "pilot": "FLAGGL, Irene",
+            "total": 5073
+          },
+          {
+            "position": 5,
+            "competition_number": 26,
+            "pilot": "TOULSON, Michael",
+            "total": 5072
+          },
+          {
+            "position": 6,
+            "competition_number": 25,
+            "pilot": "KAZLAUSKAS, Ignas",
+            "total": 4956
+          },
+          {
+            "position": 7,
+            "competition_number": 11,
+            "pilot": "KOSTRHUN, Jan",
+            "total": 4954
+          },
+          {
+            "position": 8,
+            "competition_number": 2,
+            "pilot": "NIKOLIć, Drazen",
+            "total": 4922
+          },
+          {
+            "position": 9,
+            "competition_number": 9,
+            "pilot": "GREATRIX, Jonathan",
+            "total": 4847
+          },
+          {
+            "position": 10,
+            "competition_number": 15,
+            "pilot": "MOLNAR, Peter",
+            "total": 4845
+          },
+          {
+            "position": 11,
+            "competition_number": 27,
+            "pilot": "GAUCH, Cedric",
+            "total": 4713
+          },
+          {
+            "position": 12,
+            "competition_number": 30,
+            "pilot": "WALL, Cameron",
+            "total": 4523
+          },
+          {
+            "position": 13,
+            "competition_number": 8,
+            "pilot": "SVAGELJ, Rados",
+            "total": 4434
+          },
+          {
+            "position": 14,
+            "competition_number": 13,
+            "pilot": "GARAB, Szabolcs",
+            "total": 4272
+          },
+          {
+            "position": 15,
+            "competition_number": 23,
+            "pilot": "MOSCARA, Raffael",
+            "total": 3691
+          },
+          {
+            "position": 16,
+            "competition_number": 12,
+            "pilot": "BECZ, Rita",
+            "total": 3539
+          },
+          {
+            "position": 17,
+            "competition_number": 5,
+            "pilot": "BOJANOVIČ, Jernej",
+            "total": 3510
+          },
+          {
+            "position": 18,
+            "competition_number": 4,
+            "pilot": "PAUNOVSKI, Borche",
+            "total": 3176
+          },
+          {
+            "position": 19,
+            "competition_number": 6,
+            "pilot": "DIVJAK, Igor",
+            "total": 3147
+          },
+          {
+            "position": 20,
+            "competition_number": 10,
+            "pilot": "SCAIFE, Graeme",
+            "total": 2850
+          },
+          {
+            "position": 21,
+            "competition_number": 28,
+            "pilot": "OUDENAMPSEN, Jan",
+            "total": 2584
+          },
+          {
+            "position": 22,
+            "competition_number": 14,
+            "pilot": "KONECSNI, Janos",
+            "total": 2545
+          },
+          {
+            "position": 23,
+            "competition_number": 20,
+            "pilot": "PALOCZ, Viktor",
+            "total": 2524
+          },
+          {
+            "position": 24,
+            "competition_number": 17,
+            "pilot": "NAGY, Peter",
+            "total": 2459
+          },
+          {
+            "position": 25,
+            "competition_number": 16,
+            "pilot": "NAGY, Balazs",
+            "total": 1794
+          },
+          {
+            "position": 26,
+            "competition_number": 24,
+            "pilot": "STEFANINI, Massimo",
+            "total": 365
+          }
+        ]
+      },
+      {
+        "through_task": 12,
+        "rows": [
+          {
+            "position": 1,
+            "competition_number": 29,
+            "pilot": "BAREFORD, Dominic",
+            "total": 8642
+          },
+          {
+            "position": 2,
+            "competition_number": 7,
+            "pilot": "KRALJ, Darko",
+            "total": 6931
+          },
+          {
+            "position": 3,
+            "competition_number": 3,
+            "pilot": "REMEIKA, Virginijus",
+            "total": 6471
+          },
+          {
+            "position": 4,
+            "competition_number": 26,
+            "pilot": "TOULSON, Michael",
+            "total": 6002
+          },
+          {
+            "position": 5,
+            "competition_number": 25,
+            "pilot": "KAZLAUSKAS, Ignas",
+            "total": 5956
+          },
+          {
+            "position": 6,
+            "competition_number": 11,
+            "pilot": "KOSTRHUN, Jan",
+            "total": 5865
+          },
+          {
+            "position": 7,
+            "competition_number": 1,
+            "pilot": "FLAGGL, Irene",
+            "total": 5738
+          },
+          {
+            "position": 8,
+            "competition_number": 27,
+            "pilot": "GAUCH, Cedric",
+            "total": 5662
+          },
+          {
+            "position": 9,
+            "competition_number": 15,
+            "pilot": "MOLNAR, Peter",
+            "total": 5516
+          },
+          {
+            "position": 10,
+            "competition_number": 30,
+            "pilot": "WALL, Cameron",
+            "total": 5491
+          },
+          {
+            "position": 11,
+            "competition_number": 2,
+            "pilot": "NIKOLIć, Drazen",
+            "total": 5422
+          },
+          {
+            "position": 12,
+            "competition_number": 9,
+            "pilot": "GREATRIX, Jonathan",
+            "total": 5417
+          },
+          {
+            "position": 13,
+            "competition_number": 8,
+            "pilot": "SVAGELJ, Rados",
+            "total": 4896
+          },
+          {
+            "position": 14,
+            "competition_number": 13,
+            "pilot": "GARAB, Szabolcs",
+            "total": 4810
+          },
+          {
+            "position": 15,
+            "competition_number": 12,
+            "pilot": "BECZ, Rita",
+            "total": 3885
+          },
+          {
+            "position": 16,
+            "competition_number": 23,
+            "pilot": "MOSCARA, Raffael",
+            "total": 3768
+          },
+          {
+            "position": 17,
+            "competition_number": 5,
+            "pilot": "BOJANOVIČ, Jernej",
+            "total": 3664
+          },
+          {
+            "position": 18,
+            "competition_number": 4,
+            "pilot": "PAUNOVSKI, Borche",
+            "total": 3599
+          },
+          {
+            "position": 19,
+            "competition_number": 14,
+            "pilot": "KONECSNI, Janos",
+            "total": 3526
+          },
+          {
+            "position": 20,
+            "competition_number": 28,
+            "pilot": "OUDENAMPSEN, Jan",
+            "total": 3457
+          },
+          {
+            "position": 21,
+            "competition_number": 6,
+            "pilot": "DIVJAK, Igor",
+            "total": 3455
+          },
+          {
+            "position": 22,
+            "competition_number": 10,
+            "pilot": "SCAIFE, Graeme",
+            "total": 3235
+          },
+          {
+            "position": 23,
+            "competition_number": 20,
+            "pilot": "PALOCZ, Viktor",
+            "total": 2755
+          },
+          {
+            "position": 24,
+            "competition_number": 17,
+            "pilot": "NAGY, Peter",
+            "total": 2651
+          },
+          {
+            "position": 25,
+            "competition_number": 16,
+            "pilot": "NAGY, Balazs",
+            "total": 1871
+          },
+          {
+            "position": 26,
+            "competition_number": 24,
+            "pilot": "STEFANINI, Massimo",
+            "total": 442
+          }
+        ]
+      },
+      {
+        "through_task": 13,
+        "rows": [
+          {
+            "position": 1,
+            "competition_number": 29,
+            "pilot": "BAREFORD, Dominic",
+            "total": 9619
+          },
+          {
+            "position": 2,
+            "competition_number": 3,
+            "pilot": "REMEIKA, Virginijus",
+            "total": 7471
+          },
+          {
+            "position": 3,
+            "competition_number": 7,
+            "pilot": "KRALJ, Darko",
+            "total": 7200
+          },
+          {
+            "position": 4,
+            "competition_number": 1,
+            "pilot": "FLAGGL, Irene",
+            "total": 6713
+          },
+          {
+            "position": 5,
+            "competition_number": 27,
+            "pilot": "GAUCH, Cedric",
+            "total": 6587
+          },
+          {
+            "position": 6,
+            "competition_number": 9,
+            "pilot": "GREATRIX, Jonathan",
+            "total": 6378
+          },
+          {
+            "position": 7,
+            "competition_number": 26,
+            "pilot": "TOULSON, Michael",
+            "total": 6348
+          },
+          {
+            "position": 8,
+            "competition_number": 2,
+            "pilot": "NIKOLIć, Drazen",
+            "total": 6298
+          },
+          {
+            "position": 9,
+            "competition_number": 25,
+            "pilot": "KAZLAUSKAS, Ignas",
+            "total": 6110
+          },
+          {
+            "position": 10,
+            "competition_number": 11,
+            "pilot": "KOSTRHUN, Jan",
+            "total": 6096
+          },
+          {
+            "position": 11,
+            "competition_number": 15,
+            "pilot": "MOLNAR, Peter",
+            "total": 6054
+          },
+          {
+            "position": 12,
+            "competition_number": 13,
+            "pilot": "GARAB, Szabolcs",
+            "total": 5715
+          },
+          {
+            "position": 13,
+            "competition_number": 8,
+            "pilot": "SVAGELJ, Rados",
+            "total": 5682
+          },
+          {
+            "position": 14,
+            "competition_number": 30,
+            "pilot": "WALL, Cameron",
+            "total": 5568
+          },
+          {
+            "position": 15,
+            "competition_number": 4,
+            "pilot": "PAUNOVSKI, Borche",
+            "total": 4537
+          },
+          {
+            "position": 16,
+            "competition_number": 14,
+            "pilot": "KONECSNI, Janos",
+            "total": 4436
+          },
+          {
+            "position": 17,
+            "competition_number": 6,
+            "pilot": "DIVJAK, Igor",
+            "total": 4398
+          },
+          {
+            "position": 18,
+            "competition_number": 12,
+            "pilot": "BECZ, Rita",
+            "total": 4347
+          },
+          {
+            "position": 19,
+            "competition_number": 5,
+            "pilot": "BOJANOVIČ, Jernej",
+            "total": 4087
+          },
+          {
+            "position": 20,
+            "competition_number": 23,
+            "pilot": "MOSCARA, Raffael",
+            "total": 3960
+          },
+          {
+            "position": 21,
+            "competition_number": 28,
+            "pilot": "OUDENAMPSEN, Jan",
+            "total": 3842
+          },
+          {
+            "position": 22,
+            "competition_number": 10,
+            "pilot": "SCAIFE, Graeme",
+            "total": 3350
+          },
+          {
+            "position": 23,
+            "competition_number": 20,
+            "pilot": "PALOCZ, Viktor",
+            "total": 3255
+          },
+          {
+            "position": 24,
+            "competition_number": 17,
+            "pilot": "NAGY, Peter",
+            "total": 2959
+          },
+          {
+            "position": 25,
+            "competition_number": 16,
+            "pilot": "NAGY, Balazs",
+            "total": 2827
+          },
+          {
+            "position": 26,
+            "competition_number": 24,
+            "pilot": "STEFANINI, Massimo",
+            "total": 442
+          }
+        ]
+      },
+      {
+        "through_task": 14,
+        "rows": [
+          {
+            "position": 1,
+            "competition_number": 29,
+            "pilot": "BAREFORD, Dominic",
+            "total": 9619
+          },
+          {
+            "position": 2,
+            "competition_number": 3,
+            "pilot": "REMEIKA, Virginijus",
+            "total": 7471
+          },
+          {
+            "position": 3,
+            "competition_number": 7,
+            "pilot": "KRALJ, Darko",
+            "total": 7200
+          },
+          {
+            "position": 4,
+            "competition_number": 1,
+            "pilot": "FLAGGL, Irene",
+            "total": 6713
+          },
+          {
+            "position": 5,
+            "competition_number": 27,
+            "pilot": "GAUCH, Cedric",
+            "total": 6587
+          },
+          {
+            "position": 6,
+            "competition_number": 9,
+            "pilot": "GREATRIX, Jonathan",
+            "total": 6378
+          },
+          {
+            "position": 7,
+            "competition_number": 26,
+            "pilot": "TOULSON, Michael",
+            "total": 6348
+          },
+          {
+            "position": 8,
+            "competition_number": 2,
+            "pilot": "NIKOLIć, Drazen",
+            "total": 6298
+          },
+          {
+            "position": 9,
+            "competition_number": 25,
+            "pilot": "KAZLAUSKAS, Ignas",
+            "total": 6110
+          },
+          {
+            "position": 10,
+            "competition_number": 11,
+            "pilot": "KOSTRHUN, Jan",
+            "total": 6096
+          },
+          {
+            "position": 11,
+            "competition_number": 15,
+            "pilot": "MOLNAR, Peter",
+            "total": 6054
+          },
+          {
+            "position": 12,
+            "competition_number": 13,
+            "pilot": "GARAB, Szabolcs",
+            "total": 5715
+          },
+          {
+            "position": 13,
+            "competition_number": 8,
+            "pilot": "SVAGELJ, Rados",
+            "total": 5682
+          },
+          {
+            "position": 14,
+            "competition_number": 30,
+            "pilot": "WALL, Cameron",
+            "total": 5568
+          },
+          {
+            "position": 15,
+            "competition_number": 4,
+            "pilot": "PAUNOVSKI, Borche",
+            "total": 4537
+          },
+          {
+            "position": 16,
+            "competition_number": 14,
+            "pilot": "KONECSNI, Janos",
+            "total": 4436
+          },
+          {
+            "position": 17,
+            "competition_number": 6,
+            "pilot": "DIVJAK, Igor",
+            "total": 4398
+          },
+          {
+            "position": 18,
+            "competition_number": 12,
+            "pilot": "BECZ, Rita",
+            "total": 4347
+          },
+          {
+            "position": 19,
+            "competition_number": 5,
+            "pilot": "BOJANOVIČ, Jernej",
+            "total": 4087
+          },
+          {
+            "position": 20,
+            "competition_number": 23,
+            "pilot": "MOSCARA, Raffael",
+            "total": 3960
+          },
+          {
+            "position": 21,
+            "competition_number": 28,
+            "pilot": "OUDENAMPSEN, Jan",
+            "total": 3842
+          },
+          {
+            "position": 22,
+            "competition_number": 10,
+            "pilot": "SCAIFE, Graeme",
+            "total": 3350
+          },
+          {
+            "position": 23,
+            "competition_number": 20,
+            "pilot": "PALOCZ, Viktor",
+            "total": 3255
+          },
+          {
+            "position": 24,
+            "competition_number": 17,
+            "pilot": "NAGY, Peter",
+            "total": 2959
+          },
+          {
+            "position": 25,
+            "competition_number": 16,
+            "pilot": "NAGY, Balazs",
+            "total": 2827
+          },
+          {
+            "position": 26,
+            "competition_number": 24,
+            "pilot": "STEFANINI, Massimo",
+            "total": 442
+          }
+        ]
+      },
+      {
+        "through_task": 15,
+        "rows": [
+          {
+            "position": 1,
+            "competition_number": 29,
+            "pilot": "BAREFORD, Dominic",
+            "total": 9619
+          },
+          {
+            "position": 2,
+            "competition_number": 3,
+            "pilot": "REMEIKA, Virginijus",
+            "total": 7471
+          },
+          {
+            "position": 3,
+            "competition_number": 7,
+            "pilot": "KRALJ, Darko",
+            "total": 7200
+          },
+          {
+            "position": 4,
+            "competition_number": 1,
+            "pilot": "FLAGGL, Irene",
+            "total": 6713
+          },
+          {
+            "position": 5,
+            "competition_number": 27,
+            "pilot": "GAUCH, Cedric",
+            "total": 6587
+          },
+          {
+            "position": 6,
+            "competition_number": 9,
+            "pilot": "GREATRIX, Jonathan",
+            "total": 6378
+          },
+          {
+            "position": 7,
+            "competition_number": 26,
+            "pilot": "TOULSON, Michael",
+            "total": 6348
+          },
+          {
+            "position": 8,
+            "competition_number": 2,
+            "pilot": "NIKOLIć, Drazen",
+            "total": 6298
+          },
+          {
+            "position": 9,
+            "competition_number": 25,
+            "pilot": "KAZLAUSKAS, Ignas",
+            "total": 6110
+          },
+          {
+            "position": 10,
+            "competition_number": 11,
+            "pilot": "KOSTRHUN, Jan",
+            "total": 6096
+          },
+          {
+            "position": 11,
+            "competition_number": 15,
+            "pilot": "MOLNAR, Peter",
+            "total": 6054
+          },
+          {
+            "position": 12,
+            "competition_number": 13,
+            "pilot": "GARAB, Szabolcs",
+            "total": 5715
+          },
+          {
+            "position": 13,
+            "competition_number": 8,
+            "pilot": "SVAGELJ, Rados",
+            "total": 5682
+          },
+          {
+            "position": 14,
+            "competition_number": 30,
+            "pilot": "WALL, Cameron",
+            "total": 5568
+          },
+          {
+            "position": 15,
+            "competition_number": 4,
+            "pilot": "PAUNOVSKI, Borche",
+            "total": 4537
+          },
+          {
+            "position": 16,
+            "competition_number": 14,
+            "pilot": "KONECSNI, Janos",
+            "total": 4436
+          },
+          {
+            "position": 17,
+            "competition_number": 6,
+            "pilot": "DIVJAK, Igor",
+            "total": 4398
+          },
+          {
+            "position": 18,
+            "competition_number": 12,
+            "pilot": "BECZ, Rita",
+            "total": 4347
+          },
+          {
+            "position": 19,
+            "competition_number": 5,
+            "pilot": "BOJANOVIČ, Jernej",
+            "total": 4087
+          },
+          {
+            "position": 20,
+            "competition_number": 23,
+            "pilot": "MOSCARA, Raffael",
+            "total": 3960
+          },
+          {
+            "position": 21,
+            "competition_number": 28,
+            "pilot": "OUDENAMPSEN, Jan",
+            "total": 3842
+          },
+          {
+            "position": 22,
+            "competition_number": 10,
+            "pilot": "SCAIFE, Graeme",
+            "total": 3350
+          },
+          {
+            "position": 23,
+            "competition_number": 20,
+            "pilot": "PALOCZ, Viktor",
+            "total": 3255
+          },
+          {
+            "position": 24,
+            "competition_number": 17,
+            "pilot": "NAGY, Peter",
+            "total": 2959
+          },
+          {
+            "position": 25,
+            "competition_number": 16,
+            "pilot": "NAGY, Balazs",
+            "total": 2827
+          },
+          {
+            "position": 26,
+            "competition_number": 24,
+            "pilot": "STEFANINI, Massimo",
+            "total": 442
+          }
+        ]
+      },
+      {
+        "through_task": 16,
+        "rows": [
+          {
+            "position": 1,
+            "competition_number": 29,
+            "pilot": "BAREFORD, Dominic",
+            "total": 9619
+          },
+          {
+            "position": 2,
+            "competition_number": 3,
+            "pilot": "REMEIKA, Virginijus",
+            "total": 7471
+          },
+          {
+            "position": 3,
+            "competition_number": 7,
+            "pilot": "KRALJ, Darko",
+            "total": 7200
+          },
+          {
+            "position": 4,
+            "competition_number": 1,
+            "pilot": "FLAGGL, Irene",
+            "total": 6713
+          },
+          {
+            "position": 5,
+            "competition_number": 27,
+            "pilot": "GAUCH, Cedric",
+            "total": 6587
+          },
+          {
+            "position": 6,
+            "competition_number": 9,
+            "pilot": "GREATRIX, Jonathan",
+            "total": 6378
+          },
+          {
+            "position": 7,
+            "competition_number": 26,
+            "pilot": "TOULSON, Michael",
+            "total": 6348
+          },
+          {
+            "position": 8,
+            "competition_number": 2,
+            "pilot": "NIKOLIć, Drazen",
+            "total": 6298
+          },
+          {
+            "position": 9,
+            "competition_number": 25,
+            "pilot": "KAZLAUSKAS, Ignas",
+            "total": 6110
+          },
+          {
+            "position": 10,
+            "competition_number": 11,
+            "pilot": "KOSTRHUN, Jan",
+            "total": 6096
+          },
+          {
+            "position": 11,
+            "competition_number": 15,
+            "pilot": "MOLNAR, Peter",
+            "total": 6054
+          },
+          {
+            "position": 12,
+            "competition_number": 13,
+            "pilot": "GARAB, Szabolcs",
+            "total": 5715
+          },
+          {
+            "position": 13,
+            "competition_number": 8,
+            "pilot": "SVAGELJ, Rados",
+            "total": 5682
+          },
+          {
+            "position": 14,
+            "competition_number": 30,
+            "pilot": "WALL, Cameron",
+            "total": 5568
+          },
+          {
+            "position": 15,
+            "competition_number": 4,
+            "pilot": "PAUNOVSKI, Borche",
+            "total": 4537
+          },
+          {
+            "position": 16,
+            "competition_number": 14,
+            "pilot": "KONECSNI, Janos",
+            "total": 4436
+          },
+          {
+            "position": 17,
+            "competition_number": 6,
+            "pilot": "DIVJAK, Igor",
+            "total": 4398
+          },
+          {
+            "position": 18,
+            "competition_number": 12,
+            "pilot": "BECZ, Rita",
+            "total": 4347
+          },
+          {
+            "position": 19,
+            "competition_number": 5,
+            "pilot": "BOJANOVIČ, Jernej",
+            "total": 4087
+          },
+          {
+            "position": 20,
+            "competition_number": 23,
+            "pilot": "MOSCARA, Raffael",
+            "total": 3960
+          },
+          {
+            "position": 21,
+            "competition_number": 28,
+            "pilot": "OUDENAMPSEN, Jan",
+            "total": 3842
+          },
+          {
+            "position": 22,
+            "competition_number": 10,
+            "pilot": "SCAIFE, Graeme",
+            "total": 3350
+          },
+          {
+            "position": 23,
+            "competition_number": 20,
+            "pilot": "PALOCZ, Viktor",
+            "total": 3255
+          },
+          {
+            "position": 24,
+            "competition_number": 17,
+            "pilot": "NAGY, Peter",
+            "total": 2959
+          },
+          {
+            "position": 25,
+            "competition_number": 16,
+            "pilot": "NAGY, Balazs",
+            "total": 2827
+          },
+          {
+            "position": 26,
+            "competition_number": 24,
+            "pilot": "STEFANINI, Massimo",
+            "total": 442
+          }
+        ]
+      }
+    ],
+    "all_results": [
+      {
+        "through_task": 2,
+        "rows": [
+          {
+            "position": 1,
+            "competition_number": 7,
+            "pilot": "KRALJ, Darko",
+            "total": 1000
+          },
+          {
+            "position": 2,
+            "competition_number": 30,
+            "pilot": "WALL, Cameron",
+            "total": 962
+          },
+          {
+            "position": 3,
+            "competition_number": 29,
+            "pilot": "BAREFORD, Dominic",
+            "total": 924
+          },
+          {
+            "position": 4,
+            "competition_number": 26,
+            "pilot": "TOULSON, Michael",
+            "total": 918
+          },
+          {
+            "position": 5,
+            "competition_number": 17,
+            "pilot": "NAGY, Peter",
+            "total": 837
+          },
+          {
+            "position": 6,
+            "competition_number": 15,
+            "pilot": "MOLNAR, Peter",
+            "total": 696
+          },
+          {
+            "position": 7,
+            "competition_number": 5,
+            "pilot": "BOJANOVIČ, Jernej",
+            "total": 610
+          },
+          {
+            "position": 8,
+            "competition_number": 8,
+            "pilot": "SVAGELJ, Rados",
+            "total": 607
+          },
+          {
+            "position": 9,
+            "competition_number": 20,
+            "pilot": "PALOCZ, Viktor",
+            "total": 606
+          },
+          {
+            "position": 10,
+            "competition_number": 27,
+            "pilot": "GAUCH, Cedric",
+            "total": 593
+          },
+          {
+            "position": 11,
+            "competition_number": 12,
+            "pilot": "BECZ, Rita",
+            "total": 584
+          },
+          {
+            "position": 12,
+            "competition_number": 9,
+            "pilot": "GREATRIX, Jonathan",
+            "total": 522
+          },
+          {
+            "position": 13,
+            "competition_number": 16,
+            "pilot": "NAGY, Balazs",
+            "total": 520
+          },
+          {
+            "position": 14,
+            "competition_number": 3,
+            "pilot": "REMEIKA, Virginijus",
+            "total": 480
+          },
+          {
+            "position": 15,
+            "competition_number": 11,
+            "pilot": "KOSTRHUN, Jan",
+            "total": 440
+          },
+          {
+            "position": 16,
+            "competition_number": 2,
+            "pilot": "NIKOLIć, Drazen",
+            "total": 360
+          },
+          {
+            "position": 17,
+            "competition_number": 4,
+            "pilot": "PAUNOVSKI, Borche",
+            "total": 320
+          },
+          {
+            "position": 18,
+            "competition_number": 10,
+            "pilot": "SCAIFE, Graeme",
+            "total": 320
+          },
+          {
+            "position": 19,
+            "competition_number": 13,
+            "pilot": "GARAB, Szabolcs",
+            "total": 280
+          },
+          {
+            "position": 20,
+            "competition_number": 6,
+            "pilot": "DIVJAK, Igor",
+            "total": 240
+          },
+          {
+            "position": 21,
+            "competition_number": 1,
+            "pilot": "FLAGGL, Irene",
+            "total": 200
+          },
+          {
+            "position": 22,
+            "competition_number": 23,
+            "pilot": "MOSCARA, Raffael",
+            "total": 160
+          },
+          {
+            "position": 23,
+            "competition_number": 25,
+            "pilot": "KAZLAUSKAS, Ignas",
+            "total": 80
+          },
+          {
+            "position": 24,
+            "competition_number": 28,
+            "pilot": "OUDENAMPSEN, Jan",
+            "total": 0
+          },
+          {
+            "position": 25,
+            "competition_number": 24,
+            "pilot": "STEFANINI, Massimo",
+            "total": 0
+          },
+          {
+            "position": 26,
+            "competition_number": 14,
+            "pilot": "KONECSNI, Janos",
+            "total": -110
+          }
+        ]
+      },
+      {
+        "through_task": 3,
+        "rows": [
+          {
+            "position": 1,
+            "competition_number": 29,
+            "pilot": "BAREFORD, Dominic",
+            "total": 1924
+          },
+          {
+            "position": 2,
+            "competition_number": 7,
+            "pilot": "KRALJ, Darko",
+            "total": 1743
+          },
+          {
+            "position": 3,
+            "competition_number": 30,
+            "pilot": "WALL, Cameron",
+            "total": 1637
+          },
+          {
+            "position": 4,
+            "competition_number": 26,
+            "pilot": "TOULSON, Michael",
+            "total": 1635
+          },
+          {
+            "position": 5,
+            "competition_number": 15,
+            "pilot": "MOLNAR, Peter",
+            "total": 1308
+          },
+          {
+            "position": 6,
+            "competition_number": 3,
+            "pilot": "REMEIKA, Virginijus",
+            "total": 1113
+          },
+          {
+            "position": 7,
+            "competition_number": 23,
+            "pilot": "MOSCARA, Raffael",
+            "total": 1092
+          },
+          {
+            "position": 8,
+            "competition_number": 20,
+            "pilot": "PALOCZ, Viktor",
+            "total": 1082
+          },
+          {
+            "position": 9,
+            "competition_number": 2,
+            "pilot": "NIKOLIć, Drazen",
+            "total": 1031
+          },
+          {
+            "position": 10,
+            "competition_number": 12,
+            "pilot": "BECZ, Rita",
+            "total": 1024
+          },
+          {
+            "position": 11,
+            "competition_number": 11,
+            "pilot": "KOSTRHUN, Jan",
+            "total": 1022
+          },
+          {
+            "position": 12,
+            "competition_number": 27,
+            "pilot": "GAUCH, Cedric",
+            "total": 993
+          },
+          {
+            "position": 13,
+            "competition_number": 10,
+            "pilot": "SCAIFE, Graeme",
+            "total": 840
+          },
+          {
+            "position": 14,
+            "competition_number": 8,
+            "pilot": "SVAGELJ, Rados",
+            "total": 807
+          },
+          {
+            "position": 15,
+            "competition_number": 5,
+            "pilot": "BOJANOVIČ, Jernej",
+            "total": 770
+          },
+          {
+            "position": 16,
+            "competition_number": 9,
+            "pilot": "GREATRIX, Jonathan",
+            "total": 762
+          },
+          {
+            "position": 17,
+            "competition_number": 13,
+            "pilot": "GARAB, Szabolcs",
+            "total": 760
+          },
+          {
+            "position": 18,
+            "competition_number": 1,
+            "pilot": "FLAGGL, Irene",
+            "total": 717
+          },
+          {
+            "position": 19,
+            "competition_number": 16,
+            "pilot": "NAGY, Balazs",
+            "total": 640
+          },
+          {
+            "position": 20,
+            "competition_number": 6,
+            "pilot": "DIVJAK, Igor",
+            "total": 520
+          },
+          {
+            "position": 21,
+            "competition_number": 25,
+            "pilot": "KAZLAUSKAS, Ignas",
+            "total": 440
+          },
+          {
+            "position": 22,
+            "competition_number": 14,
+            "pilot": "KONECSNI, Janos",
+            "total": 419
+          },
+          {
+            "position": 23,
+            "competition_number": 4,
+            "pilot": "PAUNOVSKI, Borche",
+            "total": 400
+          },
+          {
+            "position": 24,
+            "competition_number": 17,
+            "pilot": "NAGY, Peter",
+            "total": 267
+          },
+          {
+            "position": 25,
+            "competition_number": 28,
+            "pilot": "OUDENAMPSEN, Jan",
+            "total": 40
+          },
+          {
+            "position": 26,
+            "competition_number": 24,
+            "pilot": "STEFANINI, Massimo",
+            "total": 0
+          }
+        ]
+      },
+      {
+        "through_task": 5,
+        "rows": [
+          {
+            "position": 1,
+            "competition_number": 29,
+            "pilot": "BAREFORD, Dominic",
+            "total": 2924
+          },
+          {
+            "position": 2,
+            "competition_number": 7,
+            "pilot": "KRALJ, Darko",
+            "total": 2421
+          },
+          {
+            "position": 3,
+            "competition_number": 30,
+            "pilot": "WALL, Cameron",
+            "total": 2217
+          },
+          {
+            "position": 4,
+            "competition_number": 3,
+            "pilot": "REMEIKA, Virginijus",
+            "total": 2017
+          },
+          {
+            "position": 5,
+            "competition_number": 15,
+            "pilot": "MOLNAR, Peter",
+            "total": 1988
+          },
+          {
+            "position": 6,
+            "competition_number": 11,
+            "pilot": "KOSTRHUN, Jan",
+            "total": 1945
+          },
+          {
+            "position": 7,
+            "competition_number": 1,
+            "pilot": "FLAGGL, Irene",
+            "total": 1716
+          },
+          {
+            "position": 8,
+            "competition_number": 26,
+            "pilot": "TOULSON, Michael",
+            "total": 1693
+          },
+          {
+            "position": 9,
+            "competition_number": 27,
+            "pilot": "GAUCH, Cedric",
+            "total": 1655
+          },
+          {
+            "position": 10,
+            "competition_number": 2,
+            "pilot": "NIKOLIć, Drazen",
+            "total": 1571
+          },
+          {
+            "position": 11,
+            "competition_number": 9,
+            "pilot": "GREATRIX, Jonathan",
+            "total": 1536
+          },
+          {
+            "position": 12,
+            "competition_number": 13,
+            "pilot": "GARAB, Szabolcs",
+            "total": 1532
+          },
+          {
+            "position": 13,
+            "competition_number": 25,
+            "pilot": "KAZLAUSKAS, Ignas",
+            "total": 1389
+          },
+          {
+            "position": 14,
+            "competition_number": 8,
+            "pilot": "SVAGELJ, Rados",
+            "total": 1345
+          },
+          {
+            "position": 15,
+            "competition_number": 12,
+            "pilot": "BECZ, Rita",
+            "total": 1332
+          },
+          {
+            "position": 16,
+            "competition_number": 23,
+            "pilot": "MOSCARA, Raffael",
+            "total": 1323
+          },
+          {
+            "position": 17,
+            "competition_number": 20,
+            "pilot": "PALOCZ, Viktor",
+            "total": 1274
+          },
+          {
+            "position": 18,
+            "competition_number": 5,
+            "pilot": "BOJANOVIČ, Jernej",
+            "total": 1193
+          },
+          {
+            "position": 19,
+            "competition_number": 6,
+            "pilot": "DIVJAK, Igor",
+            "total": 1020
+          },
+          {
+            "position": 20,
+            "competition_number": 10,
+            "pilot": "SCAIFE, Graeme",
+            "total": 955
+          },
+          {
+            "position": 21,
+            "competition_number": 14,
+            "pilot": "KONECSNI, Janos",
+            "total": 804
+          },
+          {
+            "position": 22,
+            "competition_number": 16,
+            "pilot": "NAGY, Balazs",
+            "total": 794
+          },
+          {
+            "position": 23,
+            "competition_number": 4,
+            "pilot": "PAUNOVSKI, Borche",
+            "total": 669
+          },
+          {
+            "position": 24,
+            "competition_number": 17,
+            "pilot": "NAGY, Peter",
+            "total": 613
+          },
+          {
+            "position": 25,
+            "competition_number": 28,
+            "pilot": "OUDENAMPSEN, Jan",
+            "total": 502
+          },
+          {
+            "position": 26,
+            "competition_number": 24,
+            "pilot": "STEFANINI, Massimo",
+            "total": 58
+          }
+        ]
+      },
+      {
+        "through_task": 6,
+        "rows": [
+          {
+            "position": 1,
+            "competition_number": 29,
+            "pilot": "BAREFORD, Dominic",
+            "total": 3835
+          },
+          {
+            "position": 2,
+            "competition_number": 7,
+            "pilot": "KRALJ, Darko",
+            "total": 3141
+          },
+          {
+            "position": 3,
+            "competition_number": 15,
+            "pilot": "MOLNAR, Peter",
+            "total": 2988
+          },
+          {
+            "position": 4,
+            "competition_number": 30,
+            "pilot": "WALL, Cameron",
+            "total": 2918
+          },
+          {
+            "position": 5,
+            "competition_number": 11,
+            "pilot": "KOSTRHUN, Jan",
+            "total": 2749
+          },
+          {
+            "position": 6,
+            "competition_number": 3,
+            "pilot": "REMEIKA, Virginijus",
+            "total": 2555
+          },
+          {
+            "position": 7,
+            "competition_number": 1,
+            "pilot": "FLAGGL, Irene",
+            "total": 2501
+          },
+          {
+            "position": 8,
+            "competition_number": 2,
+            "pilot": "NIKOLIć, Drazen",
+            "total": 2398
+          },
+          {
+            "position": 9,
+            "competition_number": 27,
+            "pilot": "GAUCH, Cedric",
+            "total": 2296
+          },
+          {
+            "position": 10,
+            "competition_number": 13,
+            "pilot": "GARAB, Szabolcs",
+            "total": 2238
+          },
+          {
+            "position": 11,
+            "competition_number": 25,
+            "pilot": "KAZLAUSKAS, Ignas",
+            "total": 2128
+          },
+          {
+            "position": 12,
+            "competition_number": 26,
+            "pilot": "TOULSON, Michael",
+            "total": 2039
+          },
+          {
+            "position": 13,
+            "competition_number": 9,
+            "pilot": "GREATRIX, Jonathan",
+            "total": 1998
+          },
+          {
+            "position": 14,
+            "competition_number": 8,
+            "pilot": "SVAGELJ, Rados",
+            "total": 1972
+          },
+          {
+            "position": 15,
+            "competition_number": 12,
+            "pilot": "BECZ, Rita",
+            "total": 1755
+          },
+          {
+            "position": 16,
+            "competition_number": 5,
+            "pilot": "BOJANOVIČ, Jernej",
+            "total": 1501
+          },
+          {
+            "position": 17,
+            "competition_number": 23,
+            "pilot": "MOSCARA, Raffael",
+            "total": 1477
+          },
+          {
+            "position": 18,
+            "competition_number": 14,
+            "pilot": "KONECSNI, Janos",
+            "total": 1407
+          },
+          {
+            "position": 19,
+            "competition_number": 6,
+            "pilot": "DIVJAK, Igor",
+            "total": 1405
+          },
+          {
+            "position": 20,
+            "competition_number": 20,
+            "pilot": "PALOCZ, Viktor",
+            "total": 1332
+          },
+          {
+            "position": 21,
+            "competition_number": 17,
+            "pilot": "NAGY, Peter",
+            "total": 1113
+          },
+          {
+            "position": 22,
+            "competition_number": 10,
+            "pilot": "SCAIFE, Graeme",
+            "total": 1070
+          },
+          {
+            "position": 23,
+            "competition_number": 16,
+            "pilot": "NAGY, Balazs",
+            "total": 986
+          },
+          {
+            "position": 24,
+            "competition_number": 4,
+            "pilot": "PAUNOVSKI, Borche",
+            "total": 938
+          },
+          {
+            "position": 25,
+            "competition_number": 28,
+            "pilot": "OUDENAMPSEN, Jan",
+            "total": 733
+          },
+          {
+            "position": 26,
+            "competition_number": 24,
+            "pilot": "STEFANINI, Massimo",
+            "total": 116
+          }
+        ]
+      },
+      {
+        "through_task": 7,
+        "rows": [
+          {
+            "position": 1,
+            "competition_number": 29,
+            "pilot": "BAREFORD, Dominic",
+            "total": 4815
+          },
+          {
+            "position": 2,
+            "competition_number": 7,
+            "pilot": "KRALJ, Darko",
+            "total": 3934
+          },
+          {
+            "position": 3,
+            "competition_number": 3,
+            "pilot": "REMEIKA, Virginijus",
+            "total": 3555
+          },
+          {
+            "position": 4,
+            "competition_number": 11,
+            "pilot": "KOSTRHUN, Jan",
+            "total": 3375
+          },
+          {
+            "position": 5,
+            "competition_number": 15,
+            "pilot": "MOLNAR, Peter",
+            "total": 3373
+          },
+          {
+            "position": 6,
+            "competition_number": 30,
+            "pilot": "WALL, Cameron",
+            "total": 3331
+          },
+          {
+            "position": 7,
+            "competition_number": 1,
+            "pilot": "FLAGGL, Irene",
+            "total": 3050
+          },
+          {
+            "position": 8,
+            "competition_number": 13,
+            "pilot": "GARAB, Szabolcs",
+            "total": 3019
+          },
+          {
+            "position": 9,
+            "competition_number": 8,
+            "pilot": "SVAGELJ, Rados",
+            "total": 2887
+          },
+          {
+            "position": 10,
+            "competition_number": 26,
+            "pilot": "TOULSON, Michael",
+            "total": 2778
+          },
+          {
+            "position": 11,
+            "competition_number": 2,
+            "pilot": "NIKOLIć, Drazen",
+            "total": 2706
+          },
+          {
+            "position": 12,
+            "competition_number": 25,
+            "pilot": "KAZLAUSKAS, Ignas",
+            "total": 2666
+          },
+          {
+            "position": 13,
+            "competition_number": 27,
+            "pilot": "GAUCH, Cedric",
+            "total": 2642
+          },
+          {
+            "position": 14,
+            "competition_number": 12,
+            "pilot": "BECZ, Rita",
+            "total": 2352
+          },
+          {
+            "position": 15,
+            "competition_number": 9,
+            "pilot": "GREATRIX, Jonathan",
+            "total": 2267
+          },
+          {
+            "position": 16,
+            "competition_number": 6,
+            "pilot": "DIVJAK, Igor",
+            "total": 2032
+          },
+          {
+            "position": 17,
+            "competition_number": 14,
+            "pilot": "KONECSNI, Janos",
+            "total": 1968
+          },
+          {
+            "position": 18,
+            "competition_number": 20,
+            "pilot": "PALOCZ, Viktor",
+            "total": 1832
+          },
+          {
+            "position": 19,
+            "competition_number": 5,
+            "pilot": "BOJANOVIČ, Jernej",
+            "total": 1693
+          },
+          {
+            "position": 20,
+            "competition_number": 23,
+            "pilot": "MOSCARA, Raffael",
+            "total": 1515
+          },
+          {
+            "position": 21,
+            "competition_number": 4,
+            "pilot": "PAUNOVSKI, Borche",
+            "total": 1494
+          },
+          {
+            "position": 22,
+            "competition_number": 16,
+            "pilot": "NAGY, Balazs",
+            "total": 1448
+          },
+          {
+            "position": 23,
+            "competition_number": 17,
+            "pilot": "NAGY, Peter",
+            "total": 1344
+          },
+          {
+            "position": 24,
+            "competition_number": 10,
+            "pilot": "SCAIFE, Graeme",
+            "total": 1174
+          },
+          {
+            "position": 25,
+            "competition_number": 28,
+            "pilot": "OUDENAMPSEN, Jan",
+            "total": 810
+          },
+          {
+            "position": 26,
+            "competition_number": 24,
+            "pilot": "STEFANINI, Massimo",
+            "total": 231
+          }
+        ]
+      },
+      {
+        "through_task": 9,
+        "rows": [
+          {
+            "position": 1,
+            "competition_number": 29,
+            "pilot": "BAREFORD, Dominic",
+            "total": 5809
+          },
+          {
+            "position": 2,
+            "competition_number": 3,
+            "pilot": "REMEIKA, Virginijus",
+            "total": 4453
+          },
+          {
+            "position": 3,
+            "competition_number": 7,
+            "pilot": "KRALJ, Darko",
+            "total": 4280
+          },
+          {
+            "position": 4,
+            "competition_number": 1,
+            "pilot": "FLAGGL, Irene",
+            "total": 4023
+          },
+          {
+            "position": 5,
+            "competition_number": 11,
+            "pilot": "KOSTRHUN, Jan",
+            "total": 3760
+          },
+          {
+            "position": 6,
+            "competition_number": 26,
+            "pilot": "TOULSON, Michael",
+            "total": 3758
+          },
+          {
+            "position": 7,
+            "competition_number": 30,
+            "pilot": "WALL, Cameron",
+            "total": 3754
+          },
+          {
+            "position": 8,
+            "competition_number": 15,
+            "pilot": "MOLNAR, Peter",
+            "total": 3681
+          },
+          {
+            "position": 9,
+            "competition_number": 25,
+            "pilot": "KAZLAUSKAS, Ignas",
+            "total": 3666
+          },
+          {
+            "position": 10,
+            "competition_number": 27,
+            "pilot": "GAUCH, Cedric",
+            "total": 3484
+          },
+          {
+            "position": 11,
+            "competition_number": 8,
+            "pilot": "SVAGELJ, Rados",
+            "total": 3387
+          },
+          {
+            "position": 12,
+            "competition_number": 13,
+            "pilot": "GARAB, Szabolcs",
+            "total": 3288
+          },
+          {
+            "position": 13,
+            "competition_number": 9,
+            "pilot": "GREATRIX, Jonathan",
+            "total": 3229
+          },
+          {
+            "position": 14,
+            "competition_number": 2,
+            "pilot": "NIKOLIć, Drazen",
+            "total": 3168
+          },
+          {
+            "position": 15,
+            "competition_number": 6,
+            "pilot": "DIVJAK, Igor",
+            "total": 2570
+          },
+          {
+            "position": 16,
+            "competition_number": 12,
+            "pilot": "BECZ, Rita",
+            "total": 2506
+          },
+          {
+            "position": 17,
+            "competition_number": 23,
+            "pilot": "MOSCARA, Raffael",
+            "total": 2502
+          },
+          {
+            "position": 18,
+            "competition_number": 5,
+            "pilot": "BOJANOVIČ, Jernej",
+            "total": 2492
+          },
+          {
+            "position": 19,
+            "competition_number": 4,
+            "pilot": "PAUNOVSKI, Borche",
+            "total": 2406
+          },
+          {
+            "position": 20,
+            "competition_number": 14,
+            "pilot": "KONECSNI, Janos",
+            "total": 2199
+          },
+          {
+            "position": 21,
+            "competition_number": 10,
+            "pilot": "SCAIFE, Graeme",
+            "total": 2138
+          },
+          {
+            "position": 22,
+            "competition_number": 20,
+            "pilot": "PALOCZ, Viktor",
+            "total": 1947
+          },
+          {
+            "position": 23,
+            "competition_number": 28,
+            "pilot": "OUDENAMPSEN, Jan",
+            "total": 1632
+          },
+          {
+            "position": 24,
+            "competition_number": 17,
+            "pilot": "NAGY, Peter",
+            "total": 1536
+          },
+          {
+            "position": 25,
+            "competition_number": 16,
+            "pilot": "NAGY, Balazs",
+            "total": 1525
+          },
+          {
+            "position": 26,
+            "competition_number": 24,
+            "pilot": "STEFANINI, Massimo",
+            "total": 269
+          }
+        ]
+      },
+      {
+        "through_task": 10,
+        "rows": [
+          {
+            "position": 1,
+            "competition_number": 29,
+            "pilot": "BAREFORD, Dominic",
+            "total": 6743
+          },
+          {
+            "position": 2,
+            "competition_number": 3,
+            "pilot": "REMEIKA, Virginijus",
+            "total": 5394
+          },
+          {
+            "position": 3,
+            "competition_number": 7,
+            "pilot": "KRALJ, Darko",
+            "total": 5280
+          },
+          {
+            "position": 4,
+            "competition_number": 11,
+            "pilot": "KOSTRHUN, Jan",
+            "total": 4608
+          },
+          {
+            "position": 5,
+            "competition_number": 26,
+            "pilot": "TOULSON, Michael",
+            "total": 4534
+          },
+          {
+            "position": 6,
+            "competition_number": 1,
+            "pilot": "FLAGGL, Irene",
+            "total": 4485
+          },
+          {
+            "position": 7,
+            "competition_number": 27,
+            "pilot": "GAUCH, Cedric",
+            "total": 4405
+          },
+          {
+            "position": 8,
+            "competition_number": 30,
+            "pilot": "WALL, Cameron",
+            "total": 4292
+          },
+          {
+            "position": 9,
+            "competition_number": 8,
+            "pilot": "SVAGELJ, Rados",
+            "total": 4242
+          },
+          {
+            "position": 10,
+            "competition_number": 25,
+            "pilot": "KAZLAUSKAS, Ignas",
+            "total": 4217
+          },
+          {
+            "position": 11,
+            "competition_number": 2,
+            "pilot": "NIKOLIć, Drazen",
+            "total": 4128
+          },
+          {
+            "position": 12,
+            "competition_number": 9,
+            "pilot": "GREATRIX, Jonathan",
+            "total": 4051
+          },
+          {
+            "position": 13,
+            "competition_number": 15,
+            "pilot": "MOLNAR, Peter",
+            "total": 4027
+          },
+          {
+            "position": 14,
+            "competition_number": 13,
+            "pilot": "GARAB, Szabolcs",
+            "total": 3596
+          },
+          {
+            "position": 15,
+            "competition_number": 5,
+            "pilot": "BOJANOVIČ, Jernej",
+            "total": 3241
+          },
+          {
+            "position": 16,
+            "competition_number": 23,
+            "pilot": "MOSCARA, Raffael",
+            "total": 2977
+          },
+          {
+            "position": 17,
+            "competition_number": 4,
+            "pilot": "PAUNOVSKI, Borche",
+            "total": 2791
+          },
+          {
+            "position": 18,
+            "competition_number": 12,
+            "pilot": "BECZ, Rita",
+            "total": 2775
+          },
+          {
+            "position": 19,
+            "competition_number": 6,
+            "pilot": "DIVJAK, Igor",
+            "total": 2724
+          },
+          {
+            "position": 20,
+            "competition_number": 10,
+            "pilot": "SCAIFE, Graeme",
+            "total": 2696
+          },
+          {
+            "position": 21,
+            "competition_number": 14,
+            "pilot": "KONECSNI, Janos",
+            "total": 2430
+          },
+          {
+            "position": 22,
+            "competition_number": 20,
+            "pilot": "PALOCZ, Viktor",
+            "total": 2062
+          },
+          {
+            "position": 23,
+            "competition_number": 17,
+            "pilot": "NAGY, Peter",
+            "total": 1959
+          },
+          {
+            "position": 24,
+            "competition_number": 16,
+            "pilot": "NAGY, Balazs",
+            "total": 1717
+          },
+          {
+            "position": 25,
+            "competition_number": 28,
+            "pilot": "OUDENAMPSEN, Jan",
+            "total": 1690
+          },
+          {
+            "position": 26,
+            "competition_number": 24,
+            "pilot": "STEFANINI, Massimo",
+            "total": 327
+          }
+        ]
+      },
+      {
+        "through_task": 11,
+        "rows": [
+          {
+            "position": 1,
+            "competition_number": 29,
+            "pilot": "BAREFORD, Dominic",
+            "total": 7743
+          },
+          {
+            "position": 2,
+            "competition_number": 3,
+            "pilot": "REMEIKA, Virginijus",
+            "total": 6202
+          },
+          {
+            "position": 3,
+            "competition_number": 7,
+            "pilot": "KRALJ, Darko",
+            "total": 5994
+          },
+          {
+            "position": 4,
+            "competition_number": 1,
+            "pilot": "FLAGGL, Irene",
+            "total": 5073
+          },
+          {
+            "position": 5,
+            "competition_number": 26,
+            "pilot": "TOULSON, Michael",
+            "total": 5072
+          },
+          {
+            "position": 6,
+            "competition_number": 25,
+            "pilot": "KAZLAUSKAS, Ignas",
+            "total": 4956
+          },
+          {
+            "position": 7,
+            "competition_number": 11,
+            "pilot": "KOSTRHUN, Jan",
+            "total": 4954
+          },
+          {
+            "position": 8,
+            "competition_number": 2,
+            "pilot": "NIKOLIć, Drazen",
+            "total": 4922
+          },
+          {
+            "position": 9,
+            "competition_number": 9,
+            "pilot": "GREATRIX, Jonathan",
+            "total": 4847
+          },
+          {
+            "position": 10,
+            "competition_number": 15,
+            "pilot": "MOLNAR, Peter",
+            "total": 4845
+          },
+          {
+            "position": 11,
+            "competition_number": 27,
+            "pilot": "GAUCH, Cedric",
+            "total": 4713
+          },
+          {
+            "position": 12,
+            "competition_number": 30,
+            "pilot": "WALL, Cameron",
+            "total": 4523
+          },
+          {
+            "position": 13,
+            "competition_number": 8,
+            "pilot": "SVAGELJ, Rados",
+            "total": 4434
+          },
+          {
+            "position": 14,
+            "competition_number": 13,
+            "pilot": "GARAB, Szabolcs",
+            "total": 4272
+          },
+          {
+            "position": 15,
+            "competition_number": 23,
+            "pilot": "MOSCARA, Raffael",
+            "total": 3691
+          },
+          {
+            "position": 16,
+            "competition_number": 12,
+            "pilot": "BECZ, Rita",
+            "total": 3539
+          },
+          {
+            "position": 17,
+            "competition_number": 5,
+            "pilot": "BOJANOVIČ, Jernej",
+            "total": 3510
+          },
+          {
+            "position": 18,
+            "competition_number": 4,
+            "pilot": "PAUNOVSKI, Borche",
+            "total": 3176
+          },
+          {
+            "position": 19,
+            "competition_number": 6,
+            "pilot": "DIVJAK, Igor",
+            "total": 3147
+          },
+          {
+            "position": 20,
+            "competition_number": 10,
+            "pilot": "SCAIFE, Graeme",
+            "total": 2850
+          },
+          {
+            "position": 21,
+            "competition_number": 28,
+            "pilot": "OUDENAMPSEN, Jan",
+            "total": 2584
+          },
+          {
+            "position": 22,
+            "competition_number": 14,
+            "pilot": "KONECSNI, Janos",
+            "total": 2545
+          },
+          {
+            "position": 23,
+            "competition_number": 20,
+            "pilot": "PALOCZ, Viktor",
+            "total": 2524
+          },
+          {
+            "position": 24,
+            "competition_number": 17,
+            "pilot": "NAGY, Peter",
+            "total": 2459
+          },
+          {
+            "position": 25,
+            "competition_number": 16,
+            "pilot": "NAGY, Balazs",
+            "total": 1794
+          },
+          {
+            "position": 26,
+            "competition_number": 24,
+            "pilot": "STEFANINI, Massimo",
+            "total": 365
+          }
+        ]
+      },
+      {
+        "through_task": 12,
+        "rows": [
+          {
+            "position": 1,
+            "competition_number": 29,
+            "pilot": "BAREFORD, Dominic",
+            "total": 8642
+          },
+          {
+            "position": 2,
+            "competition_number": 7,
+            "pilot": "KRALJ, Darko",
+            "total": 6931
+          },
+          {
+            "position": 3,
+            "competition_number": 3,
+            "pilot": "REMEIKA, Virginijus",
+            "total": 6471
+          },
+          {
+            "position": 4,
+            "competition_number": 26,
+            "pilot": "TOULSON, Michael",
+            "total": 6002
+          },
+          {
+            "position": 5,
+            "competition_number": 25,
+            "pilot": "KAZLAUSKAS, Ignas",
+            "total": 5956
+          },
+          {
+            "position": 6,
+            "competition_number": 11,
+            "pilot": "KOSTRHUN, Jan",
+            "total": 5865
+          },
+          {
+            "position": 7,
+            "competition_number": 1,
+            "pilot": "FLAGGL, Irene",
+            "total": 5738
+          },
+          {
+            "position": 8,
+            "competition_number": 27,
+            "pilot": "GAUCH, Cedric",
+            "total": 5662
+          },
+          {
+            "position": 9,
+            "competition_number": 15,
+            "pilot": "MOLNAR, Peter",
+            "total": 5516
+          },
+          {
+            "position": 10,
+            "competition_number": 30,
+            "pilot": "WALL, Cameron",
+            "total": 5491
+          },
+          {
+            "position": 11,
+            "competition_number": 2,
+            "pilot": "NIKOLIć, Drazen",
+            "total": 5422
+          },
+          {
+            "position": 12,
+            "competition_number": 9,
+            "pilot": "GREATRIX, Jonathan",
+            "total": 5417
+          },
+          {
+            "position": 13,
+            "competition_number": 8,
+            "pilot": "SVAGELJ, Rados",
+            "total": 4896
+          },
+          {
+            "position": 14,
+            "competition_number": 13,
+            "pilot": "GARAB, Szabolcs",
+            "total": 4810
+          },
+          {
+            "position": 15,
+            "competition_number": 12,
+            "pilot": "BECZ, Rita",
+            "total": 3885
+          },
+          {
+            "position": 16,
+            "competition_number": 23,
+            "pilot": "MOSCARA, Raffael",
+            "total": 3768
+          },
+          {
+            "position": 17,
+            "competition_number": 5,
+            "pilot": "BOJANOVIČ, Jernej",
+            "total": 3664
+          },
+          {
+            "position": 18,
+            "competition_number": 4,
+            "pilot": "PAUNOVSKI, Borche",
+            "total": 3599
+          },
+          {
+            "position": 19,
+            "competition_number": 14,
+            "pilot": "KONECSNI, Janos",
+            "total": 3526
+          },
+          {
+            "position": 20,
+            "competition_number": 28,
+            "pilot": "OUDENAMPSEN, Jan",
+            "total": 3457
+          },
+          {
+            "position": 21,
+            "competition_number": 6,
+            "pilot": "DIVJAK, Igor",
+            "total": 3455
+          },
+          {
+            "position": 22,
+            "competition_number": 10,
+            "pilot": "SCAIFE, Graeme",
+            "total": 3235
+          },
+          {
+            "position": 23,
+            "competition_number": 20,
+            "pilot": "PALOCZ, Viktor",
+            "total": 2755
+          },
+          {
+            "position": 24,
+            "competition_number": 17,
+            "pilot": "NAGY, Peter",
+            "total": 2651
+          },
+          {
+            "position": 25,
+            "competition_number": 16,
+            "pilot": "NAGY, Balazs",
+            "total": 1871
+          },
+          {
+            "position": 26,
+            "competition_number": 24,
+            "pilot": "STEFANINI, Massimo",
+            "total": 442
+          }
+        ]
+      },
+      {
+        "through_task": 13,
+        "rows": [
+          {
+            "position": 1,
+            "competition_number": 29,
+            "pilot": "BAREFORD, Dominic",
+            "total": 9619
+          },
+          {
+            "position": 2,
+            "competition_number": 3,
+            "pilot": "REMEIKA, Virginijus",
+            "total": 7471
+          },
+          {
+            "position": 3,
+            "competition_number": 7,
+            "pilot": "KRALJ, Darko",
+            "total": 7200
+          },
+          {
+            "position": 4,
+            "competition_number": 1,
+            "pilot": "FLAGGL, Irene",
+            "total": 6713
+          },
+          {
+            "position": 5,
+            "competition_number": 27,
+            "pilot": "GAUCH, Cedric",
+            "total": 6587
+          },
+          {
+            "position": 6,
+            "competition_number": 9,
+            "pilot": "GREATRIX, Jonathan",
+            "total": 6378
+          },
+          {
+            "position": 7,
+            "competition_number": 26,
+            "pilot": "TOULSON, Michael",
+            "total": 6348
+          },
+          {
+            "position": 8,
+            "competition_number": 2,
+            "pilot": "NIKOLIć, Drazen",
+            "total": 6298
+          },
+          {
+            "position": 9,
+            "competition_number": 25,
+            "pilot": "KAZLAUSKAS, Ignas",
+            "total": 6110
+          },
+          {
+            "position": 10,
+            "competition_number": 11,
+            "pilot": "KOSTRHUN, Jan",
+            "total": 6096
+          },
+          {
+            "position": 11,
+            "competition_number": 15,
+            "pilot": "MOLNAR, Peter",
+            "total": 6054
+          },
+          {
+            "position": 12,
+            "competition_number": 13,
+            "pilot": "GARAB, Szabolcs",
+            "total": 5715
+          },
+          {
+            "position": 13,
+            "competition_number": 8,
+            "pilot": "SVAGELJ, Rados",
+            "total": 5682
+          },
+          {
+            "position": 14,
+            "competition_number": 30,
+            "pilot": "WALL, Cameron",
+            "total": 5568
+          },
+          {
+            "position": 15,
+            "competition_number": 4,
+            "pilot": "PAUNOVSKI, Borche",
+            "total": 4537
+          },
+          {
+            "position": 16,
+            "competition_number": 14,
+            "pilot": "KONECSNI, Janos",
+            "total": 4436
+          },
+          {
+            "position": 17,
+            "competition_number": 6,
+            "pilot": "DIVJAK, Igor",
+            "total": 4398
+          },
+          {
+            "position": 18,
+            "competition_number": 12,
+            "pilot": "BECZ, Rita",
+            "total": 4347
+          },
+          {
+            "position": 19,
+            "competition_number": 5,
+            "pilot": "BOJANOVIČ, Jernej",
+            "total": 4087
+          },
+          {
+            "position": 20,
+            "competition_number": 23,
+            "pilot": "MOSCARA, Raffael",
+            "total": 3960
+          },
+          {
+            "position": 21,
+            "competition_number": 28,
+            "pilot": "OUDENAMPSEN, Jan",
+            "total": 3842
+          },
+          {
+            "position": 22,
+            "competition_number": 10,
+            "pilot": "SCAIFE, Graeme",
+            "total": 3350
+          },
+          {
+            "position": 23,
+            "competition_number": 20,
+            "pilot": "PALOCZ, Viktor",
+            "total": 3255
+          },
+          {
+            "position": 24,
+            "competition_number": 17,
+            "pilot": "NAGY, Peter",
+            "total": 2959
+          },
+          {
+            "position": 25,
+            "competition_number": 16,
+            "pilot": "NAGY, Balazs",
+            "total": 2827
+          },
+          {
+            "position": 26,
+            "competition_number": 24,
+            "pilot": "STEFANINI, Massimo",
+            "total": 442
+          }
+        ]
+      },
+      {
+        "through_task": 14,
+        "rows": [
+          {
+            "position": 1,
+            "competition_number": 29,
+            "pilot": "BAREFORD, Dominic",
+            "total": 10619
+          },
+          {
+            "position": 2,
+            "competition_number": 3,
+            "pilot": "REMEIKA, Virginijus",
+            "total": 8387
+          },
+          {
+            "position": 3,
+            "competition_number": 7,
+            "pilot": "KRALJ, Darko",
+            "total": 8120
+          },
+          {
+            "position": 4,
+            "competition_number": 27,
+            "pilot": "GAUCH, Cedric",
+            "total": 7580
+          },
+          {
+            "position": 5,
+            "competition_number": 1,
+            "pilot": "FLAGGL, Irene",
+            "total": 7468
+          },
+          {
+            "position": 6,
+            "competition_number": 2,
+            "pilot": "NIKOLIć, Drazen",
+            "total": 7242
+          },
+          {
+            "position": 7,
+            "competition_number": 25,
+            "pilot": "KAZLAUSKAS, Ignas",
+            "total": 7103
+          },
+          {
+            "position": 8,
+            "competition_number": 11,
+            "pilot": "KOSTRHUN, Jan",
+            "total": 6785
+          },
+          {
+            "position": 9,
+            "competition_number": 15,
+            "pilot": "MOLNAR, Peter",
+            "total": 6719
+          },
+          {
+            "position": 10,
+            "competition_number": 26,
+            "pilot": "TOULSON, Michael",
+            "total": 6617
+          },
+          {
+            "position": 11,
+            "competition_number": 9,
+            "pilot": "GREATRIX, Jonathan",
+            "total": 6532
+          },
+          {
+            "position": 12,
+            "competition_number": 30,
+            "pilot": "WALL, Cameron",
+            "total": 6313
+          },
+          {
+            "position": 13,
+            "competition_number": 13,
+            "pilot": "GARAB, Szabolcs",
+            "total": 6215
+          },
+          {
+            "position": 14,
+            "competition_number": 8,
+            "pilot": "SVAGELJ, Rados",
+            "total": 6105
+          },
+          {
+            "position": 15,
+            "competition_number": 4,
+            "pilot": "PAUNOVSKI, Borche",
+            "total": 4999
+          },
+          {
+            "position": 16,
+            "competition_number": 14,
+            "pilot": "KONECSNI, Janos",
+            "total": 4974
+          },
+          {
+            "position": 17,
+            "competition_number": 6,
+            "pilot": "DIVJAK, Igor",
+            "total": 4936
+          },
+          {
+            "position": 18,
+            "competition_number": 28,
+            "pilot": "OUDENAMPSEN, Jan",
+            "total": 4823
+          },
+          {
+            "position": 19,
+            "competition_number": 12,
+            "pilot": "BECZ, Rita",
+            "total": 4578
+          },
+          {
+            "position": 20,
+            "competition_number": 23,
+            "pilot": "MOSCARA, Raffael",
+            "total": 4268
+          },
+          {
+            "position": 21,
+            "competition_number": 5,
+            "pilot": "BOJANOVIČ, Jernej",
+            "total": 4202
+          },
+          {
+            "position": 22,
+            "competition_number": 20,
+            "pilot": "PALOCZ, Viktor",
+            "total": 3601
+          },
+          {
+            "position": 23,
+            "competition_number": 10,
+            "pilot": "SCAIFE, Graeme",
+            "total": 3427
+          },
+          {
+            "position": 24,
+            "competition_number": 17,
+            "pilot": "NAGY, Peter",
+            "total": 3344
+          },
+          {
+            "position": 25,
+            "competition_number": 16,
+            "pilot": "NAGY, Balazs",
+            "total": 3019
+          },
+          {
+            "position": 26,
+            "competition_number": 24,
+            "pilot": "STEFANINI, Massimo",
+            "total": 480
+          }
+        ]
+      },
+      {
+        "through_task": 15,
+        "rows": [
+          {
+            "position": 1,
+            "competition_number": 29,
+            "pilot": "BAREFORD, Dominic",
+            "total": 11265
+          },
+          {
+            "position": 2,
+            "competition_number": 3,
+            "pilot": "REMEIKA, Virginijus",
+            "total": 9033
+          },
+          {
+            "position": 3,
+            "competition_number": 7,
+            "pilot": "KRALJ, Darko",
+            "total": 8766
+          },
+          {
+            "position": 4,
+            "competition_number": 27,
+            "pilot": "GAUCH, Cedric",
+            "total": 8226
+          },
+          {
+            "position": 5,
+            "competition_number": 2,
+            "pilot": "NIKOLIć, Drazen",
+            "total": 8199
+          },
+          {
+            "position": 6,
+            "competition_number": 1,
+            "pilot": "FLAGGL, Irene",
+            "total": 8114
+          },
+          {
+            "position": 7,
+            "competition_number": 25,
+            "pilot": "KAZLAUSKAS, Ignas",
+            "total": 7749
+          },
+          {
+            "position": 8,
+            "competition_number": 9,
+            "pilot": "GREATRIX, Jonathan",
+            "total": 7512
+          },
+          {
+            "position": 9,
+            "competition_number": 11,
+            "pilot": "KOSTRHUN, Jan",
+            "total": 7431
+          },
+          {
+            "position": 10,
+            "competition_number": 15,
+            "pilot": "MOLNAR, Peter",
+            "total": 7365
+          },
+          {
+            "position": 11,
+            "competition_number": 26,
+            "pilot": "TOULSON, Michael",
+            "total": 7263
+          },
+          {
+            "position": 12,
+            "competition_number": 8,
+            "pilot": "SVAGELJ, Rados",
+            "total": 7083
+          },
+          {
+            "position": 13,
+            "competition_number": 30,
+            "pilot": "WALL, Cameron",
+            "total": 6959
+          },
+          {
+            "position": 14,
+            "competition_number": 13,
+            "pilot": "GARAB, Szabolcs",
+            "total": 6861
+          },
+          {
+            "position": 15,
+            "competition_number": 14,
+            "pilot": "KONECSNI, Janos",
+            "total": 5974
+          },
+          {
+            "position": 16,
+            "competition_number": 4,
+            "pilot": "PAUNOVSKI, Borche",
+            "total": 5645
+          },
+          {
+            "position": 17,
+            "competition_number": 6,
+            "pilot": "DIVJAK, Igor",
+            "total": 5582
+          },
+          {
+            "position": 18,
+            "competition_number": 28,
+            "pilot": "OUDENAMPSEN, Jan",
+            "total": 5469
+          },
+          {
+            "position": 19,
+            "competition_number": 12,
+            "pilot": "BECZ, Rita",
+            "total": 5224
+          },
+          {
+            "position": 20,
+            "competition_number": 23,
+            "pilot": "MOSCARA, Raffael",
+            "total": 4914
+          },
+          {
+            "position": 21,
+            "competition_number": 5,
+            "pilot": "BOJANOVIČ, Jernej",
+            "total": 4848
+          },
+          {
+            "position": 22,
+            "competition_number": 20,
+            "pilot": "PALOCZ, Viktor",
+            "total": 4247
+          },
+          {
+            "position": 23,
+            "competition_number": 10,
+            "pilot": "SCAIFE, Graeme",
+            "total": 4073
+          },
+          {
+            "position": 24,
+            "competition_number": 17,
+            "pilot": "NAGY, Peter",
+            "total": 3990
+          },
+          {
+            "position": 25,
+            "competition_number": 16,
+            "pilot": "NAGY, Balazs",
+            "total": 3865
+          },
+          {
+            "position": 26,
+            "competition_number": 24,
+            "pilot": "STEFANINI, Massimo",
+            "total": 1126
+          }
+        ]
+      },
+      {
+        "through_task": 16,
+        "rows": [
+          {
+            "position": 1,
+            "competition_number": 29,
+            "pilot": "BAREFORD, Dominic",
+            "total": 12065
+          },
+          {
+            "position": 2,
+            "competition_number": 3,
+            "pilot": "REMEIKA, Virginijus",
+            "total": 9833
+          },
+          {
+            "position": 3,
+            "competition_number": 7,
+            "pilot": "KRALJ, Darko",
+            "total": 9566
+          },
+          {
+            "position": 4,
+            "competition_number": 27,
+            "pilot": "GAUCH, Cedric",
+            "total": 9026
+          },
+          {
+            "position": 5,
+            "competition_number": 2,
+            "pilot": "NIKOLIć, Drazen",
+            "total": 8999
+          },
+          {
+            "position": 6,
+            "competition_number": 1,
+            "pilot": "FLAGGL, Irene",
+            "total": 8914
+          },
+          {
+            "position": 7,
+            "competition_number": 25,
+            "pilot": "KAZLAUSKAS, Ignas",
+            "total": 8549
+          },
+          {
+            "position": 8,
+            "competition_number": 9,
+            "pilot": "GREATRIX, Jonathan",
+            "total": 8312
+          },
+          {
+            "position": 9,
+            "competition_number": 11,
+            "pilot": "KOSTRHUN, Jan",
+            "total": 8231
+          },
+          {
+            "position": 10,
+            "competition_number": 15,
+            "pilot": "MOLNAR, Peter",
+            "total": 8165
+          },
+          {
+            "position": 11,
+            "competition_number": 26,
+            "pilot": "TOULSON, Michael",
+            "total": 8063
+          },
+          {
+            "position": 12,
+            "competition_number": 8,
+            "pilot": "SVAGELJ, Rados",
+            "total": 7883
+          },
+          {
+            "position": 13,
+            "competition_number": 30,
+            "pilot": "WALL, Cameron",
+            "total": 7759
+          },
+          {
+            "position": 14,
+            "competition_number": 13,
+            "pilot": "GARAB, Szabolcs",
+            "total": 7661
+          },
+          {
+            "position": 15,
+            "competition_number": 14,
+            "pilot": "KONECSNI, Janos",
+            "total": 6774
+          },
+          {
+            "position": 16,
+            "competition_number": 4,
+            "pilot": "PAUNOVSKI, Borche",
+            "total": 6645
+          },
+          {
+            "position": 17,
+            "competition_number": 6,
+            "pilot": "DIVJAK, Igor",
+            "total": 6382
+          },
+          {
+            "position": 18,
+            "competition_number": 28,
+            "pilot": "OUDENAMPSEN, Jan",
+            "total": 6269
+          },
+          {
+            "position": 19,
+            "competition_number": 12,
+            "pilot": "BECZ, Rita",
+            "total": 6024
+          },
+          {
+            "position": 20,
+            "competition_number": 23,
+            "pilot": "MOSCARA, Raffael",
+            "total": 5714
+          },
+          {
+            "position": 21,
+            "competition_number": 5,
+            "pilot": "BOJANOVIČ, Jernej",
+            "total": 5648
+          },
+          {
+            "position": 22,
+            "competition_number": 20,
+            "pilot": "PALOCZ, Viktor",
+            "total": 5047
+          },
+          {
+            "position": 23,
+            "competition_number": 10,
+            "pilot": "SCAIFE, Graeme",
+            "total": 4823
+          },
+          {
+            "position": 24,
+            "competition_number": 17,
+            "pilot": "NAGY, Peter",
+            "total": 4790
+          },
+          {
+            "position": 25,
+            "competition_number": 16,
+            "pilot": "NAGY, Balazs",
+            "total": 4665
+          },
+          {
+            "position": 26,
+            "competition_number": 24,
+            "pilot": "STEFANINI, Massimo",
+            "total": 1926
+          }
+        ]
+      }
+    ]
+  }
+}
