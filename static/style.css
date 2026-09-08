@@ -1,5 +1,8 @@
 
 :root{
+  --pos-w:55px;
+  --pilot-w:270px;
+  --metric-w:78px;
   --ink:#182536;
   --ink-soft:#314257;
   --muted:#718096;
@@ -311,7 +314,10 @@ button:hover{
 
 /* Main results table */
 .table-scroll{
-  overflow:auto;
+  overflow-x:auto;
+  overflow-y:hidden;
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior-x:contain;
   max-width:100%;
   border:1px solid var(--line);
   border-radius:12px;
@@ -358,27 +364,61 @@ button:hover{
   border-bottom:0;
 }
 
-.results-table th:first-child,
-.results-table td:first-child{
+.results-table th:nth-child(-n+6),
+.results-table td:nth-child(-n+6){
   position:sticky;
-  left:0;
-  z-index:3;
+  z-index:5;
   background:#fff;
 }
+
+/* Keep the six identifying/summary columns locked while task columns scroll. */
+.results-table th:nth-child(1),
+.results-table td:nth-child(1){left:0;width:var(--pos-w);min-width:var(--pos-w)}
 
 .results-table th:nth-child(2),
-.results-table td:nth-child(2){
-  position:sticky;
-  left:55px;
-  z-index:3;
-  background:#fff;
-  box-shadow:5px 0 9px rgba(24,37,54,.055);
+.results-table td:nth-child(2){left:var(--pos-w);width:var(--pilot-w);min-width:var(--pilot-w)}
+
+.results-table th:nth-child(3),
+.results-table td:nth-child(3){left:calc(var(--pos-w) + var(--pilot-w));width:var(--metric-w);min-width:var(--metric-w)}
+
+.results-table th:nth-child(4),
+.results-table td:nth-child(4){left:calc(var(--pos-w) + var(--pilot-w) + var(--metric-w));width:var(--metric-w);min-width:var(--metric-w)}
+
+.results-table th:nth-child(5),
+.results-table td:nth-child(5){left:calc(var(--pos-w) + var(--pilot-w) + (var(--metric-w) * 2));width:var(--metric-w);min-width:var(--metric-w)}
+
+.results-table th:nth-child(6),
+.results-table td:nth-child(6){
+  left:calc(var(--pos-w) + var(--pilot-w) + (var(--metric-w) * 3));
+  width:var(--metric-w);
+  min-width:var(--metric-w);
+  box-shadow:7px 0 12px rgba(24,37,54,.09);
 }
 
-.results-table th:first-child,
-.results-table th:nth-child(2){
-  z-index:4;
+.results-table th:nth-child(-n+6){
+  z-index:8;
   background:#edf4f8;
+}
+
+/* Opaque backgrounds are important on phones so task cells cannot show through. */
+.results-table td:nth-child(-n+6){
+  background:#fff;
+}
+
+.results-table td.total-cell{
+  background:#f3f8fc;
+}
+
+.results-table td.total-provisional{
+  background:var(--warn-light) !important;
+}
+
+.results-table tbody tr:hover td:nth-child(-n+6){
+  background:#f6fbff;
+}
+
+.results-table tbody tr:hover td.total-cell{
+  background:#eef7fc;
 }
 
 .results-table .pilot-cell{
@@ -651,6 +691,30 @@ table:not(.results-table) td{
 }
 
 @media (max-width:620px){
+  :root{
+    --pos-w:48px;
+    --pilot-w:190px;
+    --metric-w:72px;
+  }
+
+  .results-table{
+    min-width:980px;
+  }
+
+  .results-table .pilot-cell{
+    min-width:var(--pilot-w);
+  }
+
+  .results-table .flag{
+    width:28px;
+    font-size:18px;
+  }
+
+  .results-table th,
+  .results-table td{
+    padding:10px 8px;
+  }
+
   .stats{
     grid-template-columns:1fr;
   }
