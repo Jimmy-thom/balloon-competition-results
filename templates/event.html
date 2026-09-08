@@ -1,23 +1,21 @@
 {% extends 'base.html' %} {% block title %}{{event.title}}{% endblock %} {% block content %}
 {{event.location}}
 {{event.title}}
-{{event.dates}}
+{{event.start_date}} – {{event.end_date}}
 
 Compare pilots
 {{pilot_count}}Pilots
 {{tasks|length}}Task occurrences
 {{flights|length}}Flights
-Competition standings
-Current totals include published provisional results. Provisional task scores are marked P.
+Overall standings
+Official or provisional scoring, with a task-range selector.
 
 
-Include provisional
+Official only
  From 
 1
  To 
 Latest
-P Provisional result
-Totals and rankings include provisional scores when selected
 Loading…
 Ranking progression
 Top eight pilots after each task. Lower position is better.
