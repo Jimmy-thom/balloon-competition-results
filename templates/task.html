@@ -1,1 +1,144 @@
-{% extends 'base.html' %}{% block title %}Task {{task.task_number}} — {{event.title}}{% endblock %}{% block content %}<div class="event-head"><div><div class="eyebrow">{{event.title}}</div><h1>Task {{task.task_number}} — {{task.name}}</h1><p class="muted">{{task.flight_number}} · {{task.flight_date}}</p></div><span class="status {{task.status|lower}}">{{task.status}}</span></div><div class="card"><div class="section-head"><h2>Results</h2><div class="controls"><a class="pill" href="?mode=official">Official</a><a class="pill" href="?mode=all">Including provisional</a></div></div><div class="table-scroll"><table><thead><tr><th>Rank</th><th>Pilot</th><th>Country</th><th>Result</th><th>Points</th><th>Penalty T</th><th>Penalty C</th><th>Score</th><th>Notes</th></tr></thead><tbody>{% for r in results %}<tr><td>{{r.rank}}</td><td><a href="/event/{{event.id}}/pilot/{{r.competition_number}}">#{{r.competition_number}} — {{r.name}}</a></td><td>{{r.country}}</td><td>{{r.result_text}}</td><td>{{r.points}}</td><td>{{r.penalty_t}}</td><td>{{r.penalty_c}}</td><td class="score">{{r.score}}</td><td>{{r.notes}}</td></tr>{% endfor %}</tbody></table></div></div>{% endblock %}
+{% extends 'base.html' %}
+{% block title %}Task {{task.task_number}} — {{event.title}}{% endblock %}
+{% block content %}
+
+<div class="event-head task-head">
+  <div>
+    <div class="eyebrow">{{event.title}}</div>
+    <h1>Task {{task.task_number}} — {{task.name}}</h1>
+    <p class="muted">{{task.flight_number}} · {{task.flight_date}}</p>
+  </div>
+  <span class="status {{task.status|lower}}">{{task.status}}</span>
+</div>
+
+<div class="card task-nav-card">
+  <div class="task-nav" id="task-nav">
+    <span class="loading">Loading task navigation…</span>
+  </div>
+</div>
+
+<div class="card">
+  <div class="section-head">
+    <div>
+      <h2>Results</h2>
+      <p class="muted">Actual result achieved and points awarded. Scores are shown as whole numbers.</p>
+    </div>
+    <div class="controls">
+      <a class="pill" href="?mode=official">Official</a>
+      <a class="pill" href="?mode=all">Including provisional</a>
+    </div>
+  </div>
+
+  <div class="table-scroll">
+    <table>
+      <thead>
+        <tr>
+          <th>Rank</th>
+          <th>Pilot</th>
+          <th>Country</th>
+          <th>Result</th>
+          <th>Points</th>
+          <th>Penalty T</th>
+          <th>Penalty C</th>
+          <th>Score</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in results %}
+        <tr>
+          <td>{{r.rank}}</td>
+          <td><a href="/event/{{event.id}}/pilot/{{r.competition_number}}">#{{r.competition_number}} — {{r.name}}</a></td>
+          <td>{{r.country or '—'}}</td>
+          <td>{{r.result_text or '—'}}</td>
+          <td class="whole-number">{{r.points|default(0, true)|round(0)|int}}</td>
+          <td class="whole-number">{{r.penalty_t|default(0, true)|round(0)|int}}</td>
+          <td class="whole-number">{{r.penalty_c|default(0, true)|round(0)|int}}</td>
+          <td class="score whole-number">{{r.score|default(0, true)|round(0)|int}}</td>
+          <td>{{r.notes or ''}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<style>
+.task-head{align-items:center}
+.task-head h1{margin-bottom:6px}
+.task-nav-card{padding:14px 18px}
+.task-nav{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.task-nav a{display:flex;flex-direction:column;gap:3px;text-decoration:none}
+.task-nav .nav-label{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:800}
+.task-nav .nav-task{font-weight:850;color:var(--text)}
+.task-nav .current-task{text-align:center;flex:1}
+.task-nav .current-task strong{font-size:16px}
+.task-nav .disabled{visibility:hidden}
+.whole-number{font-variant-numeric:tabular-nums}
+@media(max-width:760px){
+  .task-nav{gap:8px}
+  .task-nav a{max-width:38%}
+  .task-nav .current-task{max-width:24%}
+  .task-nav .nav-task{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+}
+</style>
+
+<script>
+const eventId={{event.id|tojson}};
+const currentTaskNumber={{task.task_number|tojson}};
+
+function esc(s){
+  return String(s ?? '').replace(/[&<>"']/g,m=>({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  }[m]));
+}
+
+async function loadTaskNavigation(){
+  const nav=document.getElementById('task-nav');
+  try{
+    const response=await fetch(`/api/event/${encodeURIComponent(eventId)}/tasks`);
+    if(!response.ok) throw new Error('Task list request failed');
+
+    const tasks=await response.json();
+    const usable=tasks
+      .filter(t=>t && Number.isFinite(Number(t.task_number)))
+      .sort((a,b)=>Number(a.task_number)-Number(b.task_number));
+
+    const index=usable.findIndex(t=>Number(t.task_number)===Number(currentTaskNumber));
+    if(index<0){
+      nav.innerHTML='';
+      return;
+    }
+
+    const previous=usable[index-1];
+    const next=usable[index+1];
+    const mode=new URLSearchParams(window.location.search).get('mode') || 'all';
+
+    const prevHtml=previous
+      ? `<a href="/event/${encodeURIComponent(eventId)}/task/${previous.task_number}?mode=${encodeURIComponent(mode)}">
+           <span class="nav-label">← Previous task</span>
+           <span class="nav-task">T${previous.task_number} — ${esc(previous.name)}</span>
+         </a>`
+      : '<a class="disabled" aria-hidden="true"><span class="nav-label">← Previous task</span><span class="nav-task">—</span></a>';
+
+    const nextHtml=next
+      ? `<a href="/event/${encodeURIComponent(eventId)}/task/${next.task_number}?mode=${encodeURIComponent(mode)}" style="text-align:right">
+           <span class="nav-label">Next task →</span>
+           <span class="nav-task">T${next.task_number} — ${esc(next.name)}</span>
+         </a>`
+      : '<a class="disabled" aria-hidden="true"><span class="nav-label">Next task →</span><span class="nav-task">—</span></a>';
+
+    nav.innerHTML=
+      prevHtml+
+      `<div class="current-task"><span class="nav-label">Current</span><strong>T${currentTaskNumber} — ${esc(usable[index].name)}</strong></div>`+
+      nextHtml;
+  }catch(err){
+    console.error(err);
+    nav.innerHTML='';
+  }
+}
+
+loadTaskNavigation();
+</script>
+
+{% endblock %}
