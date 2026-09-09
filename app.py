@@ -249,7 +249,23 @@ def search_page(eid):
     c.close(); return render_template("search.html",event=e,q=q,pilots=pilots)
 @app.get("/event/<eid>/history")
 def history_page(eid):
-    e=event(eid); c=conn(eid); runs=[dict(r) for r in c.execute("SELECT * FROM import_runs WHERE competition_id=? ORDER BY imported_at DESC",(eid,)).fetchall()]; c.close(); return render_template("history.html",event=e,runs=runs)
+    e=event(eid); c=conn(eid)
+    raw_runs=c.execute("SELECT * FROM import_runs WHERE competition_id=? ORDER BY imported_at DESC",(eid,)).fetchall()
+    runs=[]
+    for i,row in enumerate(raw_runs):
+        run=dict(row)
+        rid=run.get("id")
+        stats=c.execute("""SELECT COUNT(*) AS results,
+                                COUNT(DISTINCT pilot_id) AS pilots,
+                                COUNT(DISTINCT task_id) AS tasks
+                         FROM results WHERE import_run_id=?""",(rid,)).fetchone()
+        run["results_count"]=stats["results"] if stats else 0
+        run["pilots_count"]=stats["pilots"] if stats else 0
+        run["tasks_count"]=stats["tasks"] if stats else 0
+        run["is_latest"]=(i==0)
+        runs.append(run)
+    c.close()
+    return render_template("history.html",event=e,runs=runs)
 @app.get("/event/<eid>/flight/<flight_id>")
 def flight_page(eid,flight_id):
     e=event(eid); c=conn(eid); f=c.execute("SELECT * FROM flights WHERE competition_id=? AND id=?",(eid,flight_id)).fetchone()
