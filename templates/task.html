@@ -49,8 +49,21 @@
         <tr>
           <td>{{r.rank}}</td>
           <td><a href="/event/{{event.id}}/pilot/{{r.competition_number}}">#{{r.competition_number}} — {{r.name}}</a></td>
-          <td>{{r.country or '—'}}</td>
-          <td>{{r.result_text or '—'}}</td>
+          <td>
+            {% set flags = {
+              "United Kingdom":"🇬🇧","UK":"🇬🇧","Australia":"🇦🇺","Belgium":"🇧🇪","Croatia":"🇭🇷",
+              "Czech Republic":"🇨🇿","Czechia":"🇨🇿","Hungary":"🇭🇺","Switzerland":"🇨🇭","Lithuania":"🇱🇹",
+              "Slovenia":"🇸🇮","United States":"🇺🇸","USA":"🇺🇸","Austria":"🇦🇹","Germany":"🇩🇪",
+              "France":"🇫🇷","Poland":"🇵🇱","Slovakia":"🇸🇰","Italy":"🇮🇹","Spain":"🇪🇸",
+              "Netherlands":"🇳🇱","Denmark":"🇩🇰","Norway":"🇳🇴","Sweden":"🇸🇪","Brazil":"🇧🇷",
+              "Canada":"🇨🇦","Japan":"🇯🇵","New Zealand":"🇳🇿","South Africa":"🇿🇦","Ireland":"🇮🇪",
+              "Finland":"🇫🇮","Portugal":"🇵🇹","Romania":"🇷🇴","Serbia":"🇷🇸","Turkey":"🇹🇷",
+              "Israel":"🇮🇱","Mexico":"🇲🇽","Bulgaria":"🇧🇬"
+            } %}
+            <span class="flag" aria-label="{{r.country or 'Unknown country'}}">{{flags.get(r.country, '🏳️')}}</span>
+            {{r.country or '—'}}
+          </td>
+          <td>{{r.result or '—'}}</td>
           <td class="whole-number">{{r.points|default(0, true)|round(0)|int}}</td>
           <td class="whole-number">{{r.penalty_t|default(0, true)|round(0)|int}}</td>
           <td class="whole-number">{{r.penalty_c|default(0, true)|round(0)|int}}</td>
@@ -75,6 +88,7 @@
 .task-nav .current-task strong{font-size:16px}
 .task-nav .disabled{visibility:hidden}
 .whole-number{font-variant-numeric:tabular-nums}
+.country .flag{font-size:20px;margin-right:6px;vertical-align:-2px}
 @media(max-width:760px){
   .task-nav{gap:8px}
   .task-nav a{max-width:38%}
