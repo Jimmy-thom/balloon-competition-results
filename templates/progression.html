@@ -1,4 +1,9 @@
-<div>
+{% extends 'base.html' %}
+{% block title %}Ranking progression — {{event.title}}{% endblock %}
+
+{% block content %}
+<div class="event-head">
+  <div>
     <div class="eyebrow">{{event.location}}</div>
     <h1>Ranking progression</h1>
     <p class="muted">{{event.title}} · Top eight pilots after each task</p>
@@ -12,11 +17,13 @@
       <h2>Ranking progression</h2>
       <p class="muted">Lower position is better. Use the filters to change the scoring range.</p>
     </div>
+
     <div class="controls">
       <select id="mode">
         <option value="official">Official only</option>
         <option value="all">Include provisional</option>
       </select>
+
       <label>From
         <select id="from">
           <option value="">1</option>
@@ -25,6 +32,7 @@
           {% endfor %}
         </select>
       </label>
+
       <label>To
         <select id="to">
           <option value="">Latest</option>
@@ -42,6 +50,7 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+
 <script>
 const eid={{event.id|tojson}},
       mode=document.getElementById('mode'),
@@ -59,12 +68,17 @@ function qs(){
 
 async function load(){
   const d=await fetch(`/api/event/${eid}/progression?${qs()}`).then(r=>r.json());
+
   const labels=d.progression.map(x=>'T'+x.through_task);
   const top=d.progression.at(-1)?.rows.slice(0,8)||[];
 
   const ds=top.map(r=>({
     label:'#'+r.competition_number+' — '+r.pilot,
-    data:d.progression.map(x=>x.rows.find(y=>y.competition_number===r.competition_number)?.position??null),
+    data:d.progression.map(
+      x=>x.rows.find(
+        y=>y.competition_number===r.competition_number
+      )?.position??null
+    ),
     tension:.25
   }));
 
@@ -77,12 +91,25 @@ async function load(){
       responsive:true,
       maintainAspectRatio:false,
       scales:{
-        y:{reverse:true,ticks:{precision:0}},
-        x:{title:{display:true,text:'Task'}}
+        y:{
+          reverse:true,
+          ticks:{precision:0}
+        },
+        x:{
+          title:{
+            display:true,
+            text:'Task'
+          }
+        }
       },
       plugins:{
-        legend:{position:'bottom'},
-        tooltip:{mode:'index',intersect:false}
+        legend:{
+          position:'bottom'
+        },
+        tooltip:{
+          mode:'index',
+          intersect:false
+        }
       }
     }
   });
@@ -92,4 +119,3 @@ async function load(){
 load();
 </script>
 {% endblock %}
-progression.html
