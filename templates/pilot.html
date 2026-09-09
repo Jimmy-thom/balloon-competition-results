@@ -9,8 +9,18 @@
     margin-bottom:16px;
   }
   .pilot-hero h1{margin:4px 0 6px}
-  .pilot-country{display:flex;align-items:center;gap:8px}
-  .pilot-country img{width:24px;height:16px;object-fit:cover;border-radius:2px}
+  .pilot-country{display:flex;align-items:center;gap:7px;margin-top:2px}
+  .pilot-country .flag{font-size:18px;line-height:1}
+  .pilot-country .country-name{font-weight:700;color:#526274}
+  .pilot-actions{display:flex;gap:8px;flex-wrap:wrap}
+  .status-badge{display:inline-flex;align-items:center;padding:3px 7px;border-radius:999px;font-size:10px;font-weight:800;line-height:1;text-transform:uppercase;letter-spacing:.03em}
+  .status-final{background:#e8f4ea;color:#2e6b3a}
+  .status-provisional{background:#fff2cc;color:#7d5a00}
+  .status-other{background:#edf1f5;color:#5c6977}
+  .flight-link{font-weight:750;white-space:nowrap}
+  .flight-date{display:block;margin-top:2px;color:#71808f;font-size:10px;line-height:1.2}
+  .result-cell{font-weight:700;white-space:nowrap}
+  .pilot-table th,.pilot-table td{padding:8px 10px}
   .pilot-summary{
     display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
     gap:10px;margin-bottom:16px;
@@ -25,7 +35,6 @@
   .pilot-table td{vertical-align:middle}
   .pilot-table .task-link{font-weight:700}
   .pilot-table .score{font-weight:800}
-  .status.provisional{font-weight:700}
   .pilot-back{margin-top:12px}
   @media(max-width:700px){
     .pilot-hero{align-items:flex-start;flex-direction:column}
@@ -39,32 +48,32 @@
     <div class="eyebrow">{{event.title}}</div>
     <h1>#{{pilot.competition_number}} — {{pilot.name}}</h1>
     <div class="muted pilot-country">
-      {% set c = pilot.country|lower %}
-      {% if 'united kingdom' in c or c in ['gb','gbr'] %}<span>🇬🇧</span>
-      {% elif 'australia' in c or c in ['au','aus'] %}<span>🇦🇺</span>
-      {% elif 'belgium' in c or c in ['be','bel'] %}<span>🇧🇪</span>
-      {% elif 'austria' in c or c in ['at','aut'] %}<span>🇦🇹</span>
-      {% elif 'croatia' in c or c in ['hr','hrv'] %}<span>🇭🇷</span>
-      {% elif 'czech' in c or c in ['cz','cze'] %}<span>🇨🇿</span>
-      {% elif 'germany' in c or c in ['de','deu'] %}<span>🇩🇪</span>
-      {% elif 'hungary' in c or c in ['hu','hun'] %}<span>🇭🇺</span>
-      {% elif 'lithuania' in c or c in ['lt','ltu'] %}<span>🇱🇹</span>
-      {% elif 'netherlands' in c or c in ['nl','nld'] %}<span>🇳🇱</span>
-      {% elif 'poland' in c or c in ['pl','pol'] %}<span>🇵🇱</span>
-      {% elif 'slovakia' in c or c in ['sk','svk'] %}<span>🇸🇰</span>
-      {% elif 'slovenia' in c or c in ['si','svn'] %}<span>🇸🇮</span>
-      {% elif 'new zealand' in c or c in ['nz','nzl'] %}<span>🇳🇿</span>
-      {% elif 'france' in c or c in ['fr','fra'] %}<span>🇫🇷</span>
-      {% elif 'italy' in c or c in ['it','ita'] %}<span>🇮🇹</span>
-      {% elif 'spain' in c or c in ['es','esp'] %}<span>🇪🇸</span>
-      {% elif 'switzerland' in c or c in ['ch','che'] %}<span>🇨🇭</span>
-      {% elif 'united states' in c or c in ['us','usa'] %}<span>🇺🇸</span>
-      {% elif 'canada' in c or c in ['ca','can'] %}<span>🇨🇦</span>
-      {% else %}<span>🌍</span>{% endif %}
-      <span>{{pilot.country}}</span>
+      {% set c = (pilot.country or '')|lower|trim %}
+      {% if 'united kingdom' in c or c in ['gb','gbr'] %}<span class="flag">🇬🇧</span>
+      {% elif 'australia' in c or c in ['au','aus'] %}<span class="flag">🇦🇺</span>
+      {% elif 'belgium' in c or c in ['be','bel'] %}<span class="flag">🇧🇪</span>
+      {% elif 'austria' in c or c in ['at','aut'] %}<span class="flag">🇦🇹</span>
+      {% elif 'croatia' in c or c in ['hr','hrv'] %}<span class="flag">🇭🇷</span>
+      {% elif 'czech' in c or c in ['cz','cze'] %}<span class="flag">🇨🇿</span>
+      {% elif 'germany' in c or c in ['de','deu'] %}<span class="flag">🇩🇪</span>
+      {% elif 'hungary' in c or c in ['hu','hun'] %}<span class="flag">🇭🇺</span>
+      {% elif 'lithuania' in c or c in ['lt','ltu'] %}<span class="flag">🇱🇹</span>
+      {% elif 'netherlands' in c or c in ['nl','nld'] %}<span class="flag">🇳🇱</span>
+      {% elif 'poland' in c or c in ['pl','pol'] %}<span class="flag">🇵🇱</span>
+      {% elif 'slovakia' in c or c in ['sk','svk'] %}<span class="flag">🇸🇰</span>
+      {% elif 'slovenia' in c or c in ['si','svn'] %}<span class="flag">🇸🇮</span>
+      {% elif 'new zealand' in c or c in ['nz','nzl'] %}<span class="flag">🇳🇿</span>
+      {% elif 'france' in c or c in ['fr','fra'] %}<span class="flag">🇫🇷</span>
+      {% elif 'italy' in c or c in ['it','ita'] %}<span class="flag">🇮🇹</span>
+      {% elif 'spain' in c or c in ['es','esp'] %}<span class="flag">🇪🇸</span>
+      {% elif 'switzerland' in c or c in ['ch','che'] %}<span class="flag">🇨🇭</span>
+      {% elif 'united states' in c or c in ['us','usa'] %}<span class="flag">🇺🇸</span>
+      {% elif 'canada' in c or c in ['ca','can'] %}<span class="flag">🇨🇦</span>
+      {% else %}<span class="flag">🌍</span>{% endif %}
+      <span class="country-name">{{pilot.country}}</span>
     </div>
   </div>
-  <div>
+  <div class="pilot-actions">
     <a class="button" href="/event/{{event.id}}">← Back to event</a>
     <a class="button" href="/event/{{event.id}}/compare?pilots={{pilot.competition_number}}">Compare</a>
   </div>
@@ -108,11 +117,21 @@
               T{{r.task_number}} — {{r.name}}
             </a>
           </td>
-          <td>{{r.flight_number}}<br><small>{{r.flight_date}}</small></td>
-          <td><span class="status {{r.status|lower}}">{{r.status}}</span></td>
-          <td>{{r.result_text}}</td>
-          <td>{{r.points}}</td>
-          <td class="score">{{r.score}}</td>
+          <td>
+            {% if r.flight_number %}
+              <a class="flight-link" href="/event/{{event.id}}/task/{{r.task_number}}">Flight {{r.flight_number}}</a>
+            {% else %}
+              <span class="flight-link">Flight</span>
+            {% endif %}
+            <span class="flight-date">{{r.flight_date}}</span>
+          </td>
+          <td>
+            {% set st = (r.status or '')|upper %}
+            <span class="status-badge {% if st == 'FINAL' %}status-final{% elif 'PROVISIONAL' in st %}status-provisional{% else %}status-other{% endif %}">{{r.status}}</span>
+          </td>
+          <td class="result-cell">{{r.result}}</td>
+          <td>{{"%.0f"|format(r.points or 0)}}</td>
+          <td class="score">{{"%.0f"|format(r.score or 0)}}</td>
         </tr>
         {% endfor %}
       </tbody>
