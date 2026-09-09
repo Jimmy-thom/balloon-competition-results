@@ -1,0 +1,51 @@
+/* Final site-wide navigation polish */
+.site-nav{
+  display:block;
+  width:100%;
+}
+.site-nav .nav-inner{
+  max-width:1380px;
+  margin:0 auto;
+  padding:12px 24px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:24px;
+}
+.site-nav .brand{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  min-width:0;
+  color:var(--accent-dark);
+  font-weight:800;
+  white-space:nowrap;
+}
+.site-nav .brand:hover{text-decoration:none}
+.site-nav .nav-links{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:6px;
+  flex-wrap:wrap;
+}
+.site-nav .nav-links a{
+  display:inline-flex;
+  align-items:center;
+  min-height:34px;
+  padding:6px 10px;
+  border-radius:8px;
+  color:var(--ink-soft);
+  font-size:13px;
+  font-weight:800;
+}
+.site-nav .nav-links a:hover{
+  color:var(--accent-dark);
+  background:var(--accent-light);
+  text-decoration:none;
+}
+@media(max-width:700px){
+  .site-nav .nav-inner{padding:10px 14px;align-items:flex-start;flex-direction:column;gap:6px}
+  .site-nav .nav-links{width:100%;justify-content:flex-start;overflow-x:auto;flex-wrap:nowrap;padding-bottom:2px}
+  .site-nav .nav-links a{flex:0 0 auto}
+}
