@@ -1,1 +1,113 @@
-{% extends 'base.html' %}{% block title %}Import history — {{event.title}}{% endblock %}{% block content %}<div class="eyebrow">{{event.title}}</div><h1>Import history</h1><div class="card"><table><thead><tr><th>Imported</th><th>Run ID</th><th>Status</th></tr></thead><tbody>{% for r in runs %}<tr><td>{{r.imported_at}}</td><td><code>{{r.id}}</code></td><td>{{r.status if r.status is defined else ''}}</td></tr>{% else %}<tr><td colspan="3">No import history.</td></tr>{% endfor %}</tbody></table></div>{% endblock %}
+{% extends 'base.html' %}
+{% block title %}{{event.title}} — History{% endblock %}
+
+{% block content %}
+<div class="history-page">
+  <div class="page-head">
+    <div>
+      <div class="eyebrow">{{event.title}}</div>
+      <h1>Import history</h1>
+      <p class="lead">See when this competition's results were imported and how much data each import contains.</p>
+    </div>
+    <a class="button" href="/event/{{event.id}}">← Back to event</a>
+  </div>
+
+  {% if runs %}
+  <div class="history-summary">
+    <div class="summary-card">
+      <span>IMPORTS</span>
+      <strong>{{runs|length}}</strong>
+    </div>
+    <div class="summary-card">
+      <span>LATEST IMPORT</span>
+      <strong>Current</strong>
+    </div>
+    <div class="summary-card">
+      <span>EVENT</span>
+      <strong>{{event.location}}</strong>
+    </div>
+  </div>
+
+  <section class="card">
+    <div class="section-head">
+      <div>
+        <h2>Import runs</h2>
+        <p class="muted">Each run represents a snapshot of the results imported for this event.</p>
+      </div>
+    </div>
+
+    <div class="history-list">
+      {% for run in runs %}
+      <article class="history-item{% if run.is_latest %} latest{% endif %}">
+        <div class="history-main">
+          <div class="history-title-row">
+            <h3>Import run #{{run.id}}</h3>
+            {% if run.is_latest %}<span class="status-badge latest-badge">LATEST</span>{% endif %}
+          </div>
+          <div class="import-date" data-date="{{run.imported_at}}">{{run.imported_at}}</div>
+        </div>
+
+        <div class="history-stats">
+          <div><strong>{{run.pilots_count}}</strong><span>Pilots</span></div>
+          <div><strong>{{run.tasks_count}}</strong><span>Tasks</span></div>
+          <div><strong>{{run.results_count}}</strong><span>Results</span></div>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  </section>
+  {% else %}
+  <section class="card empty-state">
+    <div class="empty-icon">↻</div>
+    <h2>No import history yet</h2>
+    <p class="muted">There are no recorded result imports for this event.</p>
+    <a class="button primary" href="/event/{{event.id}}">Back to event</a>
+  </section>
+  {% endif %}
+</div>
+
+<style>
+.history-page{max-width:1180px;margin:0 auto}
+.page-head{display:flex;justify-content:space-between;align-items:end;gap:24px;margin:8px 0 24px}
+.page-head h1{margin:6px 0 8px;font-size:clamp(2rem,4vw,3rem);letter-spacing:-.03em}
+.lead{margin:0;color:var(--muted);font-size:1.02rem}
+.history-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:18px}
+.summary-card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px 20px;box-shadow:0 8px 24px rgba(20,50,80,.05)}
+.summary-card span{display:block;font-size:.7rem;font-weight:800;letter-spacing:.1em;color:var(--muted);margin-bottom:7px}
+.summary-card strong{font-size:1.45rem;color:var(--ink)}
+.history-list{display:grid;gap:12px}
+.history-item{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:20px 22px;border:1px solid var(--line);border-radius:14px;background:var(--soft)}
+.history-item.latest{background:var(--accent-light);border-color:#a9d7f5}
+.history-title-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.history-title-row h3{margin:0;font-size:1.05rem}
+.import-date{margin-top:6px;color:var(--muted);font-size:.9rem}
+.history-stats{display:flex;gap:28px;flex-shrink:0}
+.history-stats div{text-align:right;min-width:64px}
+.history-stats strong{display:block;font-size:1.15rem;color:var(--ink)}
+.history-stats span{display:block;color:var(--muted);font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-top:2px}
+.status-badge{display:inline-flex;align-items:center;border-radius:999px;padding:4px 8px;font-size:.68rem;font-weight:800;letter-spacing:.06em}
+.latest-badge{background:#d9f3e8;color:var(--success)}
+.empty-state{text-align:center;padding:54px 24px}
+.empty-icon{font-size:2rem;margin-bottom:8px;color:var(--accent)}
+.empty-state h2{margin:0 0 8px}
+.empty-state p{margin:0 0 20px}
+@media(max-width:700px){
+  .page-head{align-items:flex-start;flex-direction:column}
+  .history-summary{grid-template-columns:1fr}
+  .history-item{align-items:flex-start;flex-direction:column}
+  .history-stats{width:100%;justify-content:space-between;gap:10px}
+  .history-stats div{text-align:left}
+}
+</style>
+
+<script>
+document.querySelectorAll('.import-date').forEach(el=>{
+  const raw=el.dataset.date;
+  if(!raw)return;
+  const d=new Date(raw);
+  if(!Number.isNaN(d.getTime())){
+    el.textContent=d.toLocaleString(undefined,{year:'numeric',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
+  }
+});
+</script>
+{% endblock %}
