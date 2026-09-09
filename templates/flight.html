@@ -72,16 +72,21 @@
   <div class="section-head">
     <div>
       <h2>Tasks on this flight</h2>
-      <p class="muted">Open a task to see the individual task results.</p>
+      <p class="muted">Select a task to open its individual results.</p>
     </div>
   </div>
-  <div class="task-grid">
+  <div class="flight-task-grid">
     {% for t in tasks %}
-    <a class="task-chip" href="/event/{{event.id}}/task/{{t.task_number}}">
-      <strong>T{{t.task_number}}</strong>
-      <span>{{t.name}}</span>
-      <em>{{t.status}}</em>
-      {% if t.published %}<small>{{t.published}}</small>{% endif %}
+    <a class="flight-task-card" href="/event/{{event.id}}/task/{{t.task_number}}">
+      <div class="flight-task-top">
+        <strong>T{{t.task_number}}</strong>
+        <span class="flight-task-arrow">→</span>
+      </div>
+      <span class="flight-task-name">{{t.name}}</span>
+      <div class="flight-task-meta">
+        <em>{{t.status}}</em>
+        {% if t.published %}<small>{{t.published}}</small>{% endif %}
+      </div>
     </a>
     {% endfor %}
   </div>
@@ -120,6 +125,28 @@
 .move-up{color:#168052}.move-down{color:#c44b45}.move-flat{color:#8a94a1}
 .prov-mark{display:inline-flex;align-items:center;justify-content:center;margin-left:5px;min-width:18px;height:18px;padding:0 4px;border-radius:5px;background:var(--warn-bg);color:var(--warn);font-size:10px;font-weight:900;vertical-align:2px}
 .error-box{padding:18px;text-align:center;color:#8b3e39;background:#fff5f4;border:1px solid #f0d4d1;border-radius:11px}
+/* Flight results visual polish */
+.flight-table-wrap{box-shadow:0 4px 14px rgba(31,55,80,.05)}
+.flight-table th{padding-top:13px;padding-bottom:13px;background:linear-gradient(#f8fafc,#f2f6f9)}
+.flight-table td{padding-top:13px;padding-bottom:13px}
+.flight-table tbody tr:nth-child(even) td{background:#fcfdfe}
+.flight-table tbody tr:hover td{background:#f5f9fc}
+.flight-table .pos{font-size:14px;color:#536477}
+.flight-table .pilot{font-size:14px}
+.flight-table .pilot a{color:var(--text);text-decoration:none}
+.flight-table .country{font-size:13px}
+.flight-table .score{font-size:15px}
+.flight-table .movement{font-size:13px}
+.flight-task-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.flight-task-card{display:flex;flex-direction:column;gap:7px;padding:15px 16px;border:1px solid var(--line);border-radius:13px;background:linear-gradient(#fff,#fbfcfd);text-decoration:none;transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease}
+.flight-task-card:hover{transform:translateY(-1px);border-color:#b9cbd9;box-shadow:0 6px 18px rgba(31,55,80,.08)}
+.flight-task-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.flight-task-top strong{font-size:13px;letter-spacing:.05em;color:#557086}
+.flight-task-arrow{font-size:18px;font-weight:800;color:#7c91a3}
+.flight-task-name{font-size:15px;font-weight:800;line-height:1.3;color:var(--text)}
+.flight-task-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.flight-task-meta em{font-style:normal;font-size:10px;font-weight:850;text-transform:uppercase;letter-spacing:.05em;color:#667486}
+.flight-task-meta small{font-size:11px;color:var(--muted)}
 @media(max-width:760px){
   .flight-nav{grid-template-columns:1fr 1fr;gap:8px}
   .flight-nav-current{display:none}
@@ -130,6 +157,7 @@
   .flight-controls select{min-width:0;flex:1}
   .flight-table{min-width:690px}
   .flight-table th,.flight-table td{padding:10px 11px}
+  .flight-task-grid{grid-template-columns:1fr}
 }
 </style>
 
