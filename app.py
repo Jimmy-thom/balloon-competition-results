@@ -30,7 +30,7 @@ def mode_statuses(mode):
 def all_tasks(c,eid):
     return [dict(r) for r in c.execute("""SELECT t.*, f.flight_number, f.date_label AS flight_date
       FROM tasks t LEFT JOIN flights f ON f.id=t.flight_id
-      WHERE t.competition_id=? ORDER BY t.task_number, f.date_label""",(eid,))]
+      WHERE t.competition_id=? ORDER BY t.task_number, f.date_label""",(eid,)).fetchall()]
 def active_task(c,eid,num):
     return c.execute("""SELECT t.*,f.flight_number,f.date_label AS flight_date
       FROM tasks t LEFT JOIN flights f ON f.id=t.flight_id
@@ -64,7 +64,7 @@ def standings_data(eid,mode="official",start=None,end=None):
     out=[{"position":i,"competition_number":n,"pilot":pilots[n]["name"],"country":pilots[n]["country"],"total":totals[n],"tasks":scores.get(n,{}),"statuses":statuses_by.get(n,{})} for i,n in enumerate(ordered,1)]
     c.close(); return out
 def progression_data(eid,mode="official",start=None,end=None):
-    c=conn(eid); nums=[r["task_number"] for r in c.execute("SELECT DISTINCT task_number FROM tasks WHERE competition_id=? ORDER BY task_number",(eid,))]; c.close()
+    c=conn(eid); nums=[r["task_number"] for r in c.execute("SELECT DISTINCT task_number FROM tasks WHERE competition_id=? ORDER BY task_number",(eid,)).fetchall()]; c.close()
     if start is not None: nums=[n for n in nums if n>=start]
     if end is not None: nums=[n for n in nums if n<=end]
     return [{"through_task":n,"rows":standings_data(eid,mode,start if start is not None else None,n)} for n in nums]
@@ -124,7 +124,7 @@ def index():
     return render_template("index.html",events=events)
 @app.get("/event/<eid>")
 def event_page(eid):
-    e=event(eid); c=conn(eid); ts=all_tasks(c,eid); fs=[dict(r) for r in c.execute("SELECT * FROM flights WHERE competition_id=? ORDER BY sort_order",(eid,))]; pc=c.execute("SELECT COUNT(*) FROM pilots WHERE competition_id=?",(eid,)).fetchone()[0]; run=latest_run(c,eid); task_max=max([r["task_number"] for r in c.execute("SELECT task_number FROM tasks WHERE competition_id=?",(eid,)).fetchall()] or [1]); c.close()
+    e=event(eid); c=conn(eid); ts=all_tasks(c,eid); fs=[dict(r) for r in c.execute("SELECT * FROM flights WHERE competition_id=? ORDER BY sort_order",(eid,)).fetchall()]; pc=c.execute("SELECT COUNT(*) FROM pilots WHERE competition_id=?",(eid,)).fetchone()[0]; run=latest_run(c,eid); task_max=max([r["task_number"] for r in c.execute("SELECT task_number FROM tasks WHERE competition_id=?",(eid,)).fetchall()] or [1]); c.close()
     return render_template("event.html",event=e,tasks=ts,flights=fs,pilot_count=pc,latest_import=dict(run) if run else None,tasks_max=task_max)
 @app.get("/event/<eid>/task/<int:num>")
 def task_page(eid,num):
@@ -140,17 +140,17 @@ def pilot_page(eid,number):
     return render_template("pilot.html",event=e,pilot=dict(p),results=[dict(r) for r in rs])
 @app.get("/event/<eid>/compare")
 def compare_page(eid):
-    e=event(eid); c=conn(eid); pilots=[dict(r) for r in c.execute("SELECT competition_number,name,country FROM pilots WHERE competition_id=? ORDER BY name",(eid,))]; task_max=max([r["task_number"] for r in c.execute("SELECT task_number FROM tasks WHERE competition_id=?",(eid,)).fetchall()] or [1]); c.close()
+    e=event(eid); c=conn(eid); pilots=[dict(r) for r in c.execute("SELECT competition_number,name,country FROM pilots WHERE competition_id=? ORDER BY name",(eid,)).fetchall()]; task_max=max([r["task_number"] for r in c.execute("SELECT task_number FROM tasks WHERE competition_id=?",(eid,)).fetchall()] or [1]); c.close()
     return render_template("compare.html",event=e,pilots=pilots,tasks_max=task_max)
 @app.get("/event/<eid>/search")
 def search_page(eid):
     e=event(eid); q=request.args.get("q","").strip(); c=conn(eid); pilots=[]
     if q:
-        like="%"+q+"%"; pilots=[dict(r) for r in c.execute("SELECT competition_number,name,country FROM pilots WHERE competition_id=? AND (name LIKE ? OR CAST(competition_number AS TEXT) LIKE ?)",(eid,like,like))]
+        like="%"+q+"%"; pilots=[dict(r) for r in c.execute("SELECT competition_number,name,country FROM pilots WHERE competition_id=? AND (name LIKE ? OR CAST(competition_number AS TEXT) LIKE ?)",(eid,like,like)).fetchall()]
     c.close(); return render_template("search.html",event=e,q=q,pilots=pilots)
 @app.get("/event/<eid>/history")
 def history_page(eid):
-    e=event(eid); c=conn(eid); runs=[dict(r) for r in c.execute("SELECT * FROM import_runs WHERE competition_id=? ORDER BY imported_at DESC",(eid,))]; c.close(); return render_template("history.html",event=e,runs=runs)
+    e=event(eid); c=conn(eid); runs=[dict(r) for r in c.execute("SELECT * FROM import_runs WHERE competition_id=? ORDER BY imported_at DESC",(eid,)).fetchall()]; c.close(); return render_template("history.html",event=e,runs=runs)
 @app.get("/event/<eid>/flight/<flight_id>")
 def flight_page(eid,flight_id):
     e=event(eid); c=conn(eid); f=c.execute("SELECT * FROM flights WHERE competition_id=? AND id=?",(eid,flight_id)).fetchone()
@@ -164,7 +164,7 @@ def api_events():
     return jsonify([event(d.name) for d in sorted(DATA_DIR.iterdir()) if d.is_dir() and (d/"competition.db").exists()] if DATA_DIR.exists() else [])
 @app.get("/api/event/<eid>")
 def api_event(eid):
-    e=event(eid); c=conn(eid); run=latest_run(c,eid); out=e|{"latest_import":dict(run) if run else None,"tasks":all_tasks(c,eid),"flights":[dict(r) for r in c.execute("SELECT * FROM flights WHERE competition_id=? ORDER BY sort_order",(eid,))]}; c.close(); return jsonify(out)
+    e=event(eid); c=conn(eid); run=latest_run(c,eid); out=e|{"latest_import":dict(run) if run else None,"tasks":all_tasks(c,eid),"flights":[dict(r) for r in c.execute("SELECT * FROM flights WHERE competition_id=? ORDER BY sort_order",(eid,)).fetchall()]}; c.close(); return jsonify(out)
 @app.get("/api/event/<eid>/standings")
 def api_standings(eid):
     mode,start,end=common_filters(); return jsonify({"mode":mode,"from":start,"to":end,"rows":standings_data(eid,mode,start,end)})
