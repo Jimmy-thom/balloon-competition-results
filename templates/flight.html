@@ -19,7 +19,7 @@
 
 <div class="flight-nav card">
   {% if ns.prev %}
-    <a class="flight-nav-item" href="/event/{{event.id}}/flight/{{ns.prev.id}}">
+    <a class="flight-nav-item" href="/event/{{event.id}}/flight/{{ns.prev.flight.id}}">
       <span class="flight-nav-label">← Previous flight</span>
       <strong>Flight {{ns.prev.num}}</strong>
       <small>{{ns.prev.flight.date_label}}{% if ns.prev.flight.time_label %} · {{ns.prev.flight.time_label}}{% endif %}</small>
@@ -31,7 +31,7 @@
     <span>Flight {{ns.current_num}}</span>
   </div>
   {% if ns.next %}
-    <a class="flight-nav-item next" href="/event/{{event.id}}/flight/{{ns.next.id}}">
+    <a class="flight-nav-item next" href="/event/{{event.id}}/flight/{{ns.next.flight.id}}">
       <span class="flight-nav-label">Next flight →</span>
       <strong>Flight {{ns.next.num}}</strong>
       <small>{{ns.next.flight.date_label}}{% if ns.next.flight.time_label %} · {{ns.next.flight.time_label}}{% endif %}</small>
