@@ -1116,3 +1116,183 @@ table:not(.results-table) td{
     line-height:1.5;
   }
 }
+/* Mobile standings / navigation improvements
+   Append this block to the END of static/style.css.
+   Desktop/tablet styles remain unchanged.
+*/
+
+@media (max-width:620px){
+
+  /* Keep the site navigation readable instead of running all links together. */
+  nav{
+    display:flex;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:7px 14px;
+    padding:10px 14px;
+    font-size:12px;
+    line-height:1.3;
+  }
+
+  nav .brand{
+    flex:0 0 100%;
+    font-weight:800;
+    white-space:nowrap;
+  }
+
+  nav > a:not(.brand){
+    padding:3px 0;
+    font-weight:700;
+  }
+
+  /* Keep the three event statistics visible on one phone row. */
+  .stats{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:8px;
+  }
+
+  .stats > div{
+    padding:12px 10px;
+    border-radius:12px;
+  }
+
+  .stats b{
+    font-size:22px;
+  }
+
+  .stats span{
+    font-size:9px;
+    letter-spacing:.04em;
+  }
+
+  /* Make the event header more compact on a phone. */
+  .event-head{
+    padding:20px;
+  }
+
+  .event-head h1{
+    font-size:28px;
+  }
+
+  /* Mobile standings:
+     Always show POS + PILOT + MOVEMENT + TOTAL.
+     Country and Gap are hidden from the fixed phone view.
+     Task scores remain available by horizontal scrolling. */
+
+  .results-table{
+    min-width:820px;
+  }
+
+  /* Hide Country (3) and Gap (6) on phones. */
+  .results-table th:nth-child(3),
+  .results-table td:nth-child(3),
+  .results-table th:nth-child(6),
+  .results-table td:nth-child(6){
+    display:none;
+  }
+
+  /* Remove the old six-column sticky setup. */
+  .results-table th:nth-child(-n+6),
+  .results-table td:nth-child(-n+6){
+    position:static;
+    left:auto;
+  }
+
+  /* Re-pin only the four useful phone columns. */
+  .results-table th:nth-child(1),
+  .results-table td:nth-child(1){
+    position:sticky;
+    left:0;
+    z-index:8;
+    width:45px;
+    min-width:45px;
+  }
+
+  .results-table th:nth-child(2),
+  .results-table td:nth-child(2){
+    position:sticky;
+    left:45px;
+    z-index:8;
+    width:170px;
+    min-width:170px;
+  }
+
+  .results-table th:nth-child(4),
+  .results-table td:nth-child(4){
+    position:sticky;
+    left:215px;
+    z-index:8;
+    width:60px;
+    min-width:60px;
+    box-shadow:none;
+  }
+
+  .results-table th:nth-child(5),
+  .results-table td:nth-child(5){
+    position:sticky;
+    left:275px;
+    z-index:8;
+    width:70px;
+    min-width:70px;
+    box-shadow:7px 0 12px rgba(24,37,54,.09);
+  }
+
+  .results-table th:nth-child(1),
+  .results-table th:nth-child(2),
+  .results-table th:nth-child(4),
+  .results-table th:nth-child(5){
+    background:#edf4f8;
+  }
+
+  .results-table td:nth-child(1),
+  .results-table td:nth-child(2),
+  .results-table td:nth-child(4),
+  .results-table td:nth-child(5){
+    background:#fff;
+  }
+
+  .results-table .pilot-cell{
+    min-width:170px;
+    max-width:170px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+
+  /* Keep podium highlighting visible in the fixed columns. */
+  .results-table tbody tr.podium-1 td:nth-child(1),
+  .results-table tbody tr.podium-1 td:nth-child(2),
+  .results-table tbody tr.podium-1 td:nth-child(4),
+  .results-table tbody tr.podium-1 td:nth-child(5){
+    background:#fffaf0;
+  }
+
+  .results-table tbody tr.podium-2 td:nth-child(1),
+  .results-table tbody tr.podium-2 td:nth-child(2),
+  .results-table tbody tr.podium-2 td:nth-child(4),
+  .results-table tbody tr.podium-2 td:nth-child(5){
+    background:#f7fafc;
+  }
+
+  .results-table tbody tr.podium-3 td:nth-child(1),
+  .results-table tbody tr.podium-3 td:nth-child(2),
+  .results-table tbody tr.podium-3 td:nth-child(4),
+  .results-table tbody tr.podium-3 td:nth-child(5){
+    background:#fff8f4;
+  }
+
+  /* Slightly smaller phone table typography. */
+  .results-table th,
+  .results-table td{
+    padding:10px 8px;
+  }
+
+  .results-table .flag{
+    width:26px;
+    font-size:17px;
+  }
+
+  /* Make the mobile swipe instruction especially clear. */
+  .results-legend{
+    line-height:1.5;
+  }
+}
