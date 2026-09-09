@@ -126,6 +126,19 @@ def index():
 def event_page(eid):
     e=event(eid); c=conn(eid); ts=all_tasks(c,eid); fs=[dict(r) for r in c.execute("SELECT * FROM flights WHERE competition_id=? ORDER BY sort_order",(eid,)).fetchall()]; pc=c.execute("SELECT COUNT(*) FROM pilots WHERE competition_id=?",(eid,)).fetchone()[0]; run=latest_run(c,eid); task_max=max([r["task_number"] for r in c.execute("SELECT task_number FROM tasks WHERE competition_id=?",(eid,)).fetchall()] or [1]); c.close()
     return render_template("event.html",event=e,tasks=ts,flights=fs,pilot_count=pc,latest_import=dict(run) if run else None,tasks_max=task_max)
+@app.get("/event/<eid>/progression")
+def progression_page(eid):
+    e=event(eid)
+    c=conn(eid)
+    task_max=max([r["task_number"] for r in c.execute(
+        "SELECT task_number FROM tasks WHERE competition_id=?",(eid,)
+    ).fetchall()] or [1])
+    c.close()
+    return render_template(
+        "progression.html",
+        event=e,
+        tasks_max=task_max
+    )
 @app.get("/event/<eid>/task/<int:num>")
 def task_page(eid,num):
     e=event(eid); mode=request.args.get("mode","all"); t,rs=task_results(eid,num,mode); c=conn(eid); prev,nxt=task_navigation(c,eid,num); c.close()
