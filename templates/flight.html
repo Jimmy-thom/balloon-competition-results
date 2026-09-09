@@ -10,6 +10,37 @@
   <a class="button" href="/event/{{event.id}}">← Event standings</a>
 </div>
 
+{% set ns = namespace(prev=None, next=None, found=False) %}
+{% for f in flights %}
+  {% if ns.found and ns.next is none %}{% set ns.next = f %}{% endif %}
+  {% if f.id == flight.id %}{% set ns.found = True %}{% endif %}
+  {% if not ns.found %}{% set ns.prev = f %}{% endif %}
+{% endfor %}
+
+<div class="flight-nav card">
+  {% if ns.prev %}
+    <a class="flight-nav-item" href="/event/{{event.id}}/flight/{{ns.prev.id}}">
+      <span class="flight-nav-label">← Previous flight</span>
+      <strong>{{ns.prev.flight_number or 'Flight'}}</strong>
+      <small>{{ns.prev.date_label}}{% if ns.prev.time_label %} · {{ns.prev.time_label}}{% endif %}</small>
+    </a>
+  {% else %}
+    <div class="flight-nav-item disabled"><span class="flight-nav-label">← Previous flight</span><strong>—</strong></div>
+  {% endif %}
+  <div class="flight-nav-current">
+    <span>Flight navigation</span>
+  </div>
+  {% if ns.next %}
+    <a class="flight-nav-item next" href="/event/{{event.id}}/flight/{{ns.next.id}}">
+      <span class="flight-nav-label">Next flight →</span>
+      <strong>{{ns.next.flight_number or 'Flight'}}</strong>
+      <small>{{ns.next.date_label}}{% if ns.next.time_label %} · {{ns.next.time_label}}{% endif %}</small>
+    </a>
+  {% else %}
+    <div class="flight-nav-item disabled next"><span class="flight-nav-label">Next flight →</span><strong>—</strong></div>
+  {% endif %}
+</div>
+
 <div class="card flight-card-main">
   <div class="section-head">
     <div>
@@ -57,6 +88,15 @@
 </div>
 
 <style>
+.flight-nav{display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:center;margin-bottom:16px;padding:12px 16px}
+.flight-nav-item{display:flex;flex-direction:column;gap:2px;text-decoration:none;padding:8px 10px;border-radius:10px;min-width:0}
+.flight-nav-item:hover{background:var(--soft)}
+.flight-nav-item.next{text-align:right}
+.flight-nav-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.flight-nav-item strong{font-size:15px;color:var(--text)}
+.flight-nav-item small{font-size:12px;color:var(--muted)}
+.flight-nav-current{text-align:center;font-size:12px;font-weight:800;color:var(--muted);white-space:nowrap}
+.flight-nav-item.disabled{opacity:.45;pointer-events:none}
 .flight-head{align-items:center}
 .flight-head h1{margin-bottom:6px}
 .flight-date{margin:0;color:var(--muted);font-size:15px;font-weight:650}
@@ -81,6 +121,9 @@
 .prov-mark{display:inline-flex;align-items:center;justify-content:center;margin-left:5px;min-width:18px;height:18px;padding:0 4px;border-radius:5px;background:var(--warn-bg);color:var(--warn);font-size:10px;font-weight:900;vertical-align:2px}
 .error-box{padding:18px;text-align:center;color:#8b3e39;background:#fff5f4;border:1px solid #f0d4d1;border-radius:11px}
 @media(max-width:760px){
+  .flight-nav{grid-template-columns:1fr 1fr;gap:8px}
+  .flight-nav-current{display:none}
+  .flight-nav-item.next{text-align:right}
   .flight-head{align-items:flex-start}
   .flight-controls{width:100%;justify-content:stretch}
   .flight-controls label{flex:1;justify-content:space-between}
@@ -189,5 +232,3 @@ function render(d){
 load();
 </script>
 {% endblock %}
-flight-stage4.html
-HTML
