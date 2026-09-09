@@ -21,7 +21,7 @@
   <div class="section-head">
     <div>
       <h2>Competition standings</h2>
-      <p class="muted">Current totals include published provisional results. Provisional task scores are marked <strong>P</strong>.</p>
+      <p class="muted">Current standings with task scores, country, and movement from the previous task. Published provisional results are marked <strong>P</strong>.</p>
     </div>
     <div class="controls">
       <select id="mode">
@@ -320,7 +320,7 @@ function fmt(value){
   return Number(value).toLocaleString('en-GB');
 }
 
-function renderTable(rows){
+function renderTable(rows, movementByPilot={}){
   if(!rows.length){
     standings.innerHTML='<div class="loading">No results available for this selection.</div>';
     return;
@@ -329,6 +329,8 @@ function renderTable(rows){
   const headers=[
     '<th class="pos">POS</th>',
     '<th class="pilot-cell">Pilot Name</th>',
+    '<th class="country-cell">Country</th>',
+    '<th class="movement">Movement</th>',
     '<th class="num">Total</th>',
     '<th class="num">Gap to 1</th>',
     '<th class="num">Gap to Next</th>',
@@ -351,8 +353,17 @@ function renderTable(rows){
     const podium=i<3 ? ` podium-${i+1}` : '';
 
     h+=`<tr class="${podium.trim()}">`;
+    const movement = movementByPilot[r.competition_number];
+    let movementText='—', movementClass='move-flat';
+    if(movement!==null && movement!==undefined){
+      if(Number(movement)>0){movementText='▲ '+Math.abs(Number(movement)); movementClass='move-up';}
+      else if(Number(movement)<0){movementText='▼ '+Math.abs(Number(movement)); movementClass='move-down';}
+    }
+
     h+=`<td class="pos">${r.position}</td>`;
     h+=`<td class="pilot-cell"><span class="flag">${flag(r.country)}</span> <a href="/event/${eid}/pilot/${r.competition_number}">#${r.competition_number} — ${esc(r.pilot)}</a></td>`;
+    h+=`<td class="country-cell">${esc(r.country||'—')}</td>`;
+    h+=`<td class="movement ${movementClass}">${movementText}</td>`;
     h+=`<td class="num total-cell ${hasProv?'total-provisional':''}">${fmt(r.total)}${hasProv?'<span class="prov-mark" title="Total includes provisional result(s)">P</span>':''}</td>`;
     h+=`<td class="num gap">${fmt(gapTo1)}</td>`;
     h+=`<td class="num gap">${next ? fmt(gapToNext) : '—'}</td>`;
@@ -378,11 +389,35 @@ function renderTable(rows){
 async function load(){
   standings.innerHTML='<div class="loading">Loading…</div>';
   try{
-    const d=await fetch(`/api/event/${eid}/standings?${qs()}`).then(r=>{
-      if(!r.ok) throw new Error('Standings request failed');
-      return r.json();
+    const params=qs();
+    const [d,p] = await Promise.all([
+      fetch(`/api/event/${eid}/standings?${params}`).then(r=>{
+        if(!r.ok) throw new Error('Standings request failed');
+        return r.json();
+      }),
+      fetch(`/api/event/${eid}/progression?${params}`).then(r=>{
+        if(!r.ok) throw new Error('Progression request failed');
+        return r.json();
+      })
+    ]);
+
+    const progression=p.progression||[];
+    const current=progression.at(-1)?.rows||[];
+    const previous=progression.length>1 ? progression[progression.length-2].rows||[] : [];
+
+    const currentPos={};
+    const previousPos={};
+    current.forEach(r=>currentPos[r.competition_number]=r.position);
+    previous.forEach(r=>previousPos[r.competition_number]=r.position);
+
+    const movementByPilot={};
+    d.rows.forEach(r=>{
+      const c=currentPos[r.competition_number];
+      const old=previousPos[r.competition_number];
+      movementByPilot[r.competition_number]=(c!=null && old!=null) ? old-c : null;
     });
-    renderTable(d.rows);
+
+    renderTable(d.rows, movementByPilot);
     loadChart();
   }catch(err){
     standings.innerHTML='<div class="loading">Unable to load standings.</div>';
