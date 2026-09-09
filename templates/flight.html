@@ -104,7 +104,8 @@ const flags={
   "France":"🇫🇷","Poland":"🇵🇱","Slovakia":"🇸🇰","Italy":"🇮🇹","Spain":"🇪🇸",
   "Netherlands":"🇳🇱","Denmark":"🇩🇰","Norway":"🇳🇴","Sweden":"🇸🇪","Brazil":"🇧🇷",
   "Canada":"🇨🇦","Japan":"🇯🇵","New Zealand":"🇳🇿","South Africa":"🇿🇦","Ireland":"🇮🇪",
-  "Finland":"🇫🇮","Portugal":"🇵🇹","Romania":"🇷🇴","Serbia":"🇷🇸","Turkey":"🇹🇷","Israel":"🇮🇱"
+  "Finland":"🇫🇮","Portugal":"🇵🇹","Romania":"🇷🇴","Serbia":"🇷🇸","Turkey":"🇹🇷","Israel":"🇮🇱",
+  "Mexico":"🇲🇽","Bulgaria":"🇧🇬"
 };
 const countryNames=Object.keys(flags).sort((a,b)=>b.length-a.length);
 
@@ -121,10 +122,26 @@ function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&l
 async function load(){
   box.innerHTML='<div class="loading">Loading…</div>';
   try{
-    const url=`/api/event/${eid}/flight/${encodeURIComponent(flightId)}/standings?view=${view.value}&mode=${mode.value}`;
-    const response=await fetch(url);
+    const base=`/api/event/${eid}/flight/${encodeURIComponent(flightId)}/standings?mode=${mode.value}`;
+    const response=await fetch(`${base}&view=${view.value}`);
     if(!response.ok) throw new Error('Standings request failed');
     const d=await response.json();
+
+    // Movement is always based on cumulative standings, even when the
+    // selected display is "This flight only".
+    if(view.value==='standalone'){
+      const movementResponse=await fetch(`${base}&view=cumulative`);
+      if(movementResponse.ok){
+        const cumulative=await movementResponse.json();
+        d.movementByPilot={};
+        (cumulative.rows||[]).forEach(r=>{
+          d.movementByPilot[r.competition_number]=r.movement;
+        });
+      }
+    }else{
+      d.movementByPilot=d.movement||{};
+    }
+
     render(d);
   }catch(err){
     console.error(err);
@@ -136,11 +153,11 @@ function render(d){
   const cumulative=view.value==='cumulative';
   note.textContent=cumulative
     ? 'Cumulative totals through this flight. Movement compares each pilot with their position after the previous flight.'
-    : 'Scores from tasks on this flight only.';
+    : 'Scores from tasks on this flight only. Movement compares each pilot with their position after the previous flight.';
 
   let h='<div class="flight-table-wrap"><table class="flight-table"><thead><tr>';
   h+='<th>POS</th><th>Pilot</th><th>Country</th><th class="score">Total</th>';
-  if(cumulative) h+='<th class="movement">Movement</th>';
+  h+='<th class="movement">Movement</th>';
   h+='</tr></thead><tbody>';
 
   if(!d.rows || !d.rows.length){
@@ -148,9 +165,9 @@ function render(d){
   }else{
     d.rows.forEach(r=>{
       const country=countryFromPilot(r.pilot,r.country);
-      const movement=d.movement ? d.movement[r.competition_number] : null;
+      const movement=d.movementByPilot ? d.movementByPilot[r.competition_number] : null;
       let movementText='—', movementClass='move-flat';
-      if(cumulative && movement!==null && movement!==undefined){
+      if(movement!==null && movement!==undefined){
         if(Number(movement)>0){movementText='▲ '+movement;movementClass='move-up'}
         else if(Number(movement)<0){movementText='▼ '+Math.abs(movement);movementClass='move-down'}
       }
@@ -160,7 +177,7 @@ function render(d){
       h+=`<td class="pilot"><span class="flag">${flag(country)}</span><a href="/event/${eid}/pilot/${r.competition_number}">#${r.competition_number} — ${esc(r.pilot)}</a></td>`;
       h+=`<td class="country">${esc(country||'—')}</td>`;
       h+=`<td class="score">${fmt(r.total)}${provisional?'<span class="prov-mark" title="Includes provisional result(s)">P</span>':''}</td>`;
-      if(cumulative) h+=`<td class="movement ${movementClass}">${movementText}</td>`;
+      h+=`<td class="movement ${movementClass}">${movementText}</td>`;
       h+='</tr>';
     });
   }
@@ -172,3 +189,5 @@ function render(d){
 load();
 </script>
 {% endblock %}
+flight-stage4.html
+HTML
