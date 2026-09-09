@@ -59,16 +59,16 @@
 <div class="card">
   <div class="section-head">
     <div>
+    <div class="card">
+  <div class="section-head">
+    <div>
       <h2>Ranking progression</h2>
-      <p class="muted">Top eight pilots after each task. Lower position is better.</p>
+      <p class="muted">See how the top eight pilots moved through the competition.</p>
     </div>
-  </div>
-  <div class="chart-wrap">
-    <canvas id="chart"></canvas>
+    <a class="button" href="/event/{{event.id}}/progression">View progression</a>
   </div>
 </div>
-
-<div class="card">
+      <div class="card">
   <h2>Tasks</h2>
   <div class="task-grid">
     {% for t in tasks %}
@@ -267,7 +267,6 @@
 }
 </style>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 <script>
 const eid={{event.id|tojson}},
       standings=document.getElementById('standings'),
@@ -276,7 +275,7 @@ const eid={{event.id|tojson}},
       to=document.getElementById('to'),
       taskNumbers=[{% for n in range(1,tasks_max+1) %}{{n}},{% endfor %}];
 
-let chart;
+
 
 const flags={
   "United Kingdom":"🇬🇧","UK":"🇬🇧","GB":"🇬🇧","GBR":"🇬🇧",
@@ -435,32 +434,13 @@ async function load(){
     });
 
     renderTable(d.rows, movementByPilot);
-    loadChart();
-  }catch(err){
+      }catch(err){
     standings.innerHTML='<div class="loading">Unable to load standings.</div>';
     console.error(err);
   }
 }
 
-async function loadChart(){
-  const d=await fetch(`/api/event/${eid}/progression?${qs()}`).then(r=>r.json());
-  const labels=d.progression.map(x=>'T'+x.through_task),
-        top=d.progression.at(-1)?.rows.slice(0,8)||[];
-  const ds=top.map(r=>({
-    label:'#'+r.competition_number+' — '+r.pilot,
-    data:d.progression.map(x=>x.rows.find(y=>y.competition_number===r.competition_number)?.position??null),
-    tension:.25
-  }));
-  if(chart)chart.destroy();
-  chart=new Chart(document.getElementById('chart'),{
-    type:'line',
-    data:{labels,datasets:ds},
-    options:{
-      responsive:true,
-      maintainAspectRatio:false,
-      scales:{y:{reverse:true,ticks:{precision:0}},x:{title:{display:true,text:'Task'}}},
-      plugins:{legend:{position:'bottom'},tooltip:{mode:'index',intersect:false}}
-    }
+
   });
 }
 
