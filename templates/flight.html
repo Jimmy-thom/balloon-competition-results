@@ -1,21 +1,174 @@
-{% extends 'base.html' %} {% block title %}Flight results — {{event.title}}{% endblock %} {% block content %}
-{{event.location}}
-Flight results
-{{flight.date_label}}{% if flight.time_label %} · {{flight.time_label}}{% endif %}
+{% extends 'base.html' %}
+{% block title %}Flight results — {{event.title}}{% endblock %}
+{% block content %}
+<div class="event-head flight-head">
+  <div>
+    <div class="eyebrow">{{event.location}}</div>
+    <h1>Flight results</h1>
+    <p class="flight-date">{{flight.date_label}}{% if flight.time_label %} · {{flight.time_label}}{% endif %}</p>
+  </div>
+  <a class="button" href="/event/{{event.id}}">← Event standings</a>
+</div>
 
-← Event standings
-{% if flight.flight_number %}{{flight.flight_number}}{% else %}Selected flight{% endif %}
-Choose between the results from this flight alone and the cumulative standings through this flight.
+<div class="card flight-card-main">
+  <div class="section-head">
+    <div>
+      <h2>{% if flight.flight_number %}{{flight.flight_number}}{% else %}Selected flight{% endif %}</h2>
+      <p class="muted">Choose between the results from this flight alone and the cumulative standings through this flight.</p>
+    </div>
+    <div class="controls flight-controls">
+      <label>View
+        <select id="view">
+          <option value="standalone">This flight only</option>
+          <option value="cumulative">Cumulative through this flight</option>
+        </select>
+      </label>
+      <label>Results
+        <select id="mode">
+          <option value="all" selected>Include provisional</option>
+          <option value="official">Official only</option>
+        </select>
+      </label>
+    </div>
+  </div>
 
-View
-This flight only
-Results
-Include provisional
-Scores from tasks on this flight.
-← Swipe left/right to view the results →
-Loading…
-Tasks on this flight
-Open a task to see the individual task results.
+  <div class="flight-note" id="flight-note">Scores from tasks on this flight.</div>
+  <div class="mobile-scroll-hint">← Swipe left/right to view the results →</div>
+  <div id="flight-results" class="loading">Loading…</div>
+</div>
 
-{% for t in tasks %} T{{t.task_number}} {{t.name}} {{t.status}} {% if t.published %}{{t.published}}{% endif %} {% endfor %}
+<div class="card">
+  <div class="section-head">
+    <div>
+      <h2>Tasks on this flight</h2>
+      <p class="muted">Open a task to see the individual task results.</p>
+    </div>
+  </div>
+  <div class="task-grid">
+    {% for t in tasks %}
+    <a class="task-chip" href="/event/{{event.id}}/task/{{t.task_number}}">
+      <strong>T{{t.task_number}}</strong>
+      <span>{{t.name}}</span>
+      <em>{{t.status}}</em>
+      {% if t.published %}<small>{{t.published}}</small>{% endif %}
+    </a>
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+.flight-head{align-items:center}
+.flight-head h1{margin-bottom:6px}
+.flight-date{margin:0;color:var(--muted);font-size:15px;font-weight:650}
+.flight-card-main{overflow:hidden}
+.flight-controls{justify-content:flex-end}
+.flight-controls label{display:flex;align-items:center;gap:7px;color:#667486;font-size:13px;font-weight:700}
+.flight-note{margin:16px 0 12px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--soft);color:var(--muted);font-size:13px}
+.flight-table-wrap{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:13px;background:#fff}
+.flight-table{width:max-content;min-width:100%;border-collapse:separate;border-spacing:0;font-variant-numeric:tabular-nums}
+.flight-table th,.flight-table td{padding:12px 13px;border-bottom:1px solid var(--line);white-space:nowrap;vertical-align:middle}
+.flight-table th{background:#f6f9fb;color:#667486;font-size:11px;text-transform:uppercase;letter-spacing:.07em;text-align:left}
+.flight-table tbody tr:last-child td{border-bottom:0}
+.flight-table tbody tr:hover td{background:#fbfdff}
+.flight-table .pos{font-weight:900;width:60px;text-align:center}
+.flight-table .pilot{font-weight:750}
+.flight-table .pilot a:hover{text-decoration:underline}
+.flight-table .flag{font-size:20px;margin-right:6px;vertical-align:-2px}
+.flight-table .country{color:#667486}
+.flight-table .score{text-align:right;font-weight:850}
+.flight-table .movement{text-align:center;font-weight:900;min-width:105px}
+.move-up{color:#168052}.move-down{color:#c44b45}.move-flat{color:#8a94a1}
+.prov-mark{display:inline-flex;align-items:center;justify-content:center;margin-left:5px;min-width:18px;height:18px;padding:0 4px;border-radius:5px;background:var(--warn-bg);color:var(--warn);font-size:10px;font-weight:900;vertical-align:2px}
+.error-box{padding:18px;text-align:center;color:#8b3e39;background:#fff5f4;border:1px solid #f0d4d1;border-radius:11px}
+@media(max-width:760px){
+  .flight-head{align-items:flex-start}
+  .flight-controls{width:100%;justify-content:stretch}
+  .flight-controls label{flex:1;justify-content:space-between}
+  .flight-controls select{min-width:0;flex:1}
+  .flight-table{min-width:690px}
+  .flight-table th,.flight-table td{padding:10px 11px}
+}
+</style>
+
+<script>
+const eid={{event.id|tojson}}, flightId={{flight.id|tojson}};
+const view=document.getElementById('view');
+const mode=document.getElementById('mode');
+const box=document.getElementById('flight-results');
+const note=document.getElementById('flight-note');
+
+const flags={
+  "United Kingdom":"🇬🇧","UK":"🇬🇧","Australia":"🇦🇺","Belgium":"🇧🇪","Croatia":"🇭🇷",
+  "Czech Republic":"🇨🇿","Czechia":"🇨🇿","Hungary":"🇭🇺","Switzerland":"🇨🇭","Lithuania":"🇱🇹",
+  "Slovenia":"🇸🇮","United States":"🇺🇸","USA":"🇺🇸","Austria":"🇦🇹","Germany":"🇩🇪",
+  "France":"🇫🇷","Poland":"🇵🇱","Slovakia":"🇸🇰","Italy":"🇮🇹","Spain":"🇪🇸",
+  "Netherlands":"🇳🇱","Denmark":"🇩🇰","Norway":"🇳🇴","Sweden":"🇸🇪","Brazil":"🇧🇷",
+  "Canada":"🇨🇦","Japan":"🇯🇵","New Zealand":"🇳🇿","South Africa":"🇿🇦","Ireland":"🇮🇪",
+  "Finland":"🇫🇮","Portugal":"🇵🇹","Romania":"🇷🇴","Serbia":"🇷🇸","Turkey":"🇹🇷","Israel":"🇮🇱"
+};
+const countryNames=Object.keys(flags).sort((a,b)=>b.length-a.length);
+
+function countryFromPilot(name,country){
+  if(country) return country;
+  const text=String(name||'');
+  const found=countryNames.find(c=>text.endsWith(' '+c));
+  return found||'';
+}
+function flag(country){return flags[country]||'🏳️'}
+function fmt(n){return Number(n||0).toLocaleString('en-GB')}
+function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+
+async function load(){
+  box.innerHTML='<div class="loading">Loading…</div>';
+  try{
+    const url=`/api/event/${eid}/flight/${encodeURIComponent(flightId)}/standings?view=${view.value}&mode=${mode.value}`;
+    const response=await fetch(url);
+    if(!response.ok) throw new Error('Standings request failed');
+    const d=await response.json();
+    render(d);
+  }catch(err){
+    console.error(err);
+    box.innerHTML='<div class="error-box">Unable to load the flight standings.</div>';
+  }
+}
+
+function render(d){
+  const cumulative=view.value==='cumulative';
+  note.textContent=cumulative
+    ? 'Cumulative totals through this flight. Movement compares each pilot with their position after the previous flight.'
+    : 'Scores from tasks on this flight only.';
+
+  let h='<div class="flight-table-wrap"><table class="flight-table"><thead><tr>';
+  h+='<th>POS</th><th>Pilot</th><th>Country</th><th class="score">Total</th>';
+  if(cumulative) h+='<th class="movement">Movement</th>';
+  h+='</tr></thead><tbody>';
+
+  if(!d.rows || !d.rows.length){
+    h+='<tr><td colspan="5" class="loading">No results available.</td></tr>';
+  }else{
+    d.rows.forEach(r=>{
+      const country=countryFromPilot(r.pilot,r.country);
+      const movement=d.movement ? d.movement[r.competition_number] : null;
+      let movementText='—', movementClass='move-flat';
+      if(cumulative && movement!==null && movement!==undefined){
+        if(Number(movement)>0){movementText='▲ '+movement;movementClass='move-up'}
+        else if(Number(movement)<0){movementText='▼ '+Math.abs(movement);movementClass='move-down'}
+      }
+      const provisional=Object.values(r.statuses||{}).some(s=>s==='PROVISIONAL');
+      h+='<tr>';
+      h+=`<td class="pos">${r.position}</td>`;
+      h+=`<td class="pilot"><span class="flag">${flag(country)}</span><a href="/event/${eid}/pilot/${r.competition_number}">#${r.competition_number} — ${esc(r.pilot)}</a></td>`;
+      h+=`<td class="country">${esc(country||'—')}</td>`;
+      h+=`<td class="score">${fmt(r.total)}${provisional?'<span class="prov-mark" title="Includes provisional result(s)">P</span>':''}</td>`;
+      if(cumulative) h+=`<td class="movement ${movementClass}">${movementText}</td>`;
+      h+='</tr>';
+    });
+  }
+  h+='</tbody></table></div>';
+  box.innerHTML=h;
+}
+
+[view,mode].forEach(x=>x.addEventListener('change',load));
+load();
+</script>
 {% endblock %}
