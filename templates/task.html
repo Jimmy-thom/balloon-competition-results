@@ -60,8 +60,16 @@
               "Finland":"🇫🇮","Portugal":"🇵🇹","Romania":"🇷🇴","Serbia":"🇷🇸","Turkey":"🇹🇷",
               "Israel":"🇮🇱","Mexico":"🇲🇽","Bulgaria":"🇧🇬"
             } %}
-            <span class="flag" aria-label="{{r.country or 'Unknown country'}}">{{flags.get(r.country, '🏳️')}}</span>
-            {{r.country or '—'}}
+            {% set country = r.country or '' %}
+            {% if not country %}
+              {% for cname in flags.keys()|sort(attribute='__len__', reverse=true) %}
+                {% if r.name and r.name.endswith(' ' ~ cname) %}
+                  {% set country = cname %}
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+            <span class="flag" aria-label="{{country or 'Unknown country'}}">{{flags.get(country, '🏳️')}}</span>
+            {{country or '—'}}
           </td>
           <td>{{r.result or '—'}}</td>
           <td class="whole-number">{{r.points|default(0, true)|round(0)|int}}</td>
