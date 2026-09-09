@@ -250,10 +250,19 @@ def api_compare(eid):
     nums=list(dict.fromkeys(nums))[:8]; mode=request.args.get("mode","official"); start=request.args.get("from",type=int); end=request.args.get("to",type=int); prog=progression_data(eid,mode,start,end)
     series={n:[] for n in nums}
     for point in prog:
-        ranks={r["competition_number"]:r["position"] for r in point["rows"]}
-        for n in nums: series[n].append({"task":point["through_task"],"position":ranks.get(n)})
-    c=conn(eid); names={r["competition_number"]:r["name"] for r in c.execute("SELECT competition_number,name FROM pilots WHERE competition_id=?",(eid,)).fetchall()}; c.close()
-    return jsonify({"mode":mode,"pilots":[{"competition_number":n,"name":names.get(n)} for n in nums],"series":series})
+        lookup={r["competition_number"]:r for r in point["rows"]}
+        for n in nums:
+            r=lookup.get(n)
+            series[n].append({
+                "task":point["through_task"],
+                "position":r["position"] if r else None,
+                "total":r["total"] if r else None,
+                "score":(r.get("tasks") or {}).get(point["through_task"]) if r else None,
+                "status":(r.get("statuses") or {}).get(point["through_task"]) if r else None
+            })
+    c=conn(eid); names={r["competition_number"]:{"name":r["name"],"country":r["country"]} for r in c.execute("SELECT competition_number,name,country FROM pilots WHERE competition_id=?",(eid,)).fetchall()}; c.close()
+    return jsonify({"mode":mode,"pilots":[{"competition_number":n,"name":names.get(n,{}).get("name",str(n)),"country":names.get(n,{}).get("country",""),"series":series[n]} for n in nums]})
+
 @app.get("/healthz")
 def healthz(): return "ok",200
 if __name__=="__main__":
