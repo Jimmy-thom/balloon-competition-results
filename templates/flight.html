@@ -1,17 +1,21 @@
-{% extends 'base.html' %} {% block title %}{{flight.flight_number}} — {{event.title}}{% endblock %} {% block content %}
-{{event.title}}
-{{flight.flight_number}}
+{% extends 'base.html' %} {% block title %}Flight results — {{event.title}}{% endblock %} {% block content %}
+{{event.location}}
+Flight results
 {{flight.date_label}}{% if flight.time_label %} · {{flight.time_label}}{% endif %}
 
 ← Event standings
-Flight results
-See who performed best on this flight, or the cumulative standings through this flight.
+{% if flight.flight_number %}{{flight.flight_number}}{% else %}Selected flight{% endif %}
+Choose between the results from this flight alone and the cumulative standings through this flight.
 
-
+View
 This flight only
- 
+Results
 Include provisional
+Scores from tasks on this flight.
+← Swipe left/right to view the results →
 Loading…
 Tasks on this flight
-{% for t in tasks %} T{{t.task_number}}{{t.name}}{{t.status}} {% endfor %}
+Open a task to see the individual task results.
+
+{% for t in tasks %} T{{t.task_number}} {{t.name}} {{t.status}} {% if t.published %}{{t.published}}{% endif %} {% endfor %}
 {% endblock %}
