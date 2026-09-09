@@ -61,12 +61,43 @@
               "Israel":"🇮🇱","Mexico":"🇲🇽","Bulgaria":"🇧🇬"
             } %}
             {% set country = r.country or '' %}
-            {% if not country %}
-              {% for cname in flags.keys()|sort(attribute='__len__', reverse=true) %}
-                {% if r.name and r.name.endswith(' ' ~ cname) %}
-                  {% set country = cname %}
-                {% endif %}
-              {% endfor %}
+            {% if not country and r.name %}
+              {% if r.name.endswith(' United Kingdom') %}{% set country = 'United Kingdom' %}
+              {% elif r.name.endswith(' Australia') %}{% set country = 'Australia' %}
+              {% elif r.name.endswith(' Belgium') %}{% set country = 'Belgium' %}
+              {% elif r.name.endswith(' Croatia') %}{% set country = 'Croatia' %}
+              {% elif r.name.endswith(' Czech Republic') %}{% set country = 'Czech Republic' %}
+              {% elif r.name.endswith(' Hungary') %}{% set country = 'Hungary' %}
+              {% elif r.name.endswith(' Switzerland') %}{% set country = 'Switzerland' %}
+              {% elif r.name.endswith(' Lithuania') %}{% set country = 'Lithuania' %}
+              {% elif r.name.endswith(' Slovenia') %}{% set country = 'Slovenia' %}
+              {% elif r.name.endswith(' United States') %}{% set country = 'United States' %}
+              {% elif r.name.endswith(' Austria') %}{% set country = 'Austria' %}
+              {% elif r.name.endswith(' Germany') %}{% set country = 'Germany' %}
+              {% elif r.name.endswith(' France') %}{% set country = 'France' %}
+              {% elif r.name.endswith(' Poland') %}{% set country = 'Poland' %}
+              {% elif r.name.endswith(' Slovakia') %}{% set country = 'Slovakia' %}
+              {% elif r.name.endswith(' Italy') %}{% set country = 'Italy' %}
+              {% elif r.name.endswith(' Spain') %}{% set country = 'Spain' %}
+              {% elif r.name.endswith(' Netherlands') %}{% set country = 'Netherlands' %}
+              {% elif r.name.endswith(' Denmark') %}{% set country = 'Denmark' %}
+              {% elif r.name.endswith(' Norway') %}{% set country = 'Norway' %}
+              {% elif r.name.endswith(' Sweden') %}{% set country = 'Sweden' %}
+              {% elif r.name.endswith(' Brazil') %}{% set country = 'Brazil' %}
+              {% elif r.name.endswith(' Canada') %}{% set country = 'Canada' %}
+              {% elif r.name.endswith(' Japan') %}{% set country = 'Japan' %}
+              {% elif r.name.endswith(' New Zealand') %}{% set country = 'New Zealand' %}
+              {% elif r.name.endswith(' South Africa') %}{% set country = 'South Africa' %}
+              {% elif r.name.endswith(' Ireland') %}{% set country = 'Ireland' %}
+              {% elif r.name.endswith(' Finland') %}{% set country = 'Finland' %}
+              {% elif r.name.endswith(' Portugal') %}{% set country = 'Portugal' %}
+              {% elif r.name.endswith(' Romania') %}{% set country = 'Romania' %}
+              {% elif r.name.endswith(' Serbia') %}{% set country = 'Serbia' %}
+              {% elif r.name.endswith(' Turkey') %}{% set country = 'Turkey' %}
+              {% elif r.name.endswith(' Israel') %}{% set country = 'Israel' %}
+              {% elif r.name.endswith(' Mexico') %}{% set country = 'Mexico' %}
+              {% elif r.name.endswith(' Bulgaria') %}{% set country = 'Bulgaria' %}
+              {% endif %}
             {% endif %}
             <span class="flag" aria-label="{{country or 'Unknown country'}}">{{flags.get(country, '🏳️')}}</span>
             {{country or '—'}}
