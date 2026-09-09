@@ -1,121 +1,769 @@
+Since you've already got the page working structurally, let's do this as a complete replacement of templates/progression.html so we don't risk another partial edit.
+
+Replace the entire templates/progression.html with this:
 {% extends 'base.html' %}
 {% block title %}Ranking progression — {{event.title}}{% endblock %}
 
 {% block content %}
+
 <div class="event-head">
   <div>
     <div class="eyebrow">{{event.location}}</div>
     <h1>Ranking progression</h1>
-    <p class="muted">{{event.title}} · Top eight pilots after each task</p>
+    <p class="muted">
+      {{event.title}} · Top eight pilots after each task
+    </p>
   </div>
-  <a class="button" href="/event/{{event.id}}">← Back to standings</a>
+
+  <a class="button" href="/event/{{event.id}}">
+    ← Back to standings
+  </a>
 </div>
 
+
 <div class="card">
-  <div class="section-head">
+
+  <div class="section-head progression-head">
+
     <div>
       <h2>Ranking progression</h2>
-      <p class="muted">Lower position is better. Use the filters to change the scoring range.</p>
+      <p class="muted">
+        Lower position is better. See how the leading pilots moved through the competition.
+      </p>
     </div>
 
     <div class="controls">
+
       <select id="mode">
         <option value="official">Official only</option>
         <option value="all">Include provisional</option>
       </select>
 
-      <label>From
+      <label>
+        From
         <select id="from">
           <option value="">1</option>
+
           {% for n in range(2,tasks_max+1) %}
-          <option>{{n}}</option>
+          <option value="{{n}}">{{n}}</option>
           {% endfor %}
+
         </select>
       </label>
 
-      <label>To
+      <label>
+        To
         <select id="to">
           <option value="">Latest</option>
+
           {% for n in range(1,tasks_max+1) %}
-          <option>{{n}}</option>
+          <option value="{{n}}">{{n}}</option>
           {% endfor %}
+
         </select>
       </label>
+
     </div>
+
   </div>
+
+
+  <div id="chart-status" class="chart-status">
+    Loading ranking progression…
+  </div>
+
 
   <div class="chart-wrap">
     <canvas id="chart"></canvas>
   </div>
+
 </div>
+
+
+<div class="card">
+
+  <div class="section-head">
+    <div>
+      <h2>Current top eight</h2>
+      <p class="muted">
+        Final ranking for the selected task range.
+      </p>
+    </div>
+  </div>
+
+  <div id="top-eight" class="top-eight">
+    <div class="loading">
+      Loading…
+    </div>
+  </div>
+
+</div>
+
+
+<style>
+
+.progression-head{
+  align-items:flex-start;
+}
+
+.chart-status{
+  margin:6px 0 10px;
+  color:#687789;
+  font-size:13px;
+}
+
+.chart-wrap{
+  position:relative;
+  width:100%;
+  height:560px;
+  margin-top:8px;
+}
+
+.top-eight{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:14px;
+}
+
+.progression-pilot{
+  position:relative;
+  padding:18px;
+  border:1px solid #dfe7ef;
+  border-radius:14px;
+  background:#fff;
+  box-shadow:0 4px 14px rgba(24,33,43,.05);
+}
+
+.progression-pilot .rank{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:12px;
+}
+
+.progression-pilot .position{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:36px;
+  height:36px;
+  border-radius:10px;
+  background:#eef4f8;
+  color:#18344c;
+  font-size:17px;
+  font-weight:900;
+}
+
+.progression-pilot .pilot-number{
+  color:#718093;
+  font-size:12px;
+  font-weight:800;
+}
+
+.progression-pilot .pilot-name{
+  display:block;
+  margin-bottom:5px;
+  color:#172638;
+  font-size:16px;
+  font-weight:850;
+  line-height:1.2;
+}
+
+.progression-pilot .pilot-country{
+  color:#748294;
+  font-size:13px;
+}
+
+.progression-pilot .flag{
+  margin-right:6px;
+  font-size:18px;
+}
+
+.progression-pilot:nth-child(1) .position{
+  background:#fff0c2;
+  color:#8a6200;
+}
+
+.progression-pilot:nth-child(2) .position{
+  background:#edf1f5;
+  color:#66727e;
+}
+
+.progression-pilot:nth-child(3) .position{
+  background:#f8e8df;
+  color:#925f3d;
+}
+
+.progression-error{
+  padding:18px;
+  border:1px solid #f0c9c4;
+  border-radius:10px;
+  background:#fff4f2;
+  color:#a33a2e;
+  font-weight:700;
+}
+
+@media (max-width:900px){
+
+  .top-eight{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+
+  .chart-wrap{
+    height:480px;
+  }
+
+}
+
+@media (max-width:620px){
+
+  .progression-head{
+    display:block;
+  }
+
+  .progression-head .controls{
+    margin-top:16px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+
+  .chart-wrap{
+    height:420px;
+  }
+
+  .top-eight{
+    grid-template-columns:1fr;
+  }
+
+}
+
+</style>
+
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 
-<script>
-const eid={{event.id|tojson}},
-      mode=document.getElementById('mode'),
-      from=document.getElementById('from'),
-      to=document.getElementById('to');
 
-let chart;
+<script>
+
+const eid={{event.id|tojson}};
+
+const mode=document.getElementById('mode');
+const from=document.getElementById('from');
+const to=document.getElementById('to');
+
+const chartStatus=document.getElementById('chart-status');
+const topEight=document.getElementById('top-eight');
+
+let chart=null;
+
+
+const flags={
+
+  "United Kingdom":"🇬🇧",
+  "UK":"🇬🇧",
+  "GB":"🇬🇧",
+  "GBR":"🇬🇧",
+
+  "Australia":"🇦🇺",
+  "AU":"🇦🇺",
+  "AUS":"🇦🇺",
+
+  "Belgium":"🇧🇪",
+  "BE":"🇧🇪",
+  "BEL":"🇧🇪",
+
+  "Croatia":"🇭🇷",
+  "HR":"🇭🇷",
+  "CRO":"🇭🇷",
+
+  "Czech Republic":"🇨🇿",
+  "Czechia":"🇨🇿",
+  "CZ":"🇨🇿",
+  "CZE":"🇨🇿",
+
+  "Hungary":"🇭🇺",
+  "HU":"🇭🇺",
+  "HUN":"🇭🇺",
+
+  "Switzerland":"🇨🇭",
+  "CH":"🇨🇭",
+  "SUI":"🇨🇭",
+
+  "Lithuania":"🇱🇹",
+  "LT":"🇱🇹",
+  "LTU":"🇱🇹",
+
+  "Slovenia":"🇸🇮",
+  "SI":"🇸🇮",
+  "SLO":"🇸🇮",
+
+  "United States":"🇺🇸",
+  "USA":"🇺🇸",
+  "US":"🇺🇸",
+
+  "Austria":"🇦🇹",
+  "AT":"🇦🇹",
+  "AUT":"🇦🇹",
+
+  "Germany":"🇩🇪",
+  "DE":"🇩🇪",
+  "GER":"🇩🇪",
+
+  "France":"🇫🇷",
+  "FR":"🇫🇷",
+  "FRA":"🇫🇷",
+
+  "Poland":"🇵🇱",
+  "PL":"🇵🇱",
+  "POL":"🇵🇱",
+
+  "Slovakia":"🇸🇰",
+  "SK":"🇸🇰",
+  "SVK":"🇸🇰",
+
+  "Italy":"🇮🇹",
+  "IT":"🇮🇹",
+  "ITA":"🇮🇹",
+
+  "Spain":"🇪🇸",
+  "ES":"🇪🇸",
+  "ESP":"🇪🇸",
+
+  "Netherlands":"🇳🇱",
+  "NL":"🇳🇱",
+  "NED":"🇳🇱",
+
+  "Denmark":"🇩🇰",
+  "DK":"🇩🇰",
+  "DEN":"🇩🇰",
+
+  "Norway":"🇳🇴",
+  "NO":"🇳🇴",
+  "NOR":"🇳🇴",
+
+  "Sweden":"🇸🇪",
+  "SE":"🇸🇪",
+  "SWE":"🇸🇪",
+
+  "Brazil":"🇧🇷",
+  "BR":"🇧🇷",
+  "BRA":"🇧🇷",
+
+  "Canada":"🇨🇦",
+  "CA":"🇨🇦",
+  "CAN":"🇨🇦",
+
+  "Japan":"🇯🇵",
+  "JP":"🇯🇵",
+  "JPN":"🇯🇵",
+
+  "New Zealand":"🇳🇿",
+  "NZ":"🇳🇿",
+  "NZL":"🇳🇿",
+
+  "South Africa":"🇿🇦",
+  "ZA":"🇿🇦",
+  "RSA":"🇿🇦",
+
+  "Ireland":"🇮🇪",
+  "IE":"🇮🇪",
+  "IRL":"🇮🇪",
+
+  "Finland":"🇫🇮",
+  "FI":"🇫🇮",
+  "FIN":"🇫🇮",
+
+  "Portugal":"🇵🇹",
+  "PT":"🇵🇹",
+  "POR":"🇵🇹",
+
+  "Romania":"🇷🇴",
+  "RO":"🇷🇴",
+  "ROU":"🇷🇴",
+
+  "Serbia":"🇷🇸",
+  "RS":"🇷🇸",
+  "SRB":"🇷🇸",
+
+  "Turkey":"🇹🇷",
+  "TR":"🇹🇷",
+  "TUR":"🇹🇷",
+
+  "Israel":"🇮🇱",
+  "IL":"🇮🇱",
+  "ISR":"🇮🇱"
+
+};
+
+
+function flag(country){
+
+  const key=String(country||'').trim();
+
+  return flags[key] || '🏳️';
+
+}
+
 
 function qs(){
-  let p=new URLSearchParams({mode:mode.value});
-  if(from.value)p.set('from',from.value);
-  if(to.value)p.set('to',to.value);
+
+  const p=new URLSearchParams({
+    mode:mode.value
+  });
+
+  if(from.value){
+    p.set('from',from.value);
+  }
+
+  if(to.value){
+    p.set('to',to.value);
+  }
+
   return p;
+
 }
+
+
+function esc(value){
+
+  return String(value ?? '').replace(/[&<>"']/g,m=>({
+
+    '&':'&amp;',
+    '<':'&lt;',
+    '>':'&gt;',
+    '"':'&quot;',
+    "'":'&#39;'
+
+  }[m]));
+
+}
+
+
+function showTopEight(rows){
+
+  if(!rows.length){
+
+    topEight.innerHTML=
+      '<div class="loading">No ranking data available.</div>';
+
+    return;
+
+  }
+
+
+  topEight.innerHTML=rows.slice(0,8).map((r,i)=>`
+
+    <div class="progression-pilot">
+
+      <div class="rank">
+
+        <div class="position">
+          ${r.position}
+        </div>
+
+        <div class="pilot-number">
+          #${esc(r.competition_number)}
+        </div>
+
+      </div>
+
+      <span class="pilot-name">
+        <span class="flag">${flag(r.country)}</span>
+        ${esc(r.pilot)}
+      </span>
+
+      <span class="pilot-country">
+        ${esc(r.country || '—')}
+      </span>
+
+    </div>
+
+  `).join('');
+
+}
+
 
 async function load(){
-  const d=await fetch(`/api/event/${eid}/progression?${qs()}`).then(r=>r.json());
 
-  const labels=d.progression.map(x=>'T'+x.through_task);
-  const top=d.progression.at(-1)?.rows.slice(0,8)||[];
+  chartStatus.textContent='Loading ranking progression…';
 
-  const ds=top.map(r=>({
-    label:'#'+r.competition_number+' — '+r.pilot,
-    data:d.progression.map(
-      x=>x.rows.find(
-        y=>y.competition_number===r.competition_number
-      )?.position??null
-    ),
-    tension:.25
-  }));
+  topEight.innerHTML=
+    '<div class="loading">Loading…</div>';
 
-  if(chart)chart.destroy();
 
-  chart=new Chart(document.getElementById('chart'),{
-    type:'line',
-    data:{labels,datasets:ds},
-    options:{
-      responsive:true,
-      maintainAspectRatio:false,
-      scales:{
-        y:{
-          reverse:true,
-          ticks:{precision:0}
-        },
-        x:{
-          title:{
-            display:true,
-            text:'Task'
-          }
-        }
-      },
-      plugins:{
-        legend:{
-          position:'bottom'
-        },
-        tooltip:{
-          mode:'index',
-          intersect:false
-        }
-      }
+  try{
+
+    const response=await fetch(
+      `/api/event/${eid}/progression?${qs()}`
+    );
+
+
+    if(!response.ok){
+
+      throw new Error(
+        `Progression request failed (${response.status})`
+      );
+
     }
-  });
+
+
+    const d=await response.json();
+
+
+    if(!d.progression || !d.progression.length){
+
+      chartStatus.textContent=
+        'No progression data is available for this selection.';
+
+      topEight.innerHTML=
+        '<div class="loading">No ranking data available.</div>';
+
+      if(chart){
+        chart.destroy();
+        chart=null;
+      }
+
+      return;
+
+    }
+
+
+    const progression=d.progression;
+
+
+    const labels=progression.map(
+      x=>`T${x.through_task}`
+    );
+
+
+    const finalRows=
+      progression[progression.length-1].rows || [];
+
+
+    showTopEight(finalRows);
+
+
+    const pilots=finalRows.slice(0,8);
+
+
+    const datasets=pilots.map((pilot,index)=>({
+
+      label:`#${pilot.competition_number} — ${pilot.pilot}`,
+
+      data:progression.map(step=>{
+
+        const row=(step.rows||[]).find(
+          r=>String(r.competition_number) ===
+             String(pilot.competition_number)
+        );
+
+        return row ? row.position : null;
+
+      }),
+
+      tension:.28,
+
+      spanGaps:false,
+
+      pointRadius:4,
+
+      pointHoverRadius:7,
+
+      borderWidth:3
+
+    }));
+
+
+    if(chart){
+
+      chart.destroy();
+
+      chart=null;
+
+    }
+
+
+    chartStatus.textContent=
+      `Showing the top ${pilots.length} pilots after each task.`;
+
+
+    const canvas=document.getElementById('chart');
+
+
+    chart=new Chart(canvas,{
+
+      type:'line',
+
+      data:{
+
+        labels:labels,
+
+        datasets:datasets
+
+      },
+
+      options:{
+
+        responsive:true,
+
+        maintainAspectRatio:false,
+
+        interaction:{
+
+          mode:'index',
+
+          intersect:false
+
+        },
+
+        plugins:{
+
+          legend:{
+
+            position:'bottom',
+
+            labels:{
+
+              usePointStyle:true,
+
+              padding:18,
+
+              boxWidth:10,
+
+              font:{
+                size:12,
+                weight:'600'
+              }
+
+            }
+
+          },
+
+          tooltip:{
+
+            callbacks:{
+
+              title:function(items){
+
+                return items[0]
+                  ? items[0].label
+                  : '';
+
+              },
+
+              label:function(context){
+
+                return `${context.dataset.label}: position ${context.parsed.y}`;
+
+              }
+
+            }
+
+          }
+
+        },
+
+        scales:{
+
+          y:{
+
+            reverse:true,
+
+            min:1,
+
+            suggestedMax:8,
+
+            ticks:{
+
+              precision:0,
+
+              stepSize:1,
+
+              callback:function(value){
+
+                return '#' + value;
+
+              }
+
+            },
+
+            title:{
+
+              display:true,
+
+              text:'Ranking position'
+
+            }
+
+          },
+
+          x:{
+
+            title:{
+
+              display:true,
+
+              text:'Task'
+
+            },
+
+            grid:{
+
+              display:false
+
+            }
+
+          }
+
+        }
+
+      }
+
+    });
+
+
+  }catch(err){
+
+    console.error(err);
+
+
+    chartStatus.textContent=
+      'Unable to load ranking progression.';
+
+
+    topEight.innerHTML=`
+
+      <div class="progression-error">
+
+        The progression data could not be loaded.
+        Please try refreshing the page.
+
+      </div>
+
+    `;
+
+
+    if(chart){
+
+      chart.destroy();
+
+      chart=null;
+
+    }
+
+  }
+
 }
 
-[mode,from,to].forEach(x=>x.addEventListener('change',load));
+
+[mode,from,to].forEach(
+  x=>x.addEventListener('change',load)
+);
+
+
 load();
+
 </script>
+
 {% endblock %}
