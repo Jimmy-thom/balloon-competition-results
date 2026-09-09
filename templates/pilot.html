@@ -19,6 +19,8 @@
   .status-other{background:#edf1f5;color:#5c6977}
   .flight-link{font-weight:750;white-space:nowrap}
   .flight-date{display:block;margin-top:2px;color:#71808f;font-size:10px;line-height:1.2}
+  .pilot-flight-link{color:#174f86;text-decoration:none}
+  .pilot-flight-link:hover{text-decoration:underline}
   .result-cell{font-weight:700;white-space:nowrap}
   .pilot-table th,.pilot-table td{padding:8px 10px}
   .pilot-summary{
@@ -52,7 +54,7 @@
       {% if 'united kingdom' in c or c in ['gb','gbr'] %}<span class="flag">🇬🇧</span>
       {% elif 'australia' in c or c in ['au','aus'] %}<span class="flag">🇦🇺</span>
       {% elif 'belgium' in c or c in ['be','bel'] %}<span class="flag">🇧🇪</span>
-      {% elif 'austria' in c or c in ['at','aut'] %}<span class="flag">🇦🇹</span>
+      {% elif 'austria' in c or 'österreich' in c or c in ['at','aut'] %}<span class="flag">🇦🇹</span>
       {% elif 'croatia' in c or c in ['hr','hrv'] %}<span class="flag">🇭🇷</span>
       {% elif 'czech' in c or c in ['cz','cze'] %}<span class="flag">🇨🇿</span>
       {% elif 'germany' in c or c in ['de','deu'] %}<span class="flag">🇩🇪</span>
@@ -119,7 +121,9 @@
           </td>
           <td>
             {% if r.flight_number %}
-              <a class="flight-link" href="/event/{{event.id}}/task/{{r.task_number}}">Flight {{r.flight_number}}</a>
+              <a class="flight-link pilot-flight-link"
+                 data-flight-number="{{r.flight_number}}"
+                 href="/event/{{event.id}}/task/{{r.task_number}}">Flight {{r.flight_number}}</a>
             {% else %}
               <span class="flight-link">Flight</span>
             {% endif %}
@@ -141,8 +145,63 @@
 
 <script>
 (async function(){
+  const eid = {{ event.id|tojson }};
+
+  // If the backend supplies a 24-hour time such as "15:15 PM",
+  // remove the redundant AM/PM suffix. Keep genuine 12-hour times intact.
+  document.querySelectorAll('.flight-date').forEach(el => {
+    el.textContent = el.textContent.replace(
+      /\\b(1[3-9]|2[0-3]):([0-5]\\d)\\s+(AM|PM)\\b/gi,
+      '$1:$2'
+    );
+  });
+
+  // Make the flag robust to country names, ISO codes and decorated values.
+  const country = {{ (pilot.country or '')|tojson }}.toLowerCase().trim();
+  const flagMap = [
+    [['austria','österreich','aut','at'],'🇦🇹'],
+    [['united kingdom','great britain','uk','gbr','gb'],'🇬🇧'],
+    [['australia','aus','au'],'🇦🇺'],
+    [['belgium','bel','be'],'🇧🇪'],
+    [['croatia','hrv','hr'],'🇭🇷'],
+    [['czech republic','czechia','czech','cze','cz'],'🇨🇿'],
+    [['germany','deu','de'],'🇩🇪'],
+    [['hungary','hun','hu'],'🇭🇺'],
+    [['lithuania','ltu','lt'],'🇱🇹'],
+    [['netherlands','nld','nl'],'🇳🇱'],
+    [['poland','pol','pl'],'🇵🇱'],
+    [['slovakia','svk','sk'],'🇸🇰'],
+    [['slovenia','svn','si'],'🇸🇮'],
+    [['new zealand','nzl','nz'],'🇳🇿'],
+    [['france','fra','fr'],'🇫🇷'],
+    [['italy','ita','it'],'🇮🇹'],
+    [['spain','esp','es'],'🇪🇸'],
+    [['switzerland','che','ch'],'🇨🇭'],
+    [['united states','united states of america','usa','us'],'🇺🇸'],
+    [['canada','can','ca'],'🇨🇦']
+  ];
+  const match = flagMap.find(([names]) =>
+    names.some(n => country === n || country.startsWith(n + ' ') ||
+                    country.startsWith(n + '(') || country.includes(n))
+  );
+  const flagEl = document.querySelector('.pilot-country .flag');
+  if(flagEl) flagEl.textContent = match ? match[1] : '🌍';
+
+  // Resolve Flight N to the real flight page using the existing event API.
   try{
-    const eid = {{ event.id|tojson }};
+    const er = await fetch(`/api/event/${eid}`);
+    const eventData = await er.json();
+    const flights = eventData.flights || [];
+    document.querySelectorAll('.pilot-flight-link').forEach(link => {
+      const n = String(link.dataset.flightNumber || '');
+      const f = flights.find(x => String(x.flight_number) === n);
+      if(f && f.id) link.href = `/event/${eid}/flight/${f.id}`;
+    });
+  }catch(e){
+    console.warn('Flight links unavailable', e);
+  }
+
+  try{
     const number = {{ pilot.competition_number|tojson }};
     const r = await fetch(`/api/event/${eid}/standings?mode=all`);
     const d = await r.json();
