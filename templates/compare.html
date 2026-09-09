@@ -108,7 +108,7 @@ let chart;
 const flags={"Australia":"🇦🇺","United Kingdom":"🇬🇧","Austria":"🇦🇹","Croatia":"🇭🇷","Germany":"🇩🇪","France":"🇫🇷","Poland":"🇵🇱","Slovakia":"🇸🇰","Slovenia":"🇸🇮","Czech Republic":"🇨🇿","Hungary":"🇭🇺","Switzerland":"🇨🇭","Lithuania":"🇱🇹","Netherlands":"🇳🇱","Italy":"🇮🇹","Spain":"🇪🇸","United States":"🇺🇸","Canada":"🇨🇦","New Zealand":"🇳🇿","Ireland":"🇮🇪"};
 function flag(c){return flags[c]||'🌍'}
 function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
-function selected(){return boxes.filter(b=>b.checked).map(b=>b.value).slice(0,8)}
+function selected(){return boxes.filter(b=>b.checked).map(b=>b.value)}
 function updateLabels(){boxes.forEach(b=>b.closest('label').classList.toggle('selected',b.checked));count.textContent=`${selected().length} of 8 selected`}
 function fmt(v){return v==null?'—':Number(v).toLocaleString(undefined,{maximumFractionDigits:0})}
 function qs(){const nums=selected();const p=new URLSearchParams({pilots:nums.join(','),mode:mode.value});if(from.value)p.set('from',from.value);if(to.value)p.set('to',to.value);return p}
@@ -123,16 +123,16 @@ async function load(){
     if(chart)chart.destroy();
     chart=new Chart(chartCanvas,{type:'line',data:{labels,datasets:ds},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},scales:{y:{reverse:true,beginAtZero:false,ticks:{precision:0},title:{display:true,text:'Position'}},x:{title:{display:true,text:'Task'}}},plugins:{legend:{position:'bottom'},tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: position ${ctx.parsed.y??'—'}`}}}}});
     renderTable(d);
-  }catch(err){tableWrap.innerHTML='<div class="error-box">Unable to load the comparison. Please refresh and try again.</div>';}
+  }catch(err){console.error(err);tableWrap.innerHTML='<div class="error-box">Unable to load the task-by-task comparison.</div>';}
 }
 function renderTable(d){
-  const series=d.pilots, tasks=series[0]?.series||[];
+  const series=d.pilots||[], tasks=series[0]?.series||[];
   let h='<table class="compare-table"><thead><tr><th>Pilot</th>';
   tasks.forEach(x=>h+=`<th>T${x.task}</th>`); h+='<th>Total</th></tr></thead><tbody>';
-  series.forEach(p=>{const last=p.series[p.series.length-1];h+=`<tr><td><span class="pilot-name">${flag(p.country)} #${p.competition_number} — ${esc(p.name)}</span><span class="pilot-sub">Final position ${last?.position??'—'}</span></td>`;p.series.forEach(x=>{h+=`<td class="rank ${x.position==1?'top':''} ${x.position==null?'missing':''}">${x.position??'—'}</td>`});h+=`<td><b>${fmt(last?.total)}</b></td></tr>`});
+  series.forEach(p=>{const ps=p.series||[];const last=ps[ps.length-1];h+=`<tr><td><span class="pilot-name">${flag(p.country)} #${p.competition_number} — ${esc(p.name)}</span><span class="pilot-sub">Final position ${last?.position??'—'}</span></td>`;ps.forEach(x=>{h+=`<td class="rank ${x.position==1?'top':''} ${x.position==null?'missing':''}">${x.position??'—'}</td>`});h+=`<td><b>${fmt(last?.total)}</b></td></tr>`});
   h+='</tbody></table>'; tableWrap.innerHTML=h;
 }
-boxes.forEach(b=>b.addEventListener('change',()=>{if(selected().length>=8){boxes.filter(x=>x.checked).slice(0,-8).forEach(x=>x.checked=false)}load()}));[mode,from,to].forEach(x=>x.addEventListener('change',load));
+boxes.forEach(b=>b.addEventListener('change',()=>{if(boxes.filter(x=>x.checked).length>8){b.checked=false;return}load()}));[mode,from,to].forEach(x=>x.addEventListener('change',load));
 search.addEventListener('input',()=>{const q=search.value.trim().toLowerCase();boxes.forEach(b=>{const l=b.closest('label');l.style.display=!q||l.dataset.search.toLowerCase().includes(q)?'flex':'none'})});
 document.getElementById('clear-all').addEventListener('click',()=>{boxes.forEach(b=>b.checked=false);load()});
 document.getElementById('select-top').addEventListener('click',()=>{boxes.forEach(b=>b.checked=false);boxes.slice(0,3).forEach(b=>b.checked=true);load()});
