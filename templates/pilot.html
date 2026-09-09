@@ -1,1 +1,140 @@
-{% extends 'base.html' %}{% block title %}#{{pilot.competition_number}} — {{pilot.name}}{% endblock %}{% block content %}<div class="event-head"><div><div class="eyebrow">{{event.title}}</div><h1>#{{pilot.competition_number}} — {{pilot.name}}</h1><p class="muted">{{pilot.country}}</p></div><a class="button" href="/event/{{event.id}}/compare?pilots={{pilot.competition_number}}">Compare</a></div><div class="card"><h2>Task record</h2><div class="table-scroll"><table><thead><tr><th>Task</th><th>Flight</th><th>Status</th><th>Result</th><th>Points</th><th>Score</th></tr></thead><tbody>{% for r in results %}<tr><td><a href="/event/{{event.id}}/task/{{r.task_number}}">T{{r.task_number}} — {{r.name}}</a></td><td>{{r.flight_number}}<br><small>{{r.flight_date}}</small></td><td><span class="status {{r.status|lower}}">{{r.status}}</span></td><td>{{r.result_text}}</td><td>{{r.points}}</td><td class="score">{{r.score}}</td></tr>{% endfor %}</tbody></table></div></div>{% endblock %}
+{% extends 'base.html' %}
+
+{% block title %}#{{pilot.competition_number}} — {{pilot.name}}{% endblock %}
+
+{% block content %}
+<style>
+  .pilot-hero{
+    display:flex;justify-content:space-between;align-items:center;gap:18px;
+    margin-bottom:16px;
+  }
+  .pilot-hero h1{margin:4px 0 6px}
+  .pilot-country{display:flex;align-items:center;gap:8px}
+  .pilot-country img{width:24px;height:16px;object-fit:cover;border-radius:2px}
+  .pilot-summary{
+    display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:10px;margin-bottom:16px;
+  }
+  .pilot-stat{
+    background:#f7f9fb;border:1px solid #dbe3ea;border-radius:10px;
+    padding:12px 14px;
+  }
+  .pilot-stat .label{font-size:10px;text-transform:uppercase;color:#71808f;font-weight:700;letter-spacing:.04em}
+  .pilot-stat .value{font-size:22px;font-weight:800;margin-top:3px}
+  .pilot-table th{white-space:nowrap}
+  .pilot-table td{vertical-align:middle}
+  .pilot-table .task-link{font-weight:700}
+  .pilot-table .score{font-weight:800}
+  .status.provisional{font-weight:700}
+  .pilot-back{margin-top:12px}
+  @media(max-width:700px){
+    .pilot-hero{align-items:flex-start;flex-direction:column}
+    .pilot-summary{grid-template-columns:1fr 1fr}
+    .pilot-summary .pilot-stat:last-child{grid-column:1/-1}
+  }
+</style>
+
+<div class="pilot-hero">
+  <div>
+    <div class="eyebrow">{{event.title}}</div>
+    <h1>#{{pilot.competition_number}} — {{pilot.name}}</h1>
+    <div class="muted pilot-country">
+      {% set c = pilot.country|lower %}
+      {% if 'united kingdom' in c or c in ['gb','gbr'] %}<span>🇬🇧</span>
+      {% elif 'australia' in c or c in ['au','aus'] %}<span>🇦🇺</span>
+      {% elif 'belgium' in c or c in ['be','bel'] %}<span>🇧🇪</span>
+      {% elif 'austria' in c or c in ['at','aut'] %}<span>🇦🇹</span>
+      {% elif 'croatia' in c or c in ['hr','hrv'] %}<span>🇭🇷</span>
+      {% elif 'czech' in c or c in ['cz','cze'] %}<span>🇨🇿</span>
+      {% elif 'germany' in c or c in ['de','deu'] %}<span>🇩🇪</span>
+      {% elif 'hungary' in c or c in ['hu','hun'] %}<span>🇭🇺</span>
+      {% elif 'lithuania' in c or c in ['lt','ltu'] %}<span>🇱🇹</span>
+      {% elif 'netherlands' in c or c in ['nl','nld'] %}<span>🇳🇱</span>
+      {% elif 'poland' in c or c in ['pl','pol'] %}<span>🇵🇱</span>
+      {% elif 'slovakia' in c or c in ['sk','svk'] %}<span>🇸🇰</span>
+      {% elif 'slovenia' in c or c in ['si','svn'] %}<span>🇸🇮</span>
+      {% elif 'new zealand' in c or c in ['nz','nzl'] %}<span>🇳🇿</span>
+      {% elif 'france' in c or c in ['fr','fra'] %}<span>🇫🇷</span>
+      {% elif 'italy' in c or c in ['it','ita'] %}<span>🇮🇹</span>
+      {% elif 'spain' in c or c in ['es','esp'] %}<span>🇪🇸</span>
+      {% elif 'switzerland' in c or c in ['ch','che'] %}<span>🇨🇭</span>
+      {% elif 'united states' in c or c in ['us','usa'] %}<span>🇺🇸</span>
+      {% elif 'canada' in c or c in ['ca','can'] %}<span>🇨🇦</span>
+      {% else %}<span>🌍</span>{% endif %}
+      <span>{{pilot.country}}</span>
+    </div>
+  </div>
+  <div>
+    <a class="button" href="/event/{{event.id}}">← Back to event</a>
+    <a class="button" href="/event/{{event.id}}/compare?pilots={{pilot.competition_number}}">Compare</a>
+  </div>
+</div>
+
+<div class="pilot-summary">
+  <div class="pilot-stat">
+    <div class="label">Current position</div>
+    <div class="value" id="pilot-position">—</div>
+  </div>
+  <div class="pilot-stat">
+    <div class="label">Total score</div>
+    <div class="value" id="pilot-total">—</div>
+  </div>
+  <div class="pilot-stat">
+    <div class="label">Tasks recorded</div>
+    <div class="value">{{results|length}}</div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>Task record</h2>
+  <p class="muted">Results for this pilot across the competition. Click a task to open the full task results.</p>
+  <div class="table-scroll">
+    <table class="pilot-table">
+      <thead>
+        <tr>
+          <th>Task</th>
+          <th>Flight</th>
+          <th>Status</th>
+          <th>Result</th>
+          <th>Points</th>
+          <th>Score</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in results %}
+        <tr>
+          <td>
+            <a class="task-link" href="/event/{{event.id}}/task/{{r.task_number}}">
+              T{{r.task_number}} — {{r.name}}
+            </a>
+          </td>
+          <td>{{r.flight_number}}<br><small>{{r.flight_date}}</small></td>
+          <td><span class="status {{r.status|lower}}">{{r.status}}</span></td>
+          <td>{{r.result_text}}</td>
+          <td>{{r.points}}</td>
+          <td class="score">{{r.score}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+(async function(){
+  try{
+    const eid = {{ event.id|tojson }};
+    const number = {{ pilot.competition_number|tojson }};
+    const r = await fetch(`/api/event/${eid}/standings?mode=all`);
+    const d = await r.json();
+    const row = (d.rows || []).find(x => String(x.competition_number) === String(number));
+    if(row){
+      document.getElementById('pilot-position').textContent = row.position;
+      document.getElementById('pilot-total').textContent = Number(row.total || 0).toLocaleString();
+    }
+  }catch(e){
+    console.warn('Pilot summary unavailable', e);
+  }
+})();
+</script>
+{% endblock %}
