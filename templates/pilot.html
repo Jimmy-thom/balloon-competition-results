@@ -119,12 +119,10 @@
             </a>
           </td>
           <td>
-            {% if r.flight_number %}
-              <a class="flight-link pilot-flight-link"
-                 data-task-number="{{r.task_number}}"
-                 href="/event/{{event.id}}/task/{{r.task_number}}">Flight</a>
+            {% if r.flight_id and r.flight_ordinal %}
+              <a class="flight-link" href="/event/{{event.id}}/flight/{{r.flight_id}}">Flight {{r.flight_ordinal}}</a>
             {% else %}
-              <span class="flight-link">Flight</span>
+              <span class="flight-link">—</span>
             {% endif %}
             <span class="flight-date">{{r.flight_date}}</span>
           </td>
@@ -147,55 +145,6 @@
   const eid = {{ event.id|tojson }};
   const number = {{ pilot.competition_number|tojson }};
 
-  // Normalize the imported pilot identity. Some imported records have the
-  // country appended to the pilot name and/or an incomplete country field.
-  const heading = document.getElementById('pilot-heading');
-  const rawName = heading ? (heading.dataset.pilotName || '') : '';
-  const suppliedCountry = heading ? (heading.dataset.pilotCountry || '') : '';
-
-  const countries = [
-    ['United Kingdom','🇬🇧'], ['Great Britain','🇬🇧'],
-    ['Australia','🇦🇺'], ['Belgium','🇧🇪'], ['Austria','🇦🇹'],
-    ['Croatia','🇭🇷'], ['Czech Republic','🇨🇿'], ['Czechia','🇨🇿'],
-    ['Germany','🇩🇪'], ['Hungary','🇭🇺'], ['Lithuania','🇱🇹'],
-    ['Netherlands','🇳🇱'], ['Poland','🇵🇱'], ['Slovakia','🇸🇰'],
-    ['Slovenia','🇸🇮'], ['New Zealand','🇳🇿'], ['France','🇫🇷'],
-    ['Italy','🇮🇹'], ['Spain','🇪🇸'], ['Switzerland','🇨🇭'],
-    ['United States of America','🇺🇸'], ['United States','🇺🇸'],
-    ['Canada','🇨🇦']
-  ];
-
-  function findCountry(value){
-    const v = String(value || '').trim().toLowerCase();
-    return countries.find(([name]) =>
-      v === name.toLowerCase() ||
-      v.endsWith(' ' + name.toLowerCase()) ||
-      v.includes(name.toLowerCase())
-    );
-  }
-
-  const countryMatch = findCountry(suppliedCountry) || findCountry(rawName);
-  const countryName = countryMatch ? countryMatch[0] : suppliedCountry.trim();
-
-  let cleanName = rawName.trim();
-  if(countryMatch){
-    const suffix = countryMatch[0];
-    const re = new RegExp('\\s+' + suffix.replace(/[.*+?^${}()|[\]\\]/g,'\\$&') + '\\s*$', 'i');
-    cleanName = cleanName.replace(re, '').trim();
-  }
-
-  if(heading){
-    heading.textContent = `#${number} — ${cleanName}`;
-  }
-
-  const countryLine = document.querySelector('.pilot-country');
-  if(countryLine){
-    const flag = countryLine.querySelector('.flag');
-    const name = countryLine.querySelector('.country-name');
-    if(flag) flag.textContent = countryMatch ? countryMatch[1] : '🌍';
-    if(name) name.textContent = countryName || 'Unknown';
-  }
-
   // Correct redundant 24-hour clock suffixes such as "15:15 PM".
   document.querySelectorAll('.flight-date').forEach(el => {
     el.textContent = el.textContent.replace(
@@ -203,33 +152,6 @@
       '$1:$2'
     );
   });
-
-  // Resolve each task to its actual flight. The event API contains task.flight_id
-  // and flights in sort order, allowing us to display Flight 1, Flight 2, etc.
-  try{
-    const er = await fetch(`/api/event/${eid}`);
-    const eventData = await er.json();
-    const flights = (eventData.flights || []).slice().sort(
-      (a,b) => Number(a.sort_order || 0) - Number(b.sort_order || 0)
-    );
-    const tasks = eventData.tasks || [];
-
-    document.querySelectorAll('.pilot-flight-link').forEach(link => {
-      const taskNumber = String(link.dataset.taskNumber || '');
-      const task = tasks.find(t => String(t.task_number) === taskNumber);
-      if(!task || !task.flight_id) return;
-
-      const flightIndex = flights.findIndex(
-        f => String(f.id) === String(task.flight_id)
-      );
-      if(flightIndex < 0) return;
-
-      link.textContent = `Flight ${flightIndex + 1}`;
-      link.href = `/event/${eid}/flight/${task.flight_id}`;
-    });
-  }catch(e){
-    console.warn('Flight links unavailable', e);
-  }
 
   // Populate the current position and total score.
   try{
