@@ -193,8 +193,59 @@ def compare_page(eid):
 @app.get("/event/<eid>/search")
 def search_page(eid):
     e=event(eid); q=request.args.get("q","").strip(); c=conn(eid); pilots=[]
+
     if q:
-        like="%"+q+"%"; pilots=[dict(r) for r in c.execute("SELECT competition_number,name,country FROM pilots WHERE competition_id=? AND (name LIKE ? OR CAST(competition_number AS TEXT) LIKE ?)",(eid,like,like)).fetchall()]
+        like="%"+q+"%"
+        if is_postgres():
+            sql="""SELECT competition_number,name,country
+                     FROM pilots
+                     WHERE competition_id=?
+                       AND (name ILIKE ? OR CAST(competition_number AS TEXT) ILIKE ?)
+                     ORDER BY CASE WHEN CAST(competition_number AS TEXT)=? THEN 0 ELSE 1 END, name
+                     LIMIT 100"""
+        else:
+            sql="""SELECT competition_number,name,country
+                     FROM pilots
+                     WHERE competition_id=?
+                       AND (name LIKE ? OR CAST(competition_number AS TEXT) LIKE ?)
+                     ORDER BY CASE WHEN CAST(competition_number AS TEXT)=? THEN 0 ELSE 1 END, name
+                     LIMIT 100"""
+        pilots=[dict(r) for r in c.execute(sql,(eid,like,like,q)).fetchall()]
+
+    # Match the clean country/name presentation used on the pilot page.
+    country_map={
+        "AU":"Australia","AUS":"Australia","GB":"United Kingdom","GBR":"United Kingdom",
+        "AT":"Austria","AUT":"Austria","HR":"Croatia","HRV":"Croatia",
+        "CZ":"Czech Republic","CZE":"Czech Republic","DE":"Germany","DEU":"Germany",
+        "HU":"Hungary","HUN":"Hungary","LT":"Lithuania","LTU":"Lithuania",
+        "NL":"Netherlands","NLD":"Netherlands","PL":"Poland","POL":"Poland",
+        "SK":"Slovakia","SVK":"Slovakia","SI":"Slovenia","SVN":"Slovenia",
+        "NZ":"New Zealand","NZL":"New Zealand","FR":"France","FRA":"France",
+        "IT":"Italy","ITA":"Italy","ES":"Spain","ESP":"Spain",
+        "CH":"Switzerland","CHE":"Switzerland","US":"United States","USA":"United States",
+        "CA":"Canada","CAN":"Canada"
+    }
+    for pilot in pilots:
+        raw=(pilot.get("country") or "").strip()
+        parts=raw.split()
+        pilot["country"]=country_map.get(parts[0].upper(),raw) if parts else ""
+        name=(pilot.get("name") or "").strip()
+        for country_name in sorted(set(country_map.values()), key=len, reverse=True):
+            if name.lower().endswith(" " + country_name.lower()):
+                name=name[:-(len(country_name)+1)].rstrip()
+                break
+        pilot["name"]=name
+
+    # Add the current official standing to each result when available.
+    standings={}
+    if pilots:
+        for row in standings_data(eid,"official"):
+            standings[row["competition_number"]]=row
+    for pilot in pilots:
+        row=standings.get(pilot["competition_number"],{})
+        pilot["position"]=row.get("position")
+        pilot["total"]=row.get("total")
+
     c.close(); return render_template("search.html",event=e,q=q,pilots=pilots)
 @app.get("/event/<eid>/history")
 def history_page(eid):
