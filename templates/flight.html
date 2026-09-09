@@ -10,31 +10,31 @@
   <a class="button" href="/event/{{event.id}}">← Event standings</a>
 </div>
 
-{% set ns = namespace(prev=None, next=None, found=False) %}
+{% set ns = namespace(prev=None, next=None, found=False, current_num=None) %}
 {% for f in flights %}
-  {% if ns.found and ns.next is none %}{% set ns.next = f %}{% endif %}
-  {% if f.id == flight.id %}{% set ns.found = True %}{% endif %}
-  {% if not ns.found %}{% set ns.prev = f %}{% endif %}
+  {% if ns.found and ns.next is none %}{% set ns.next = {'flight': f, 'num': loop.index} %}{% endif %}
+  {% if f.id == flight.id %}{% set ns.found = True %}{% set ns.current_num = loop.index %}{% endif %}
+  {% if not ns.found %}{% set ns.prev = {'flight': f, 'num': loop.index} %}{% endif %}
 {% endfor %}
 
 <div class="flight-nav card">
   {% if ns.prev %}
     <a class="flight-nav-item" href="/event/{{event.id}}/flight/{{ns.prev.id}}">
       <span class="flight-nav-label">← Previous flight</span>
-      <strong>{{ns.prev.flight_number or 'Flight'}}</strong>
-      <small>{{ns.prev.date_label}}{% if ns.prev.time_label %} · {{ns.prev.time_label}}{% endif %}</small>
+      <strong>Flight {{ns.prev.num}}</strong>
+      <small>{{ns.prev.flight.date_label}}{% if ns.prev.flight.time_label %} · {{ns.prev.flight.time_label}}{% endif %}</small>
     </a>
   {% else %}
     <div class="flight-nav-item disabled"><span class="flight-nav-label">← Previous flight</span><strong>—</strong></div>
   {% endif %}
   <div class="flight-nav-current">
-    <span>Flight navigation</span>
+    <span>Flight {{ns.current_num}}</span>
   </div>
   {% if ns.next %}
     <a class="flight-nav-item next" href="/event/{{event.id}}/flight/{{ns.next.id}}">
       <span class="flight-nav-label">Next flight →</span>
-      <strong>{{ns.next.flight_number or 'Flight'}}</strong>
-      <small>{{ns.next.date_label}}{% if ns.next.time_label %} · {{ns.next.time_label}}{% endif %}</small>
+      <strong>Flight {{ns.next.num}}</strong>
+      <small>{{ns.next.flight.date_label}}{% if ns.next.flight.time_label %} · {{ns.next.flight.time_label}}{% endif %}</small>
     </a>
   {% else %}
     <div class="flight-nav-item disabled next"><span class="flight-nav-label">Next flight →</span><strong>—</strong></div>
@@ -44,7 +44,7 @@
 <div class="card flight-card-main">
   <div class="section-head">
     <div>
-      <h2>{% if flight.flight_number %}{{flight.flight_number}}{% else %}Selected flight{% endif %}</h2>
+      <h2>Flight {{ns.current_num}}</h2>
       <p class="muted">Choose between the results from this flight alone and the cumulative standings through this flight.</p>
     </div>
     <div class="controls flight-controls">
