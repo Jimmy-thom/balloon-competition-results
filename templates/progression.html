@@ -1,0 +1,20 @@
+ data:{labels,datasets:ds},
+    options:{
+      responsive:true,
+      maintainAspectRatio:false,
+      scales:{
+        y:{reverse:true,ticks:{precision:0}},
+        x:{title:{display:true,text:'Task'}}
+      },
+      plugins:{
+        legend:{position:'bottom'},
+        tooltip:{mode:'index',intersect:false}
+      }
+    }
+  });
+}
+
+[mode,from,to].forEach(x=>x.addEventListener('change',load));
+load();
+</script>
+{% endblock %}
