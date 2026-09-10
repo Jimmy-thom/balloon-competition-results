@@ -238,12 +238,51 @@ def flight_task_links(soup, base):
             if getattr(node,'name',None) in heading_tags and parse_flight_heading(clean(node.get_text(' ',strip=True))):
                 break
             if getattr(node,'name',None) not in {'span','div','li','p','td','th','strong','b'}: continue
-            direct=clean(' '.join(str(x) for x in node.children if getattr(x,'name',None) is None))
-            label=parse_task_label(direct)
-            if not label or label['task_number'] in seen_numbers: continue
-            seen_numbers.add(label['task_number'])
-            synthetic=f'{base}#flight={idx}&task={label["task_number"]}'
-            f['tasks'].append({'url':synthetic,'tid':'','link_text':direct,'task_number_hint':label['task_number'],'name_hint':label['name'],'status_hint':label['status'],'linked':False})
+
+            # Some cancelled tasks are rendered as plain text rather than
+            # links, with the CANCELLED badge/text outside the immediate
+            # text node.  Inspect the full visible text of the element and
+            # extract every task label it contains.
+            visible=clean(node.get_text(' ',strip=True))
+            if not visible: continue
+
+            matches=list(re.finditer(
+                r'(?i)(?:^|\s)(Practice\s+)?Task\s+(\d+)\s*[-–]\s*(.*?)(?=(?:\s+(?:Practice\s+)?Task\s+\d+\s*[-–])|$)',
+                visible
+            ))
+            if not matches:
+                # Mildura-style practice labels are rendered as
+                # "Practice 1 - ..." rather than "Practice Task 1 - ...".
+                matches=list(re.finditer(
+                    r'(?i)(?:^|\s)Practice\s+(\d+)\s*[-–]\s*(.*?)(?=(?:\s+Practice\s+\d+\s*[-–])|$)',
+                    visible
+                ))
+
+            for m in matches:
+                if m.group(1) and 'Practice' in m.group(0):
+                    # First regex: Practice Task N - ...
+                    task_no=int(m.group(2))
+                    body=clean(m.group(3))
+                    is_practice=True
+                elif m.group(1) is None and m.lastindex >= 3:
+                    task_no=int(m.group(2))
+                    body=clean(m.group(3))
+                    is_practice=False
+                else:
+                    # Second regex: Practice N - ...
+                    task_no=int(m.group(1))
+                    body=clean(m.group(2))
+                    is_practice=True
+
+                status='UNKNOWN'
+                sm=re.search(r'(?i)\b(FINAL|PROVISIONAL|OFFICIAL|CANCELLED|COMPLETE|COMPLETED)\s*$',body)
+                if sm:
+                    status=norm_status(sm.group(1))
+                    body=clean(body[:sm.start()])
+                if task_no in seen_numbers: continue
+                seen_numbers.add(task_no)
+                synthetic=f'{base}#flight={idx}&task={task_no}'
+                f['tasks'].append({'url':synthetic,'tid':'','link_text':clean(m.group(0)),'task_number_hint':task_no,'name_hint':body,'status_hint':status,'linked':False})
         flights.append(f)
     return flights
 
