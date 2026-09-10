@@ -275,22 +275,28 @@ def flight_task_links(soup, base):
         flights.append(f)
         seen_by_idx.append(seen_numbers)
 
-    # Second pass: plain-text task labels. Find the nearest preceding flight
-    # heading for each individual text node. This prevents wrapper elements
-    # from leaking tasks from a later flight into an earlier one.
-    for node in soup.find_all(string=True):
-        visible = clean(str(node))
-        if not visible:
+    # Second pass: cancelled/provisional task rows without result links.
+    # On WatchMeFly these are rendered as <a> rows with NO href, while the
+    # status badge is a child <span>. Reading the complete anchor text gives
+    # us "Task 7 - Judge Declared Goal CANCELLED" without scanning wrapper
+    # containers, so tasks cannot leak between flight sections.
+    task_pat = re.compile(
+        r'(?i)\bTask\s+(?P<number>\d+)\s*[-–]\s*'
+        r'(?P<body>.*?)(?P<status>FINAL|PROVISIONAL|OFFICIAL|CANCELLED|COMPLETE|COMPLETED)\b'
+    )
+    practice_pat = re.compile(
+        r'(?i)\bPractice(?:\s+Task)?\s+(?P<number>\d+)\s*[-–]\s*'
+        r'(?P<body>.*?)(?P<status>FINAL|PROVISIONAL|OFFICIAL|CANCELLED|COMPLETE|COMPLETED)\b'
+    )
+
+    for node in soup.find_all('a'):
+        # Result/task links were already handled above. We only want task
+        # rows that have no href (the way cancelled tasks are published).
+        if node.get('href'):
             continue
 
-        parent = getattr(node, 'parent', None)
-        if parent is not None:
-            if getattr(parent, 'name', '') in {'script', 'style', 'noscript'}:
-                continue
-            if node.find_parent('a') is not None:
-                continue
-
-        if not re.search(r'(?i)\b(?:Task\s+\d+|Practice(?:\s+Task)?\s+\d+)\s*[-–]', visible):
+        visible = clean(node.get_text(' ', strip=True))
+        if not visible:
             continue
 
         previous = node.find_all_previous(list(heading_tags))
@@ -306,20 +312,23 @@ def flight_task_links(soup, base):
         if owner_idx is None:
             continue
 
-        task_pat = re.compile(
-            r'(?i)\bTask\s+(?P<number>\d+)\s*[-–]\s*'
-            r'(?P<body>.*?)(?P<status>FINAL|PROVISIONAL|OFFICIAL|CANCELLED|COMPLETE|COMPLETED)\b'
-        )
-        practice_pat = re.compile(
-            r'(?i)\bPractice(?:\s+Task)?\s+(?P<number>\d+)\s*[-–]\s*'
-            r'(?P<body>.*?)(?P<status>FINAL|PROVISIONAL|OFFICIAL|CANCELLED|COMPLETE|COMPLETED)\b'
-        )
-
         matches = []
         for m in practice_pat.finditer(visible):
-            matches.append((int(m.group('number')), clean(m.group('body')), True, m.group(0), m.group('status')))
+            matches.append((
+                int(m.group('number')),
+                clean(m.group('body')),
+                True,
+                m.group(0),
+                m.group('status')
+            ))
         for m in task_pat.finditer(visible):
-            matches.append((int(m.group('number')), clean(m.group('body')), False, m.group(0), m.group('status')))
+            matches.append((
+                int(m.group('number')),
+                clean(m.group('body')),
+                False,
+                m.group(0),
+                m.group('status')
+            ))
 
         for task_no, body, is_practice, matched_text, raw_status in matches:
             status = norm_status(raw_status)
