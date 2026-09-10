@@ -246,33 +246,32 @@ def flight_task_links(soup, base):
             visible=clean(node.get_text(' ',strip=True))
             if not visible: continue
 
-            matches=list(re.finditer(
-                r'(?i)(?:^|\s)(Practice\s+)?Task\s+(\d+)\s*[-–]\s*(.*?)(?=(?:\s+(?:Practice\s+)?Task\s+\d+\s*[-–])|$)',
-                visible
-            ))
+            # Use separate named-group patterns so a status/name can never
+            # accidentally be passed to int(). WatchMeFly uses both normal
+            # "Task N - ..." labels and practice labels such as
+            # "Practice 1 - ...".
+            matches = []
+            normal_pat = re.compile(
+                r'(?i)(?:^|\s)Task\s+(?P<number>\d+)\s*[-–]\s*(?P<body>.*?)(?=(?:\s+(?:Practice\s+)?Task\s+\d+\s*[-–])|$)'
+            )
+            practice_task_pat = re.compile(
+                r'(?i)(?:^|\s)Practice\s+Task\s+(?P<number>\d+)\s*[-–]\s*(?P<body>.*?)(?=(?:\s+(?:Practice\s+)?Task\s+\d+\s*[-–])|$)'
+            )
+            practice_pat = re.compile(
+                r'(?i)(?:^|\s)Practice\s+(?P<number>\d+)\s*[-–]\s*(?P<body>.*?)(?=(?:\s+Practice\s+\d+\s*[-–])|$)'
+            )
+
+            for m in practice_task_pat.finditer(visible):
+                matches.append((int(m.group('number')), clean(m.group('body')), True, m.group(0)))
+            for m in normal_pat.finditer(visible):
+                matches.append((int(m.group('number')), clean(m.group('body')), False, m.group(0)))
             if not matches:
                 # Mildura-style practice labels are rendered as
                 # "Practice 1 - ..." rather than "Practice Task 1 - ...".
-                matches=list(re.finditer(
-                    r'(?i)(?:^|\s)Practice\s+(\d+)\s*[-–]\s*(.*?)(?=(?:\s+Practice\s+\d+\s*[-–])|$)',
-                    visible
-                ))
+                for m in practice_pat.finditer(visible):
+                    matches.append((int(m.group('number')), clean(m.group('body')), True, m.group(0)))
 
-            for m in matches:
-                if m.group(1) and 'Practice' in m.group(0):
-                    # First regex: Practice Task N - ...
-                    task_no=int(m.group(2))
-                    body=clean(m.group(3))
-                    is_practice=True
-                elif m.group(1) is None and m.lastindex >= 3:
-                    task_no=int(m.group(2))
-                    body=clean(m.group(3))
-                    is_practice=False
-                else:
-                    # Second regex: Practice N - ...
-                    task_no=int(m.group(1))
-                    body=clean(m.group(2))
-                    is_practice=True
+            for task_no, body, is_practice, matched_text in matches:
 
                 status='UNKNOWN'
                 sm=re.search(r'(?i)\b(FINAL|PROVISIONAL|OFFICIAL|CANCELLED|COMPLETE|COMPLETED)\s*$',body)
@@ -282,7 +281,7 @@ def flight_task_links(soup, base):
                 if task_no in seen_numbers: continue
                 seen_numbers.add(task_no)
                 synthetic=f'{base}#flight={idx}&task={task_no}'
-                f['tasks'].append({'url':synthetic,'tid':'','link_text':clean(m.group(0)),'task_number_hint':task_no,'name_hint':body,'status_hint':status,'linked':False})
+                f['tasks'].append({'url':synthetic,'tid':'','link_text':clean(matched_text),'task_number_hint':task_no,'name_hint':body,'status_hint':status,'linked':False})
         flights.append(f)
     return flights
 
