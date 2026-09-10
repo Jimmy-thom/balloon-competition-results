@@ -210,91 +210,137 @@ def parse_task_label(text):
 
 
 def flight_task_links(soup, base):
-    """Discover every WatchMeFly flight and task, including empty/cancelled ones."""
+    """Discover every WatchMeFly flight and task, including empty/cancelled ones.
+
+    WatchMeFly publishes normal tasks as links, but cancelled tasks may be
+    plain text with no result page. We therefore use flight headings as hard
+    section boundaries, collect linked tasks from each section, then make a
+    global pass over individual text nodes for plain cancelled/practice labels.
+    """
     headings = []
     heading_tags = {'h1','h2','h3','h4','h5','h6'}
+
     for tag in soup.find_all(list(heading_tags)):
         parsed = parse_flight_heading(clean(tag.get_text(' ', strip=True)))
         if parsed:
             headings.append((tag, parsed))
+
     flights = []
-    for idx,(heading,flight) in enumerate(headings):
-        f=flight.copy(); f['heading']=clean(heading.get_text(' ',strip=True)); f['tasks']=[]; f['sort_order']=idx
-        seen_links=set(); seen_numbers=set()
+    seen_by_idx = []
+
+    # First pass: discover flights and their real result/task links.
+    for idx, (heading, flight) in enumerate(headings):
+        f = flight.copy()
+        f['heading'] = clean(heading.get_text(' ', strip=True))
+        f['tasks'] = []
+        f['sort_order'] = idx
+
+        seen_links = set()
+        seen_numbers = set()
+
         for node in heading.next_elements:
-            if getattr(node,'name',None) in heading_tags and parse_flight_heading(clean(node.get_text(' ',strip=True))):
-                break
-            if getattr(node,'name',None)=='a' and node.get('href'):
-                href=urljoin(base,node['href']); q=parse_qs(urlparse(href).query)
-                if 'tid' not in q or q.get('v',[''])[0].lower()!='tr':
-                    continue
-                key=(q['tid'][0],href)
-                if key in seen_links: continue
-                seen_links.add(key)
-                label=parse_task_label(clean(node.get_text(' ',strip=True)))
-                if label: seen_numbers.add(label['task_number'])
-                f['tasks'].append({'url':href,'tid':q['tid'][0],'link_text':clean(node.get_text(' ',strip=True)),'task_number_hint':label['task_number'] if label else None,'name_hint':label['name'] if label else '','status_hint':label['status'] if label else 'UNKNOWN','linked':True})
-        # Cancelled/no-result tasks are plain text on WatchMeFly.  Parse only
-        # individual text nodes inside this flight section.  Do NOT call
-        # get_text() on broad containers (div/span/td/etc.), because those
-        # containers can wrap content from the next flight and cause task
-        # leakage between flight sections.
-        for node in heading.next_elements:
-            if getattr(node,'name',None) in heading_tags and parse_flight_heading(clean(node.get_text(' ',strip=True))):
+            if (
+                getattr(node, 'name', None) in heading_tags
+                and parse_flight_heading(clean(node.get_text(' ', strip=True)))
+            ):
                 break
 
-            # BeautifulSoup exposes visible text as NavigableString objects.
-            # Ignore text belonging to links because linked tasks were already
-            # captured above.
-            if not isinstance(node, str):
-                continue
-            if getattr(node, 'parent', None) is not None and node.find_parent('a') is not None:
+            if getattr(node, 'name', None) != 'a' or not node.get('href'):
                 continue
 
-            visible=clean(str(node))
-            if not visible:
+            href = urljoin(base, node['href'])
+            q = parse_qs(urlparse(href).query)
+            if 'tid' not in q or q.get('v', [''])[0].lower() != 'tr':
                 continue
 
-            # WatchMeFly currently renders plain cancelled tasks like:
-            #   Task 7 - Judge Declared Goal CANCELLED
-            # and practice labels like:
-            #   Practice 1 - Pilot Declared Goal PROVISIONAL
-            # Keep the parser deliberately local to the individual text node.
-            task_pat = re.compile(
-                r'(?i)\bTask\s+(?P<number>\d+)\s*[-–]\s*'
-                r'(?P<body>.*?)(?P<status>FINAL|PROVISIONAL|OFFICIAL|CANCELLED|COMPLETE|COMPLETED)\b'
-            )
-            practice_pat = re.compile(
-                r'(?i)\bPractice(?:\s+Task)?\s+(?P<number>\d+)\s*[-–]\s*'
-                r'(?P<body>.*?)(?P<status>FINAL|PROVISIONAL|OFFICIAL|CANCELLED|COMPLETE|COMPLETED)\b'
-            )
+            key = (q['tid'][0], href)
+            if key in seen_links:
+                continue
+            seen_links.add(key)
 
-            matches=[]
-            # Check practice first so "Practice 1" is never interpreted as
-            # an ordinary competition task.
-            for m in practice_pat.finditer(visible):
-                matches.append((int(m.group('number')), clean(m.group('body')), True, m.group(0), m.group('status')))
-            for m in task_pat.finditer(visible):
-                matches.append((int(m.group('number')), clean(m.group('body')), False, m.group(0), m.group('status')))
+            label = parse_task_label(clean(node.get_text(' ', strip=True)))
+            if label:
+                seen_numbers.add(label['task_number'])
 
-            for task_no, body, is_practice, matched_text, raw_status in matches:
-                status=norm_status(raw_status)
-                if task_no in seen_numbers:
-                    continue
-                seen_numbers.add(task_no)
-                synthetic=f'{base}#flight={idx}&task={task_no}'
-                f['tasks'].append({
-                    'url':synthetic,
-                    'tid':'',
-                    'link_text':clean(matched_text),
-                    'task_number_hint':task_no,
-                    'name_hint':body,
-                    'status_hint':status,
-                    'linked':False
-                })
+            f['tasks'].append({
+                'url': href,
+                'tid': q['tid'][0],
+                'link_text': clean(node.get_text(' ', strip=True)),
+                'task_number_hint': label['task_number'] if label else None,
+                'name_hint': label['name'] if label else '',
+                'status_hint': label['status'] if label else 'UNKNOWN',
+                'linked': True
+            })
+
         flights.append(f)
-    return flights
+        seen_by_idx.append(seen_numbers)
 
+    # Second pass: plain-text task labels. Find the nearest preceding flight
+    # heading for each individual text node. This prevents wrapper elements
+    # from leaking tasks from a later flight into an earlier one.
+    for node in soup.find_all(string=True):
+        visible = clean(str(node))
+        if not visible:
+            continue
+
+        parent = getattr(node, 'parent', None)
+        if parent is not None:
+            if getattr(parent, 'name', '') in {'script', 'style', 'noscript'}:
+                continue
+            if node.find_parent('a') is not None:
+                continue
+
+        if not re.search(r'(?i)\b(?:Task\s+\d+|Practice(?:\s+Task)?\s+\d+)\s*[-–]', visible):
+            continue
+
+        previous = node.find_all_previous(list(heading_tags))
+        owner_idx = None
+        for previous_heading in previous:
+            if parse_flight_heading(clean(previous_heading.get_text(' ', strip=True))):
+                for i, (known_heading, _) in enumerate(headings):
+                    if known_heading is previous_heading:
+                        owner_idx = i
+                        break
+                if owner_idx is not None:
+                    break
+        if owner_idx is None:
+            continue
+
+        task_pat = re.compile(
+            r'(?i)\bTask\s+(?P<number>\d+)\s*[-–]\s*'
+            r'(?P<body>.*?)(?P<status>FINAL|PROVISIONAL|OFFICIAL|CANCELLED|COMPLETE|COMPLETED)\b'
+        )
+        practice_pat = re.compile(
+            r'(?i)\bPractice(?:\s+Task)?\s+(?P<number>\d+)\s*[-–]\s*'
+            r'(?P<body>.*?)(?P<status>FINAL|PROVISIONAL|OFFICIAL|CANCELLED|COMPLETE|COMPLETED)\b'
+        )
+
+        matches = []
+        for m in practice_pat.finditer(visible):
+            matches.append((int(m.group('number')), clean(m.group('body')), True, m.group(0), m.group('status')))
+        for m in task_pat.finditer(visible):
+            matches.append((int(m.group('number')), clean(m.group('body')), False, m.group(0), m.group('status')))
+
+        for task_no, body, is_practice, matched_text, raw_status in matches:
+            status = norm_status(raw_status)
+            if status not in {'CANCELLED', 'PROVISIONAL'}:
+                continue
+            if task_no in seen_by_idx[owner_idx]:
+                continue
+
+            seen_by_idx[owner_idx].add(task_no)
+            synthetic = f'{base}#flight={owner_idx}&task={task_no}'
+            flights[owner_idx]['tasks'].append({
+                'url': synthetic,
+                'tid': '',
+                'link_text': clean(matched_text),
+                'task_number_hint': task_no,
+                'name_hint': body,
+                'status_hint': status,
+                'linked': False
+            })
+
+    return flights
 def task_links(soup, base):
     """
     Backwards-compatible task link discovery.
