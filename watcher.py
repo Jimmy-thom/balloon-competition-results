@@ -10,7 +10,7 @@ from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 
-from db import connect
+from db import connect, is_postgres
 from importer import import_event
 
 
@@ -34,8 +34,18 @@ def now_iso():
 
 
 def _table_columns(c, table):
-    cur = c.execute(f"SELECT * FROM {table} LIMIT 0")
-    return {d[0] for d in (cur.description or [])}
+    # The project DB adapter returns a lightweight Cursor wrapper on
+    # PostgreSQL, so it does not expose DB-API ``description`` directly.
+    # Use the database catalog/PRAGMA instead of relying on cursor internals.
+    if is_postgres():
+        rows = c.execute(
+            "SELECT column_name FROM information_schema.columns "
+            "WHERE table_schema='public' AND table_name=?",
+            (table,)
+        ).fetchall()
+        return {r["column_name"] for r in rows}
+    rows = c.execute(f"PRAGMA table_info({table})").fetchall()
+    return {r[1] for r in rows}
 
 
 def ensure_schema(c):
