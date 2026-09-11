@@ -37,7 +37,8 @@ CREATE TABLE IF NOT EXISTS import_runs(
     imported_at TEXT,
     source_url TEXT,
     record_count INTEGER,
-    error_count INTEGER
+    error_count INTEGER,
+    snapshot_hash TEXT
 );
 
 CREATE TABLE IF NOT EXISTS flights(
@@ -598,6 +599,59 @@ def import_event(url, out_root):
     tasks=list(unique.values())
     tasks.sort(key=lambda x:(x.get('flight',{}).get('sort_order',999999),x['task_number'],x.get('published','')))
     # ------------------------------------------------------------
+    # Build a deterministic snapshot hash so repeated watcher checks do not
+    # create duplicate import runs when WatchMeFly has not changed.
+    # ------------------------------------------------------------
+    snapshot_payload = {
+        'event': meta,
+        'flights': [
+            {
+                'flight_number': f.get('flight_number', ''),
+                'date_label': f.get('date_label', ''),
+                'time_label': f.get('time_label', ''),
+                'sort_order': f.get('sort_order', 0),
+            }
+            for f in flights
+        ],
+        'tasks': [
+            {
+                'flight_number': (t.get('flight') or {}).get('flight_number', ''),
+                'date_label': (t.get('flight') or {}).get('date_label', ''),
+                'time_label': (t.get('flight') or {}).get('time_label', ''),
+                'sort_order': (t.get('flight') or {}).get('sort_order', 0),
+                'task_number': t.get('task_number'),
+                'name': t.get('name', ''),
+                'status': t.get('status', 'UNKNOWN'),
+                'published': t.get('published', ''),
+                'source_url': t.get('source_url', ''),
+            }
+            for t in tasks
+        ],
+        'results': [
+            {
+                'task_number': t.get('task_number'),
+                'task_source_url': t.get('source_url', ''),
+                'competition_number': r.get('competition_number'),
+                'pilot': r.get('pilot', ''),
+                'country': r.get('country', ''),
+                'rank': r.get('rank'),
+                'result': r.get('result', ''),
+                'points': r.get('points'),
+                'penalty_t': r.get('penalty_t'),
+                'penalty_c': r.get('penalty_c'),
+                'score': r.get('score'),
+                'notes': r.get('notes', ''),
+                'status': t.get('status', 'UNKNOWN'),
+            }
+            for t in tasks for r in t.get('rows', [])
+        ],
+        'errors': errors,
+    }
+    snapshot_hash = hashlib.sha256(
+        json.dumps(snapshot_payload, sort_keys=True, separators=(',', ':')).encode('utf-8')
+    ).hexdigest()
+
+    # ------------------------------------------------------------
     # Local output directory.
     # ------------------------------------------------------------
 
@@ -661,26 +715,57 @@ def import_event(url, out_root):
         )
 
     # ------------------------------------------------------------
+    # Database migration + snapshot comparison.
+    # ------------------------------------------------------------
+    if is_postgres():
+        c.execute('ALTER TABLE import_runs ADD COLUMN IF NOT EXISTS snapshot_hash TEXT')
+    else:
+        columns = [row[1] for row in c.raw.execute('PRAGMA table_info(import_runs)').fetchall()]
+        if 'snapshot_hash' not in columns:
+            c.raw.execute('ALTER TABLE import_runs ADD COLUMN snapshot_hash TEXT')
+
+    latest = c.execute(
+        "SELECT id, snapshot_hash FROM import_runs WHERE competition_id=? ORDER BY imported_at DESC LIMIT 1",
+        (event_id,)
+    ).fetchone()
+    if latest and latest['snapshot_hash'] == snapshot_hash:
+        c.close()
+        (root / 'errors.json').write_text(
+            json.dumps(errors, indent=2),
+            encoding='utf-8'
+        )
+        return (
+            event_id,
+            latest['id'],
+            len(tasks),
+            sum(len(t['rows']) for t in tasks),
+            errors,
+            False,
+            snapshot_hash
+        )
+
+    # ------------------------------------------------------------
     # Import run.
     # ------------------------------------------------------------
-
     run_id = stable(
         event_id,
         datetime.now(timezone.utc).isoformat(),
         len(tasks)
     )
-
     imported = datetime.now(timezone.utc).isoformat()
 
     c.execute(
-        'INSERT INTO import_runs VALUES (?,?,?,?,?,?)',
+        '''INSERT INTO import_runs(
+            id,competition_id,imported_at,source_url,record_count,error_count,snapshot_hash
+        ) VALUES (?,?,?,?,?,?,?)''',
         (
             run_id,
             event_id,
             imported,
             url,
             sum(len(t['rows']) for t in tasks),
-            len(errors)
+            len(errors),
+            snapshot_hash
         )
     )
 
@@ -848,7 +933,9 @@ def import_event(url, out_root):
         run_id,
         len(tasks),
         sum(len(t['rows']) for t in tasks),
-        errors
+        errors,
+        True,
+        snapshot_hash
     )
 
 
@@ -872,7 +959,9 @@ if __name__ == '__main__':
                         'run_id',
                         'tasks',
                         'results',
-                        'errors'
+                        'errors',
+                        'changed',
+                        'snapshot_hash'
                     ],
                     import_event(
                         a.url,
