@@ -1,1 +1,40 @@
-{% extends 'base.html' %}{% block title %}Competitions{% endblock %}{% block content %}<section class="hero"><div><div class="eyebrow">BALLOON COMPETITION RESULTS</div><h1>Competitions</h1><p class="muted">Imported competition data, standings and task results.</p></div><div class="searchbox"><input id="globalSearch" placeholder="Search pilots or events…"><div id="searchResults"></div></div></section>{% for e in events %}<a class="event-card" href="/event/{{e.id}}"><div><h2>{{e.title}}</h2><div class="muted">{{e.location}} · {{e.start_date}} – {{e.end_date}}</div></div><span class="arrow">→</span></a>{% else %}<div class="card">No imported competitions.</div>{% endfor %}<script>const i=document.getElementById('globalSearch'),s=document.getElementById('searchResults');i?.addEventListener('input',async()=>{const q=i.value.trim();if(!q){s.innerHTML='';return}const d=await fetch('/api/search?q='+encodeURIComponent(q)).then(r=>r.json());s.innerHTML=d.slice(0,12).map(x=>x.type==='event'?`<a href="/event/${x.event_id}">${x.title}</a>`:`<a href="/event/${x.event_id}/pilot/${x.competition_number}">#${x.competition_number} — ${x.name} <small>${x.event_id}</small></a>`).join('')||'<span>No matches</span>'})</script>{% endblock %}
+{% extends 'base.html' %}
+{% block title %}Competitions{% endblock %}
+{% block content %}
+<section class="hero">
+  <div>
+    <div class="eyebrow">BALLOON COMPETITION RESULTS</div>
+    <h1>Competitions</h1>
+    <p class="muted">Imported competition data, standings and task results.</p>
+  </div>
+  <div class="searchbox">
+    <input id="globalSearch" placeholder="Search pilots or events…">
+    <div id="searchResults"></div>
+  </div>
+</section>
+
+{% for e in events %}
+<a class="event-card" href="/event/{{e.id}}">
+  <div>
+    <h2>{{e.title}}</h2>
+    <div class="muted">{{e.location}}{% if e.dates %} · {{e.dates}}{% endif %}</div>
+  </div>
+  <span class="arrow">→</span>
+</a>
+{% else %}
+<div class="card">No imported competitions.</div>
+{% endfor %}
+
+<script>
+const i=document.getElementById('globalSearch'),s=document.getElementById('searchResults');
+i?.addEventListener('input',async()=>{
+  const q=i.value.trim();
+  if(!q){s.innerHTML='';return}
+  const d=await fetch('/api/search?q='+encodeURIComponent(q)).then(r=>r.json());
+  s.innerHTML=d.slice(0,12).map(x=>x.type==='event'
+    ?`<a href="/event/${x.event_id}">${x.title}</a>`
+    :`<a href="/event/${x.event_id}/pilot/${x.competition_number}">#${x.competition_number} — ${x.name} <small>${x.event_id}</small></a>`
+  ).join('')||'<span>No matches</span>'
+})
+</script>
+{% endblock %}
