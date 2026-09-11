@@ -196,16 +196,35 @@ def parse_event(html, url):
     location = fields.get('Event Location', '')
     dates = fields.get('Event Dates', '')
 
-    # Current event pages show the location immediately after the event title
-    # and the scheduled date range later in the page body.
+    # Current WatchMeFly pages show the location in the DOM immediately after
+    # the event heading. Do not search the flattened page text here because
+    # navigation text can contain "Home Competitions <event title>".
     if title and not location:
-        m = re.search(
-            re.escape(title) + r'\s+(?:Image\s+)?(.+?)\s+Local Time:',
-            text,
-            re.I
-        )
-        if m:
-            location = clean(m.group(1))
+        for tag in soup.find_all(['h1', 'h2', 'h3']):
+            if clean(tag.get_text(' ', strip=True)) != title:
+                continue
+            for node in tag.next_elements:
+                if getattr(node, 'name', None) in {'h1', 'h2', 'h3'}:
+                    break
+                if getattr(node, 'name', None) == 'a':
+                    candidate = clean(node.get_text(' ', strip=True))
+                    if candidate.lower() == 'image':
+                        continue
+                elif isinstance(node, str):
+                    candidate = clean(str(node))
+                else:
+                    continue
+                if not candidate:
+                    continue
+                if candidate.lower().startswith('local time:'):
+                    break
+                if candidate.lower() == 'image':
+                    continue
+                if candidate.lower() not in {'event details', 'results', 'task data', 'noticeboard', 'pilots', 'officials', 'details', 'tasks', 'enb'}:
+                    location = candidate.split('Local Time:', 1)[0].strip()
+                    break
+            if location:
+                break
 
     if not dates:
         range_patterns = [
