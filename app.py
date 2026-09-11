@@ -5,7 +5,7 @@ import os
 import hmac
 from urllib.parse import urlparse, parse_qs
 from db import connect, is_postgres, init_postgres
-from watcher import add_event
+from watcher import add_event, ensure_schema, purge_event, refresh_lifecycle
 
 BASE = Path(__file__).resolve().parent
 DATA_DIR = BASE / "data"
@@ -355,23 +355,33 @@ ADMIN_TEMPLATE = """
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Admin — Balloon Competition Results</title>
   <style>
-    body{font-family:Arial,sans-serif;max-width:760px;margin:40px auto;padding:0 20px;color:#222}
-    .card{border:1px solid #ddd;border-radius:12px;padding:24px;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.05)}
-    h1{margin-top:0}
+    body{font-family:Arial,sans-serif;max-width:980px;margin:40px auto;padding:0 20px;color:#222}
+    .card{border:1px solid #ddd;border-radius:12px;padding:24px;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.05);margin-bottom:20px}
+    h1,h2{margin-top:0}
     label{display:block;font-weight:600;margin:18px 0 7px}
     input{box-sizing:border-box;width:100%;padding:12px;border:1px solid #bbb;border-radius:8px;font-size:16px}
     button{margin-top:20px;padding:12px 18px;border:0;border-radius:8px;font-size:16px;cursor:pointer}
+    .danger{background:#f5d6d6;color:#8a1c1c}
     .message{padding:12px 14px;border-radius:8px;margin-bottom:18px}
     .error{background:#fde8e8;color:#8a1c1c}
     .success{background:#e8f7e8;color:#1d6b2b}
     .muted{color:#666}
     a{color:#175ea8}
+    table{width:100%;border-collapse:collapse;margin-top:14px}
+    th,td{padding:10px 8px;border-bottom:1px solid #e5e5e5;text-align:left;vertical-align:top}
+    th{font-size:13px;color:#555}
+    .status{font-weight:700}
+    .active{color:#1d6b2b}
+    .finished{color:#9a6200}
+    .small{font-size:13px;color:#666}
+    .inline{display:inline}
+    .inline button{margin:0;padding:7px 10px;font-size:13px}
   </style>
 </head>
 <body>
   <div class="card">
-    <h1>Add Competition</h1>
-    <p class="muted">Import a WatchMeFly competition and automatically enable monitoring.</p>
+    <h1>Competition Administration</h1>
+    <p class="muted">Import WatchMeFly competitions, monitor them automatically, and manage their retention lifecycle.</p>
 
     {% if error %}
       <div class="message error">{{ error }}</div>
@@ -379,9 +389,8 @@ ADMIN_TEMPLATE = """
 
     {% if success %}
       <div class="message success">
-        Competition <strong>{{ event_id }}</strong> was imported successfully and monitoring is enabled.
-        <br><br>
-        <a href="{{ event_url }}">Open competition</a>
+        {{ success_message }}
+        {% if event_url %}<br><br><a href="{{ event_url }}">Open competition</a>{% endif %}
       </div>
     {% endif %}
 
@@ -390,16 +399,65 @@ ADMIN_TEMPLATE = """
       <input id="token" name="token" type="password" autocomplete="off" required>
 
       <label for="url">WatchMeFly competition URL</label>
-      <input id="url" name="url" type="url"
-             placeholder="https://watchmefly.net/events/event.php?e=croatia2026"
-             required>
+      <input id="url" name="url" type="url" placeholder="https://watchmefly.net/events/event.php?e=croatia2026" required>
 
       <button type="submit">Import Competition</button>
     </form>
   </div>
+
+  <div class="card">
+    <h2>Competition lifecycle</h2>
+    <p class="muted">Events are automatically marked <strong>FINISHED</strong> after their recorded end date. The default retention period is 7 days. Automatic deletion is currently disabled while we test this system safely.</p>
+    {% if competitions %}
+    <table>
+      <thead><tr><th>Competition</th><th>Status</th><th>Event end</th><th>Purge after</th><th>Monitoring</th><th>Action</th></tr></thead>
+      <tbody>
+      {% for c in competitions %}
+        <tr>
+          <td><a href="/event/{{c.competition_id}}">{{c.title or c.competition_id}}</a><br><span class="small">{{c.competition_id}}</span></td>
+          <td class="status {{ 'finished' if c.lifecycle_status == 'FINISHED' else 'active' }}">{{c.lifecycle_status}}</td>
+          <td>{{c.event_end_date or 'Not detected'}}</td>
+          <td>{{c.purge_after or '—'}}</td>
+          <td>{{'Enabled' if c.enabled else 'Disabled'}}</td>
+          <td>
+            {% if c.lifecycle_status == 'FINISHED' %}
+            <form class="inline" method="post" action="{{url_for('admin_purge')}}">
+              <input type="hidden" name="token" value="">
+              <input type="hidden" name="event_id" value="{{c.competition_id}}">
+              <button class="danger" type="submit" onclick="this.form.token.value=document.getElementById('token').value; return confirm('Permanently delete {{c.competition_id}} and all of its stored results? WatchMeFly will remain the source of record.');">Purge data</button>
+            </form>
+            {% else %}
+              <span class="small">Retained</span>
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+      <p class="muted">No competitions are currently registered.</p>
+    {% endif %}
+    <p class="small">For a purge action, enter your token in the import-token field above first; the purge button uses the same protected admin credential.</p>
+  </div>
 </body>
 </html>
 """
+
+
+def admin_competitions():
+    c = conn()
+    try:
+        ensure_schema(c)
+        rows = c.execute(
+            """SELECT m.competition_id,m.enabled,m.lifecycle_status,m.event_end_date,m.finished_at,m.purge_after,
+                      c.title,c.dates
+               FROM competition_monitoring m
+               LEFT JOIN competitions c ON c.id=m.competition_id
+               ORDER BY CASE WHEN m.lifecycle_status='ACTIVE' THEN 0 ELSE 1 END, c.title, m.competition_id"""
+        ).fetchall()
+        return [dict(r) for r in rows]
+    finally:
+        c.close()
 
 
 @app.get("/admin")
@@ -410,8 +468,10 @@ def admin_page():
         ADMIN_TEMPLATE,
         error=None,
         success=False,
+        success_message=None,
         event_id=None,
         event_url=None,
+        competitions=admin_competitions(),
     )
 
 
@@ -424,15 +484,10 @@ def admin_import():
     supplied_token = request.form.get("token", "")
     if not hmac.compare_digest(supplied_token, configured_token):
         return render_template_string(
-            ADMIN_TEMPLATE,
-            error="Invalid import token.",
-            success=False,
-            event_id=None,
-            event_url=None,
+            ADMIN_TEMPLATE, error="Invalid import token.", success=False, success_message=None, event_id=None, event_url=None, competitions=admin_competitions()
         ), 403
 
     source_url = request.form.get("url", "").strip()
-
     parsed = urlparse(source_url)
     event_id = parse_qs(parsed.query).get("e", [""])[0].strip()
 
@@ -443,33 +498,65 @@ def admin_import():
         or not event_id
     ):
         return render_template_string(
-            ADMIN_TEMPLATE,
-            error="Please enter a valid WatchMeFly competition URL.",
-            success=False,
-            event_id=None,
-            event_url=None,
+            ADMIN_TEMPLATE, error="Please enter a valid WatchMeFly competition URL.", success=False, success_message=None, event_id=None, event_url=None, competitions=admin_competitions()
         ), 400
 
     try:
-        # Reuse the existing importer + monitoring workflow.
-        # This keeps the admin page from having a second import implementation.
         add_event(source_url)
     except Exception as exc:
         return render_template_string(
-            ADMIN_TEMPLATE,
-            error=f"Import failed: {exc}",
-            success=False,
-            event_id=None,
-            event_url=None,
+            ADMIN_TEMPLATE, error=f"Import failed: {exc}", success=False, success_message=None, event_id=None, event_url=None, competitions=admin_competitions()
         ), 500
 
     return render_template_string(
         ADMIN_TEMPLATE,
         error=None,
         success=True,
+        success_message=f"Competition {event_id} was imported successfully and monitoring is enabled.",
         event_id=event_id,
         event_url=url_for("event_page", eid=event_id),
+        competitions=admin_competitions(),
     )
+
+
+@app.post("/admin/purge")
+def admin_purge():
+    configured_token = os.getenv("IMPORT_TOKEN", "")
+    if not configured_token:
+        abort(503, description="IMPORT_TOKEN is not configured.")
+    supplied_token = request.form.get("token", "")
+    if not hmac.compare_digest(supplied_token, configured_token):
+        return "Invalid import token.", 403
+
+    event_id = request.form.get("event_id", "").strip()
+    if not event_id:
+        return "Missing competition ID.", 400
+
+    c = conn()
+    try:
+        ensure_schema(c)
+        result = purge_event(c, event_id)
+    except Exception as exc:
+        c.close()
+        return render_template_string(
+            ADMIN_TEMPLATE, error=f"Purge failed: {exc}", success=False, success_message=None, event_id=None, event_url=None, competitions=admin_competitions()
+        ), 400
+    finally:
+        try:
+            c.close()
+        except Exception:
+            pass
+
+    return render_template_string(
+        ADMIN_TEMPLATE,
+        error=None,
+        success=True,
+        success_message=f"Competition {event_id} has been permanently purged from this site.",
+        event_id=event_id,
+        event_url=None,
+        competitions=admin_competitions(),
+    )
+
 
 @app.get("/healthz")
 def healthz(): return "ok",200
