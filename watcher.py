@@ -322,12 +322,46 @@ def refresh_lifecycle(c, event_id, now=None):
 
 
 def purge_event(c, event_id, out_root='data'):
-    """Permanently remove one competition and all of its dependent data."""
-    row = c.execute("SELECT lifecycle_status FROM competition_monitoring WHERE competition_id=?", (event_id,)).fetchone()
+    """Permanently remove one competition, but only after all purge safety checks pass."""
+    row = c.execute(
+        "SELECT lifecycle_status,event_end_date,finished_at,purge_after FROM competition_monitoring WHERE competition_id=?",
+        (event_id,)
+    ).fetchone()
     if not row:
         raise RuntimeError(f'Competition {event_id} is not registered for monitoring.')
+
     if row['lifecycle_status'] != 'FINISHED':
         raise RuntimeError(f'Competition {event_id} is not marked FINISHED.')
+
+    now = datetime.now(timezone.utc)
+
+    # Final safety gate: never purge while the authoritative event end date
+    # is still today or in the future.
+    end_text = row['event_end_date']
+    if not end_text:
+        raise RuntimeError(f'Competition {event_id} has no event end date; purge refused.')
+    try:
+        end_date = date.fromisoformat(end_text)
+    except ValueError:
+        raise RuntimeError(f'Competition {event_id} has an invalid event end date; purge refused.')
+    if now.date() <= end_date:
+        raise RuntimeError(f'Competition {event_id} has not reached its end date; purge refused.')
+
+    # Final safety gate: purge_after is mandatory and must have passed.
+    purge_after_text = row['purge_after']
+    if not purge_after_text:
+        raise RuntimeError(f'Competition {event_id} has no purge-after date; purge refused.')
+    try:
+        purge_after = date.fromisoformat(purge_after_text)
+    except ValueError:
+        raise RuntimeError(f'Competition {event_id} has an invalid purge-after date; purge refused.')
+    if now.date() < purge_after:
+        raise RuntimeError(f'Competition {event_id} is still inside its retention period; purge refused.')
+
+    # A finished timestamp is also required so a malformed lifecycle row
+    # cannot accidentally pass the deletion gate.
+    if not row['finished_at']:
+        raise RuntimeError(f'Competition {event_id} has no finished timestamp; purge refused.')
 
     run_rows = c.execute("SELECT id FROM import_runs WHERE competition_id=?", (event_id,)).fetchall()
     run_ids = [r['id'] for r in run_rows]
