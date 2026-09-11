@@ -266,7 +266,14 @@ def refresh_lifecycle(c, event_id, now=None):
     finished_at = row['finished_at']
     purge_after = row['purge_after']
 
-    if end and status == 'ACTIVE' and now.date() > end:
+    # Reconcile the stored lifecycle status with the authoritative end date.
+    # This also repairs a previously incorrect FINISHED status if a later run
+    # discovers that the official event actually ends in the future.
+    if end and now.date() <= end:
+        status = 'ACTIVE'
+        finished_at = None
+        purge_after = None
+    elif end and now.date() > end and status == 'ACTIVE':
         status = 'FINISHED'
         finished_at = finished_at or now.isoformat()
         purge_after = (end + timedelta(days=retention_days())).isoformat()
