@@ -410,7 +410,7 @@ ADMIN_TEMPLATE = """
     <p class="muted">Events are automatically marked <strong>FINISHED</strong> after their recorded end date. The default retention period is 7 days. Automatic deletion is currently disabled while we test this system safely.</p>
     {% if competitions %}
     <table>
-      <thead><tr><th>Competition</th><th>Status</th><th>Event end</th><th>Purge after</th><th>Monitoring</th><th>Action</th></tr></thead>
+      <thead><tr><th>Competition</th><th>Status</th><th>Event end</th><th>Purge after</th><th>Monitoring</th><th>Last checked</th><th>Last import</th><th>Action</th></tr></thead>
       <tbody>
       {% for c in competitions %}
         <tr>
@@ -419,6 +419,8 @@ ADMIN_TEMPLATE = """
           <td>{{c.event_end_date or 'Not detected'}}</td>
           <td>{{c.purge_after or '—'}}</td>
           <td>{{'Enabled' if c.enabled else 'Disabled'}}</td>
+          <td class="small">{{c.last_checked_at or '—'}}</td>
+          <td class="small">{{c.last_import_at or '—'}}</td>
           <td>
             {% if c.lifecycle_status == 'FINISHED' %}
             <form class="inline" method="post" action="{{url_for('admin_purge')}}">
@@ -450,6 +452,7 @@ def admin_competitions():
         ensure_schema(c)
         rows = c.execute(
             """SELECT m.competition_id,m.enabled,m.lifecycle_status,m.event_end_date,m.finished_at,m.purge_after,
+                      m.last_checked_at,m.last_import_at,
                       c.title,c.dates
                FROM competition_monitoring m
                LEFT JOIN competitions c ON c.id=m.competition_id
