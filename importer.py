@@ -37,8 +37,7 @@ CREATE TABLE IF NOT EXISTS import_runs(
     imported_at TEXT,
     source_url TEXT,
     record_count INTEGER,
-    error_count INTEGER,
-    snapshot_hash TEXT
+    error_count INTEGER
 );
 
 CREATE TABLE IF NOT EXISTS flights(
@@ -134,52 +133,109 @@ def fetch(session, url):
 
 
 def parse_event(html, url):
+    """Extract competition metadata from a WatchMeFly event page.
+
+    WatchMeFly currently uses a generic HTML page title ("WatchMeFly | Event")
+    and presents the real competition title/location/dates in the page body.
+    Older pages exposed labelled table fields, so keep those as fallbacks.
+    """
     soup = BeautifulSoup(html, 'html.parser')
 
-    title = clean(soup.title.get_text()) if soup.title else ''
-
     fields = {}
-
     for tr in soup.find_all('tr'):
         cells = [
             clean(x.get_text(' ', strip=True))
             for x in tr.find_all(['th', 'td'])
         ]
-
         if len(cells) >= 2:
             k = cells[0].rstrip(':')
             v = cells[1]
-
             if k and v and len(k) < 60:
                 fields.setdefault(k, v)
 
     text = clean(soup.get_text(' ', strip=True))
 
+    # Older WatchMeFly pages sometimes expose explicit metadata labels.
+    title = ''
     m = re.search(
         r'Event title:\s*([^|]+?)(?:\s+Event Location:|\s+Event Dates:)',
-        text
+        text,
+        re.I
     )
-
     if m:
         title = clean(m.group(1))
 
+    # Current WatchMeFly pages use a generic <title> but put the real event
+    # name in a heading near the top of the page.
+    if not title:
+        ignored = {
+            'event details', 'results', 'task data', 'noticeboard',
+            'pilots', 'officials', 'details', 'tasks', 'enb'
+        }
+        for tag in soup.find_all(['h1', 'h2', 'h3']):
+            candidate = clean(tag.get_text(' ', strip=True))
+            if not candidate:
+                continue
+            if candidate.lower() in ignored:
+                continue
+            if re.match(r'^(?:practice\s+)?flight\s+\d+', candidate, re.I):
+                continue
+            if re.match(r'^task\s+\d+', candidate, re.I):
+                continue
+            title = candidate
+            break
+
+    if not title:
+        title = clean(soup.title.get_text()) if soup.title else ''
+
+    title = title.replace('WatchMeFly |', '').strip()
+    if title.lower() == 'event':
+        title = ''
+
     location = fields.get('Event Location', '')
     dates = fields.get('Event Dates', '')
+
+    # Current event pages show the location immediately after the event title
+    # and the scheduled date range later in the page body.
+    if title and not location:
+        m = re.search(
+            re.escape(title) + r'\s+(?:Image\s+)?(.+?)\s+Local Time:',
+            text,
+            re.I
+        )
+        if m:
+            location = clean(m.group(1))
+
+    if not dates:
+        range_patterns = [
+            r'(\d{1,2}\s+[A-Za-z]{3,9}\s+\d{4}\s*[-–]\s*\d{1,2}\s+[A-Za-z]{3,9}\s+\d{4})',
+            r'(\d{1,2}[./-]\d{1,2}[./-]\d{4}\s*[-–]\s*\d{1,2}[./-]\d{1,2}[./-]\d{4})',
+        ]
+        for pattern in range_patterns:
+            m = re.search(pattern, text)
+            if m:
+                dates = clean(m.group(1))
+                break
+
     organiser = fields.get('Organiser', '')
     director = (
         fields.get('Event Director', '')
         or fields.get('Director', '')
     )
 
+    if not director:
+        m = re.search(r'\bDirector:\s*([^|]+?)(?=\s+Combined Logger/Marker Event|\s+Contact Details|$)', text, re.I)
+        if m:
+            director = clean(m.group(1))
+
     return {
-        'title': title.replace('WatchMeFly |', '').strip() or url,
+        'title': title or url,
         'location': location,
         'dates': dates,
         'organiser': organiser,
         'director': director,
         'source_url': url
     }
-
 
 def is_flight_heading(text):
     text = clean(text)
@@ -211,146 +267,91 @@ def parse_task_label(text):
 
 
 def flight_task_links(soup, base):
-    """Discover every WatchMeFly flight and task, including empty/cancelled ones.
-
-    WatchMeFly publishes normal tasks as links, but cancelled tasks may be
-    plain text with no result page. We therefore use flight headings as hard
-    section boundaries, collect linked tasks from each section, then make a
-    global pass over individual text nodes for plain cancelled/practice labels.
-    """
+    """Discover every WatchMeFly flight and task, including empty/cancelled ones."""
     headings = []
     heading_tags = {'h1','h2','h3','h4','h5','h6'}
-
     for tag in soup.find_all(list(heading_tags)):
         parsed = parse_flight_heading(clean(tag.get_text(' ', strip=True)))
         if parsed:
             headings.append((tag, parsed))
-
     flights = []
-    seen_by_idx = []
-
-    # First pass: discover flights and their real result/task links.
-    for idx, (heading, flight) in enumerate(headings):
-        f = flight.copy()
-        f['heading'] = clean(heading.get_text(' ', strip=True))
-        f['tasks'] = []
-        f['sort_order'] = idx
-
-        seen_links = set()
-        seen_numbers = set()
-
+    for idx,(heading,flight) in enumerate(headings):
+        f=flight.copy(); f['heading']=clean(heading.get_text(' ',strip=True)); f['tasks']=[]; f['sort_order']=idx
+        seen_links=set(); seen_numbers=set()
         for node in heading.next_elements:
-            if (
-                getattr(node, 'name', None) in heading_tags
-                and parse_flight_heading(clean(node.get_text(' ', strip=True)))
-            ):
+            if getattr(node,'name',None) in heading_tags and parse_flight_heading(clean(node.get_text(' ',strip=True))):
+                break
+            if getattr(node,'name',None)=='a' and node.get('href'):
+                href=urljoin(base,node['href']); q=parse_qs(urlparse(href).query)
+                if 'tid' not in q or q.get('v',[''])[0].lower()!='tr':
+                    continue
+                key=(q['tid'][0],href)
+                if key in seen_links: continue
+                seen_links.add(key)
+                label=parse_task_label(clean(node.get_text(' ',strip=True)))
+                if label: seen_numbers.add(label['task_number'])
+                f['tasks'].append({'url':href,'tid':q['tid'][0],'link_text':clean(node.get_text(' ',strip=True)),'task_number_hint':label['task_number'] if label else None,'name_hint':label['name'] if label else '','status_hint':label['status'] if label else 'UNKNOWN','linked':True})
+        # Cancelled/no-result tasks are plain text on WatchMeFly.  Parse only
+        # individual text nodes inside this flight section.  Do NOT call
+        # get_text() on broad containers (div/span/td/etc.), because those
+        # containers can wrap content from the next flight and cause task
+        # leakage between flight sections.
+        for node in heading.next_elements:
+            if getattr(node,'name',None) in heading_tags and parse_flight_heading(clean(node.get_text(' ',strip=True))):
                 break
 
-            if getattr(node, 'name', None) != 'a' or not node.get('href'):
+            # BeautifulSoup exposes visible text as NavigableString objects.
+            # Ignore text belonging to links because linked tasks were already
+            # captured above.
+            if not isinstance(node, str):
+                continue
+            if getattr(node, 'parent', None) is not None and node.find_parent('a') is not None:
                 continue
 
-            href = urljoin(base, node['href'])
-            q = parse_qs(urlparse(href).query)
-            if 'tid' not in q or q.get('v', [''])[0].lower() != 'tr':
+            visible=clean(str(node))
+            if not visible:
                 continue
 
-            key = (q['tid'][0], href)
-            if key in seen_links:
-                continue
-            seen_links.add(key)
+            # WatchMeFly currently renders plain cancelled tasks like:
+            #   Task 7 - Judge Declared Goal CANCELLED
+            # and practice labels like:
+            #   Practice 1 - Pilot Declared Goal PROVISIONAL
+            # Keep the parser deliberately local to the individual text node.
+            task_pat = re.compile(
+                r'(?i)\bTask\s+(?P<number>\d+)\s*[-–]\s*'
+                r'(?P<body>.*?)(?P<status>FINAL|PROVISIONAL|OFFICIAL|CANCELLED|COMPLETE|COMPLETED)\b'
+            )
+            practice_pat = re.compile(
+                r'(?i)\bPractice(?:\s+Task)?\s+(?P<number>\d+)\s*[-–]\s*'
+                r'(?P<body>.*?)(?P<status>FINAL|PROVISIONAL|OFFICIAL|CANCELLED|COMPLETE|COMPLETED)\b'
+            )
 
-            label = parse_task_label(clean(node.get_text(' ', strip=True)))
-            if label:
-                seen_numbers.add(label['task_number'])
+            matches=[]
+            # Check practice first so "Practice 1" is never interpreted as
+            # an ordinary competition task.
+            for m in practice_pat.finditer(visible):
+                matches.append((int(m.group('number')), clean(m.group('body')), True, m.group(0), m.group('status')))
+            for m in task_pat.finditer(visible):
+                matches.append((int(m.group('number')), clean(m.group('body')), False, m.group(0), m.group('status')))
 
-            f['tasks'].append({
-                'url': href,
-                'tid': q['tid'][0],
-                'link_text': clean(node.get_text(' ', strip=True)),
-                'task_number_hint': label['task_number'] if label else None,
-                'name_hint': label['name'] if label else '',
-                'status_hint': label['status'] if label else 'UNKNOWN',
-                'linked': True
-            })
-
+            for task_no, body, is_practice, matched_text, raw_status in matches:
+                status=norm_status(raw_status)
+                if task_no in seen_numbers:
+                    continue
+                seen_numbers.add(task_no)
+                synthetic=f'{base}#flight={idx}&task={task_no}'
+                f['tasks'].append({
+                    'url':synthetic,
+                    'tid':'',
+                    'link_text':clean(matched_text),
+                    'task_number_hint':task_no,
+                    'name_hint':body,
+                    'status_hint':status,
+                    'linked':False
+                })
         flights.append(f)
-        seen_by_idx.append(seen_numbers)
-
-    # Second pass: cancelled/provisional task rows without result links.
-    # On WatchMeFly these are rendered as <a> rows with NO href, while the
-    # status badge is a child <span>. Reading the complete anchor text gives
-    # us "Task 7 - Judge Declared Goal CANCELLED" without scanning wrapper
-    # containers, so tasks cannot leak between flight sections.
-    task_pat = re.compile(
-        r'(?i)\bTask\s+(?P<number>\d+)\s*[-–]\s*'
-        r'(?P<body>.*?)(?P<status>FINAL|PROVISIONAL|OFFICIAL|CANCELLED|COMPLETE|COMPLETED)\b'
-    )
-    practice_pat = re.compile(
-        r'(?i)\bPractice(?:\s+Task)?\s+(?P<number>\d+)\s*[-–]\s*'
-        r'(?P<body>.*?)(?P<status>FINAL|PROVISIONAL|OFFICIAL|CANCELLED|COMPLETE|COMPLETED)\b'
-    )
-
-    for node in soup.find_all('a'):
-        # Result/task links were already handled above. We only want task
-        # rows that have no href (the way cancelled tasks are published).
-        if node.get('href'):
-            continue
-
-        visible = clean(node.get_text(' ', strip=True))
-        if not visible:
-            continue
-
-        previous = node.find_all_previous(list(heading_tags))
-        owner_idx = None
-        for previous_heading in previous:
-            if parse_flight_heading(clean(previous_heading.get_text(' ', strip=True))):
-                for i, (known_heading, _) in enumerate(headings):
-                    if known_heading is previous_heading:
-                        owner_idx = i
-                        break
-                if owner_idx is not None:
-                    break
-        if owner_idx is None:
-            continue
-
-        matches = []
-        for m in practice_pat.finditer(visible):
-            matches.append((
-                int(m.group('number')),
-                clean(m.group('body')),
-                True,
-                m.group(0),
-                m.group('status')
-            ))
-        for m in task_pat.finditer(visible):
-            matches.append((
-                int(m.group('number')),
-                clean(m.group('body')),
-                False,
-                m.group(0),
-                m.group('status')
-            ))
-
-        for task_no, body, is_practice, matched_text, raw_status in matches:
-            status = norm_status(raw_status)
-            if status not in {'CANCELLED', 'PROVISIONAL'}:
-                continue
-            if task_no in seen_by_idx[owner_idx]:
-                continue
-
-            seen_by_idx[owner_idx].add(task_no)
-            synthetic = f'{base}#flight={owner_idx}&task={task_no}'
-            flights[owner_idx]['tasks'].append({
-                'url': synthetic,
-                'tid': '',
-                'link_text': clean(matched_text),
-                'task_number_hint': task_no,
-                'name_hint': body,
-                'status_hint': status,
-                'linked': False
-            })
-
     return flights
+
 def task_links(soup, base):
     """
     Backwards-compatible task link discovery.
@@ -604,63 +605,6 @@ def import_event(url, out_root):
     root.mkdir(parents=True, exist_ok=True)
 
     # ------------------------------------------------------------
-    # Build a deterministic snapshot hash before writing the run.
-    # This is what makes repeated polling safe: if WatchMeFly has not
-    # changed the competition data, we do not create another import run
-    # or duplicate all of the result rows.
-    # ------------------------------------------------------------
-    snapshot_tasks = []
-    snapshot_results = []
-    for t in tasks:
-        f = t.get('flight') or {}
-        snapshot_tasks.append({
-            'flight_number': f.get('flight_number', ''),
-            'date_label': f.get('date_label', ''),
-            'time_label': f.get('time_label', ''),
-            'sort_order': f.get('sort_order', 0),
-            'task_number': t.get('task_number'),
-            'name': t.get('name', ''),
-            'status': t.get('status', 'UNKNOWN'),
-            'published': t.get('published', ''),
-            'source_url': t.get('source_url', ''),
-        })
-        for r in t.get('rows', []):
-            snapshot_results.append({
-                'task_number': t.get('task_number'),
-                'task_source_url': t.get('source_url', ''),
-                'competition_number': r.get('competition_number'),
-                'pilot': r.get('pilot', ''),
-                'country': r.get('country', ''),
-                'rank': r.get('rank'),
-                'result': r.get('result', ''),
-                'points': r.get('points'),
-                'penalty_t': r.get('penalty_t'),
-                'penalty_c': r.get('penalty_c'),
-                'score': r.get('score'),
-                'notes': r.get('notes', ''),
-                'status': t.get('status', 'UNKNOWN'),
-            })
-
-    snapshot_payload = {
-        'event': meta,
-        'flights': [
-            {
-                'flight_number': f.get('flight_number', ''),
-                'date_label': f.get('date_label', ''),
-                'time_label': f.get('time_label', ''),
-                'sort_order': f.get('sort_order', 0),
-            }
-            for f in flights
-        ],
-        'tasks': sorted(snapshot_tasks, key=lambda x: json.dumps(x, sort_keys=True)),
-        'results': sorted(snapshot_results, key=lambda x: json.dumps(x, sort_keys=True)),
-        'errors': sorted(errors, key=lambda x: json.dumps(x, sort_keys=True)),
-    }
-    snapshot_hash = hashlib.sha256(
-        json.dumps(snapshot_payload, sort_keys=True, separators=(',', ':')).encode('utf-8')
-    ).hexdigest()
-
-    # ------------------------------------------------------------
     # Database connection.
     # ------------------------------------------------------------
 
@@ -717,34 +661,6 @@ def import_event(url, out_root):
         )
 
     # ------------------------------------------------------------
-    # Database migration for existing installations.
-    # ------------------------------------------------------------
-    if is_postgres():
-        c.execute('ALTER TABLE import_runs ADD COLUMN IF NOT EXISTS snapshot_hash TEXT')
-    else:
-        columns = [row[1] for row in c.raw.execute('PRAGMA table_info(import_runs)').fetchall()]
-        if 'snapshot_hash' not in columns:
-            c.raw.execute('ALTER TABLE import_runs ADD COLUMN snapshot_hash TEXT')
-
-    # If the newest completed import has the exact same snapshot, return it
-    # instead of creating another run. This keeps one-minute polling safe.
-    latest = c.execute(
-        "SELECT id, record_count, error_count, snapshot_hash FROM import_runs WHERE competition_id=? ORDER BY imported_at DESC LIMIT 1",
-        (event_id,)
-    ).fetchone()
-    if latest and latest['snapshot_hash'] == snapshot_hash:
-        c.close()
-        return (
-            event_id,
-            latest['id'],
-            len(tasks),
-            sum(len(t['rows']) for t in tasks),
-            errors,
-            False,
-            snapshot_hash
-        )
-
-    # ------------------------------------------------------------
     # Import run.
     # ------------------------------------------------------------
 
@@ -757,15 +673,14 @@ def import_event(url, out_root):
     imported = datetime.now(timezone.utc).isoformat()
 
     c.execute(
-        'INSERT INTO import_runs(id,competition_id,imported_at,source_url,record_count,error_count,snapshot_hash) VALUES (?,?,?,?,?,?,?)',
+        'INSERT INTO import_runs VALUES (?,?,?,?,?,?)',
         (
             run_id,
             event_id,
             imported,
             url,
             sum(len(t['rows']) for t in tasks),
-            len(errors),
-            snapshot_hash
+            len(errors)
         )
     )
 
@@ -933,9 +848,7 @@ def import_event(url, out_root):
         run_id,
         len(tasks),
         sum(len(t['rows']) for t in tasks),
-        errors,
-        True,
-        snapshot_hash
+        errors
     )
 
 
@@ -959,9 +872,7 @@ if __name__ == '__main__':
                         'run_id',
                         'tasks',
                         'results',
-                        'errors',
-                        'changed',
-                        'snapshot_hash'
+                        'errors'
                     ],
                     import_event(
                         a.url,
