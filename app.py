@@ -1,8 +1,11 @@
 from __future__ import annotations
 from pathlib import Path
-from flask import Flask, abort, jsonify, render_template, request
+from flask import Flask, abort, jsonify, render_template, request, redirect, url_for, render_template_string
 import os
+import hmac
+from urllib.parse import urlparse, parse_qs
 from db import connect, is_postgres, init_postgres
+from watcher import add_event
 
 BASE = Path(__file__).resolve().parent
 DATA_DIR = BASE / "data"
@@ -342,6 +345,131 @@ def api_compare(eid):
             })
     c=conn(eid); names={r["competition_number"]:{"name":r["name"],"country":r["country"]} for r in c.execute("SELECT competition_number,name,country FROM pilots WHERE competition_id=?",(eid,)).fetchall()}; c.close()
     return jsonify({"mode":mode,"pilots":[{"competition_number":n,"name":names.get(n,{}).get("name",str(n)),"country":names.get(n,{}).get("country",""),"series":series[n]} for n in nums]})
+
+
+ADMIN_TEMPLATE = """
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Admin — Balloon Competition Results</title>
+  <style>
+    body{font-family:Arial,sans-serif;max-width:760px;margin:40px auto;padding:0 20px;color:#222}
+    .card{border:1px solid #ddd;border-radius:12px;padding:24px;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+    h1{margin-top:0}
+    label{display:block;font-weight:600;margin:18px 0 7px}
+    input{box-sizing:border-box;width:100%;padding:12px;border:1px solid #bbb;border-radius:8px;font-size:16px}
+    button{margin-top:20px;padding:12px 18px;border:0;border-radius:8px;font-size:16px;cursor:pointer}
+    .message{padding:12px 14px;border-radius:8px;margin-bottom:18px}
+    .error{background:#fde8e8;color:#8a1c1c}
+    .success{background:#e8f7e8;color:#1d6b2b}
+    .muted{color:#666}
+    a{color:#175ea8}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Add Competition</h1>
+    <p class="muted">Import a WatchMeFly competition and automatically enable monitoring.</p>
+
+    {% if error %}
+      <div class="message error">{{ error }}</div>
+    {% endif %}
+
+    {% if success %}
+      <div class="message success">
+        Competition <strong>{{ event_id }}</strong> was imported successfully and monitoring is enabled.
+        <br><br>
+        <a href="{{ event_url }}">Open competition</a>
+      </div>
+    {% endif %}
+
+    <form method="post" action="{{ url_for('admin_import') }}">
+      <label for="token">Import token</label>
+      <input id="token" name="token" type="password" autocomplete="off" required>
+
+      <label for="url">WatchMeFly competition URL</label>
+      <input id="url" name="url" type="url"
+             placeholder="https://watchmefly.net/events/event.php?e=croatia2026"
+             required>
+
+      <button type="submit">Import Competition</button>
+    </form>
+  </div>
+</body>
+</html>
+"""
+
+
+@app.get("/admin")
+def admin_page():
+    if not os.getenv("IMPORT_TOKEN"):
+        abort(503, description="IMPORT_TOKEN is not configured.")
+    return render_template_string(
+        ADMIN_TEMPLATE,
+        error=None,
+        success=False,
+        event_id=None,
+        event_url=None,
+    )
+
+
+@app.post("/admin/import")
+def admin_import():
+    configured_token = os.getenv("IMPORT_TOKEN", "")
+    if not configured_token:
+        abort(503, description="IMPORT_TOKEN is not configured.")
+
+    supplied_token = request.form.get("token", "")
+    if not hmac.compare_digest(supplied_token, configured_token):
+        return render_template_string(
+            ADMIN_TEMPLATE,
+            error="Invalid import token.",
+            success=False,
+            event_id=None,
+            event_url=None,
+        ), 403
+
+    source_url = request.form.get("url", "").strip()
+
+    parsed = urlparse(source_url)
+    event_id = parse_qs(parsed.query).get("e", [""])[0].strip()
+
+    if (
+        parsed.scheme not in ("http", "https")
+        or parsed.netloc.lower() not in ("watchmefly.net", "www.watchmefly.net")
+        or not parsed.path.startswith("/events/")
+        or not event_id
+    ):
+        return render_template_string(
+            ADMIN_TEMPLATE,
+            error="Please enter a valid WatchMeFly competition URL.",
+            success=False,
+            event_id=None,
+            event_url=None,
+        ), 400
+
+    try:
+        # Reuse the existing importer + monitoring workflow.
+        # This keeps the admin page from having a second import implementation.
+        add_event(source_url)
+    except Exception as exc:
+        return render_template_string(
+            ADMIN_TEMPLATE,
+            error=f"Import failed: {exc}",
+            success=False,
+            event_id=None,
+            event_url=None,
+        ), 500
+
+    return render_template_string(
+        ADMIN_TEMPLATE,
+        error=None,
+        success=True,
+        event_id=event_id,
+        event_url=url_for("event_page", eid=event_id),
+    )
 
 @app.get("/healthz")
 def healthz(): return "ok",200
