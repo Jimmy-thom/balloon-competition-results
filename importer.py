@@ -575,6 +575,20 @@ def import_event(url, out_root):
 
     meta = parse_event(event_html, url)
 
+    # Reject generic WatchMeFly pages that are not real competition event pages.
+    # This check must happen before creating any local files or database rows.
+    title = clean(meta.get('title', ''))
+    dates = clean(meta.get('dates', ''))
+    location = clean(meta.get('location', ''))
+    generic_titles = {
+        'event', 'competitions', 'competition', 'results',
+        'tasks', 'task data', 'noticeboard', 'pilots', 'officials'
+    }
+    if not title or title.lower() in generic_titles or not dates or not location:
+        raise RuntimeError(
+            'The supplied WatchMeFly URL does not appear to be a valid competition event page.'
+        )
+
     # ------------------------------------------------------------
     # Discover flights and tasks from the Flights & Tasks page.
     # ------------------------------------------------------------
