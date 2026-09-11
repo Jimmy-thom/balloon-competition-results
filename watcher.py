@@ -6,6 +6,7 @@ import os
 import re
 import shutil
 import sys
+import urllib.request
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
@@ -143,8 +144,54 @@ def _parse_date_candidates(text):
     return out
 
 
+def _watchmefly_end_date(url):
+    """Read the official competition date range from the WatchMeFly page.
+
+    The imported ``competitions.dates`` value is not always a full range; for
+    some events it contains only the start date. Flight labels are also not a
+    reliable substitute for the official event end date because the latest
+    flown flight may occur before the competition's scheduled end.
+    """
+    if not url:
+        return None
+    try:
+        req = urllib.request.Request(
+            url,
+            headers={'User-Agent': 'balloon-competition-web/1.0'}
+        )
+        with urllib.request.urlopen(req, timeout=10) as response:
+            html = response.read().decode('utf-8', errors='ignore')
+        text = re.sub(r'<[^>]+>', ' ', html)
+        text = re.sub(r'\s+', ' ', text)
+
+        # Prefer an explicit full event range, e.g.
+        # "9 September 2026 - 13 September 2026".
+        range_patterns = [
+            r'(\d{1,2})\s+([A-Za-z]{3,9})\s+(\d{4})\s*[-–]\s*(\d{1,2})\s+([A-Za-z]{3,9})\s+(\d{4})',
+            r'(\d{1,2})[./-](\d{1,2})[./-](\d{4})\s*[-–]\s*(\d{1,2})[./-](\d{1,2})[./-](\d{4})',
+        ]
+        for pattern in range_patterns:
+            m = re.search(pattern, text)
+            if not m:
+                continue
+            try:
+                if m.group(2).isdigit():
+                    return date(int(m.group(6)), int(m.group(5)), int(m.group(4)))
+                month = m.group(5)
+                fmt = '%b' if len(month) <= 3 else '%B'
+                return datetime.strptime(
+                    f'{m.group(4)} {month} {m.group(6)}', f'%d {fmt} %Y'
+                ).date()
+            except ValueError:
+                pass
+    except Exception:
+        return None
+    return None
+
+
 def competition_end_date(c, event_id):
     sources = []
+    source_url = None
     try:
         row = c.execute("SELECT * FROM competitions WHERE id=?", (event_id,)).fetchone()
         if row:
@@ -154,14 +201,41 @@ def competition_end_date(c, event_id):
                     sources.append(d[key])
     except Exception:
         pass
-    try:
-        rows = c.execute("SELECT date_label FROM flights WHERE competition_id=?", (event_id,)).fetchall()
-        sources.extend([r['date_label'] for r in rows if r['date_label']])
-    except Exception:
-        pass
+
+    # If the stored competition dates contain a real range, trust that first.
     candidates = []
     for source in sources:
         candidates.extend(_parse_date_candidates(source))
+    if len(candidates) >= 2:
+        return max(candidates)
+
+    # WatchMeFly is the source of record. Its event page contains the official
+    # scheduled range even when the imported database value only contains the
+    # start date.
+    try:
+        row = c.execute(
+            "SELECT source_url FROM competition_monitoring WHERE competition_id=?",
+            (event_id,)
+        ).fetchone()
+        source_url = row['source_url'] if row else None
+    except Exception:
+        pass
+    official_end = _watchmefly_end_date(source_url)
+    if official_end:
+        return official_end
+
+    # Final fallback: use the latest flown flight date, but only when the
+    # official event page did not provide a scheduled end date.
+    try:
+        rows = c.execute("SELECT date_label FROM flights WHERE competition_id=?", (event_id,)).fetchall()
+        flight_candidates = []
+        for r in rows:
+            if r['date_label']:
+                flight_candidates.extend(_parse_date_candidates(r['date_label']))
+        if flight_candidates:
+            return max(flight_candidates)
+    except Exception:
+        pass
     return max(candidates) if candidates else None
 
 
