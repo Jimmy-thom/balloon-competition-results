@@ -462,7 +462,7 @@ def run_once(out_root='data'):
                     lifecycle = refresh_lifecycle(c, event_id)
                     if lifecycle.get('purge_due') and (auto_purge_enabled() or purge_dry_run_enabled()):
                         result = purge_event(c, event_id, out_root)
-                        lifecycle['purged'] = True
+                        lifecycle['purged'] = bool(result.get('purged', False))
                     else:
                         result = {'event_id': event_id, 'changed': False, 'tasks': 0, 'results': 0, 'errors': []}
                 finally:
@@ -481,7 +481,7 @@ def run_once(out_root='data'):
                 lifecycle = refresh_lifecycle(c, event_id)
                 if lifecycle.get('purge_due') and (auto_purge_enabled() or purge_dry_run_enabled()):
                     result['purged'] = purge_event(c, event_id, out_root)
-                    lifecycle['purged'] = True
+                    lifecycle['purged'] = bool(result['purged'].get('purged', False))
             finally:
                 c.close()
             result['lifecycle'] = lifecycle
