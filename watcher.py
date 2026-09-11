@@ -28,6 +28,7 @@ CREATE TABLE IF NOT EXISTS competition_monitoring(
 """
 
 RETENTION_DAYS_DEFAULT = 7
+_PG_MONITOR_SCHEMA_READY = False
 
 
 def now_iso():
@@ -50,18 +51,38 @@ def _table_columns(c, table):
 
 
 def ensure_schema(c):
-    c.execute(SCHEMA)
-    columns = _table_columns(c, 'competition_monitoring')
+    global _PG_MONITOR_SCHEMA_READY
+    if is_postgres() and _PG_MONITOR_SCHEMA_READY:
+        return
+
+    if is_postgres():
+        exists = c.execute(
+            "SELECT to_regclass('public.competition_monitoring') IS NOT NULL AS ready"
+        ).fetchone()
+        if exists and exists['ready']:
+            columns = _table_columns(c, 'competition_monitoring')
+        else:
+            c.execute(SCHEMA)
+            columns = _table_columns(c, 'competition_monitoring')
+    else:
+        c.execute(SCHEMA)
+        columns = _table_columns(c, 'competition_monitoring')
+
     migrations = {
         'lifecycle_status': "TEXT NOT NULL DEFAULT 'ACTIVE'",
         'event_end_date': 'TEXT',
         'finished_at': 'TEXT',
         'purge_after': 'TEXT',
     }
+    changed = False
     for name, definition in migrations.items():
         if name not in columns:
             c.execute(f"ALTER TABLE competition_monitoring ADD COLUMN {name} {definition}")
-    c.commit()
+            changed = True
+    if changed or not is_postgres():
+        c.commit()
+    if is_postgres():
+        _PG_MONITOR_SCHEMA_READY = True
 
 
 def event_id_from_url(url):
@@ -376,6 +397,27 @@ def run_once(out_root='data'):
         event_id = row['competition_id']
         url = row['source_url']
         try:
+            # Once an event has finished, its WatchMeFly data no longer needs
+            # to be re-imported during the retention window. We only maintain
+            # lifecycle state and optionally purge it when the retention period
+            # expires. This avoids unnecessary writes and reduces lock pressure.
+            if row['lifecycle_status'] == 'FINISHED':
+                c = connect(None if os.getenv('DATABASE_URL') else 'data/app.db')
+                try:
+                    ensure_schema(c)
+                    lifecycle = refresh_lifecycle(c, event_id)
+                    if lifecycle.get('purge_due') and auto_purge_enabled():
+                        result = purge_event(c, event_id, out_root)
+                        lifecycle['purged'] = True
+                    else:
+                        result = {'event_id': event_id, 'changed': False, 'tasks': 0, 'results': 0, 'errors': []}
+                finally:
+                    c.close()
+                result['lifecycle'] = lifecycle
+                summary.append(result)
+                print(json.dumps(result, indent=2, default=str), flush=True)
+                continue
+
             print(f'Checking {event_id} ...', flush=True)
             result = run_import(url, out_root)
             c = connect(None if os.getenv('DATABASE_URL') else 'data/app.db')
@@ -392,12 +434,15 @@ def run_once(out_root='data'):
             summary.append(result)
             print(json.dumps(result, indent=2, default=str), flush=True)
         except Exception as exc:
-            c = connect(None if os.getenv('DATABASE_URL') else 'data/app.db')
             try:
-                ensure_schema(c)
-                record_check(c, event_id, error=exc)
-            finally:
-                c.close()
+                c = connect(None if os.getenv('DATABASE_URL') else 'data/app.db')
+                try:
+                    ensure_schema(c)
+                    record_check(c, event_id, error=exc)
+                finally:
+                    c.close()
+            except Exception as record_exc:
+                print(f'ERROR {event_id}: {exc} (also failed to record error: {record_exc})', file=sys.stderr, flush=True)
             summary.append({'event_id': event_id, 'error': str(exc)})
             print(f'ERROR {event_id}: {exc}', file=sys.stderr, flush=True)
 
