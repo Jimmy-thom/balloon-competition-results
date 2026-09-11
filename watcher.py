@@ -461,8 +461,15 @@ def run_once(out_root='data'):
                     ensure_schema(c)
                     lifecycle = refresh_lifecycle(c, event_id)
                     if lifecycle.get('purge_due') and (auto_purge_enabled() or purge_dry_run_enabled()):
-                        result = purge_event(c, event_id, out_root)
-                        lifecycle['purged'] = bool(result.get('purged', False))
+                        purge_result = purge_event(c, event_id, out_root)
+                        result = {
+                            'event_id': event_id,
+                            'changed': False,
+                            'tasks': 0,
+                            'results': 0,
+                            'errors': [],
+                            **purge_result,
+                        }
                     else:
                         result = {'event_id': event_id, 'changed': False, 'tasks': 0, 'results': 0, 'errors': []}
                 finally:
@@ -480,8 +487,8 @@ def run_once(out_root='data'):
                 record_check(c, event_id, changed=result['changed'], error=(result['errors'] or None))
                 lifecycle = refresh_lifecycle(c, event_id)
                 if lifecycle.get('purge_due') and (auto_purge_enabled() or purge_dry_run_enabled()):
-                    result['purged'] = purge_event(c, event_id, out_root)
-                    lifecycle['purged'] = bool(result['purged'].get('purged', False))
+                    purge_result = purge_event(c, event_id, out_root)
+                    result.update(purge_result)
             finally:
                 c.close()
             result['lifecycle'] = lifecycle
