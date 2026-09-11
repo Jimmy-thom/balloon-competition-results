@@ -521,11 +521,13 @@ def parse_task(html, url, event_id, flight=None, link_text=''):
 
             country = ''
 
-            if 'image' in ptxt.lower():
-                tail = clean(ptxt.split('Image', 1)[1])
-
-                if tail:
-                    country = tail
+            # WatchMeFly renders the pilot cell as e.g.
+            #   #1 - FILUS, TomaszImage Poland
+            # Some pages add punctuation/whitespace after Image. Keep the
+            # nationality separate from the pilot name and normalise it.
+            image_match = re.search(r'Image\s*:?[\s]*(.+)$', ptxt, re.I)
+            if image_match:
+                country = clean(image_match.group(1)).lstrip(':,- ').strip()
 
             rank_text = d.get('rank', '').replace(',', '')
 
@@ -872,7 +874,7 @@ def import_event(url, out_root):
                     )
                     DO UPDATE SET
                         name=EXCLUDED.name,
-                        country=EXCLUDED.country
+                        country=COALESCE(NULLIF(EXCLUDED.country, ''), pilots.country)
                     """,
                     (
                         event_id,
@@ -901,6 +903,12 @@ def import_event(url, out_root):
                         r['country']
                     )
                 )
+
+                if r['country']:
+                    c.execute(
+                        "UPDATE pilots SET name=?, country=? WHERE competition_id=? AND competition_number=? AND (country IS NULL OR country='')",
+                        (r['pilot'], r['country'], event_id, r['competition_number'])
+                    )
 
             p = c.execute(
                 """
