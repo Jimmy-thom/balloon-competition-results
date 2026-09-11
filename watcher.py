@@ -271,6 +271,10 @@ def auto_purge_enabled():
     return os.getenv('AUTO_PURGE_ENABLED', 'false').strip().lower() in {'1', 'true', 'yes', 'on'}
 
 
+def purge_dry_run_enabled():
+    return os.getenv('PURGE_DRY_RUN', 'true').strip().lower() in {'1', 'true', 'yes', 'on'}
+
+
 def refresh_lifecycle(c, event_id, now=None):
     """Update lifecycle from the competition end date. Returns a status dict."""
     now = now or datetime.now(timezone.utc)
@@ -365,6 +369,22 @@ def purge_event(c, event_id, out_root='data'):
 
     run_rows = c.execute("SELECT id FROM import_runs WHERE competition_id=?", (event_id,)).fetchall()
     run_ids = [r['id'] for r in run_rows]
+    counts = {
+        'import_runs': len(run_ids),
+        'results': 0,
+        'tasks': 0,
+        'flights': 0,
+        'pilots': 0,
+    }
+    if run_ids:
+        qs = ','.join('?' * len(run_ids))
+        counts['results'] = c.execute(f"SELECT COUNT(*) AS n FROM results WHERE import_run_id IN ({qs})", run_ids).fetchone()['n']
+    counts['tasks'] = c.execute("SELECT COUNT(*) AS n FROM tasks WHERE competition_id=?", (event_id,)).fetchone()['n']
+    counts['flights'] = c.execute("SELECT COUNT(*) AS n FROM flights WHERE competition_id=?", (event_id,)).fetchone()['n']
+    counts['pilots'] = c.execute("SELECT COUNT(*) AS n FROM pilots WHERE competition_id=?", (event_id,)).fetchone()['n']
+
+    if purge_dry_run_enabled():
+        return {'event_id': event_id, 'purged': False, 'dry_run': True, 'would_delete': counts}
     if run_ids:
         qs = ','.join('?' * len(run_ids))
         c.execute(f"DELETE FROM results WHERE import_run_id IN ({qs})", run_ids)
@@ -380,7 +400,7 @@ def purge_event(c, event_id, out_root='data'):
     if folder.exists():
         shutil.rmtree(folder, ignore_errors=True)
 
-    return {'event_id': event_id, 'purged': True}
+    return {'event_id': event_id, 'purged': True, 'dry_run': False, 'deleted': counts}
 
 
 def run_import(url, out_root='data'):
@@ -440,7 +460,7 @@ def run_once(out_root='data'):
                 try:
                     ensure_schema(c)
                     lifecycle = refresh_lifecycle(c, event_id)
-                    if lifecycle.get('purge_due') and auto_purge_enabled():
+                    if lifecycle.get('purge_due') and (auto_purge_enabled() or purge_dry_run_enabled()):
                         result = purge_event(c, event_id, out_root)
                         lifecycle['purged'] = True
                     else:
@@ -459,7 +479,7 @@ def run_once(out_root='data'):
                 ensure_schema(c)
                 record_check(c, event_id, changed=result['changed'], error=(result['errors'] or None))
                 lifecycle = refresh_lifecycle(c, event_id)
-                if lifecycle.get('purge_due') and auto_purge_enabled():
+                if lifecycle.get('purge_due') and (auto_purge_enabled() or purge_dry_run_enabled()):
                     result['purged'] = purge_event(c, event_id, out_root)
                     lifecycle['purged'] = True
             finally:
