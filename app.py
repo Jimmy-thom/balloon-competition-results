@@ -281,13 +281,23 @@ def api_progression(eid):
 @app.get("/api/event/<eid>/flight/<flight_id>/standings")
 def api_flight_standings(eid,flight_id):
     mode=request.args.get("mode","all"); cumulative=request.args.get("view","flight")=="cumulative"
-    current=flight_standings(eid,flight_id,mode,cumulative); movement={}
-    if cumulative:
-        c=conn(eid); f=c.execute("SELECT sort_order FROM flights WHERE competition_id=? AND id=?",(eid,flight_id)).fetchone()
-        prev=c.execute("SELECT id FROM flights WHERE competition_id=? AND sort_order<? ORDER BY sort_order DESC LIMIT 1",(eid,f["sort_order"])).fetchone() if f else None; c.close()
-        if prev:
-            prior=flight_standings(eid,prev["id"],mode,True); old={r["competition_number"]:r["position"] for r in prior}
-            movement={r["competition_number"]:(old[r["competition_number"]]-r["position"]) if r["competition_number"] in old else None for r in current}
+    current=flight_standings(eid,flight_id,mode,cumulative)
+    movement={}
+
+    # Movement is always calculated from cumulative standings, even when
+    # the current flight's displayed results are still provisional.
+    # This lets the movement column work on flight 2 while keeping the
+    # displayed provisional scores/rankings exactly as selected.
+    c=conn(eid)
+    f=c.execute("SELECT sort_order FROM flights WHERE competition_id=? AND id=?",(eid,flight_id)).fetchone()
+    prev=c.execute("SELECT id FROM flights WHERE competition_id=? AND sort_order<? ORDER BY sort_order DESC LIMIT 1",(eid,f["sort_order"])).fetchone() if f else None
+    c.close()
+    if prev:
+        current_cumulative=flight_standings(eid,flight_id,mode,True)
+        prior=flight_standings(eid,prev["id"],mode,True)
+        old={r["competition_number"]:r["position"] for r in prior}
+        movement={r["competition_number"]:(old[r["competition_number"]]-r["position"]) if r["competition_number"] in old else None for r in current_cumulative}
+
     return jsonify({"mode":mode,"view":"cumulative" if cumulative else "flight","rows":current,"movement":movement})
 @app.get("/api/event/<eid>/compare")
 def api_compare(eid):
