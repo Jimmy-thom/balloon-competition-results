@@ -241,6 +241,10 @@
   text-align:center;
 }
 
+/* Pilot name has two display variants: full on desktop, compact on mobile. */
+.results-table .pilot-compact{display:none}
+.results-table .pilot-full{display:inline}
+
 /* Mobile standings: keep POS + compact pilot + movement + total visible.
    Task columns continue horizontally to the right. */
 @media (max-width:620px){
@@ -273,6 +277,9 @@
     font-size:14px;
     font-weight:800;
   }
+
+  .results-table .pilot-full{display:none}
+  .results-table .pilot-compact{display:inline}
 
   .results-table .flag{
     display:none;
@@ -433,6 +440,55 @@ function compactPilotName(name){
   return raw;
 }
 
+/* Some older imports have the nationality appended to the pilot name while
+   the country field is empty. Clean that at display time so the table remains
+   correct even before those older rows are re-imported. */
+const countryNames=[
+  'United States','United Kingdom','Czech Republic','New Zealand','South Africa',
+  'Netherlands','Switzerland','Germany','Austria','Australia','Belgium','Brazil',
+  'Canada','Croatia','Denmark','Estonia','Finland','France','Hungary','Ireland',
+  'Italy','Lithuania','Luxembourg','Norway','Poland','Portugal','Romania',
+  'Slovakia','Slovenia','Spain','Sweden','Turkey','Ukraine'
+].sort((a,b)=>b.length-a.length);
+
+const countryCodes={
+  AU:'Australia',AUS:'Australia',GB:'United Kingdom',GBR:'United Kingdom',
+  AT:'Austria',AUT:'Austria',BE:'Belgium',BEL:'Belgium',BR:'Brazil',BRA:'Brazil',
+  CA:'Canada',CAN:'Canada',HR:'Croatia',HRV:'Croatia',CZ:'Czech Republic',CZE:'Czech Republic',
+  DE:'Germany',DEU:'Germany',DK:'Denmark',DNK:'Denmark',EE:'Estonia',EST:'Estonia',
+  ES:'Spain',ESP:'Spain',FI:'Finland',FIN:'Finland',FR:'France',FRA:'France',
+  HU:'Hungary',HUN:'Hungary',IE:'Ireland',IRL:'Ireland',IT:'Italy',ITA:'Italy',
+  LT:'Lithuania',LTU:'Lithuania',LU:'Luxembourg',LUX:'Luxembourg',NL:'Netherlands',NLD:'Netherlands',
+  NO:'Norway',NOR:'Norway',NZ:'New Zealand',NZL:'New Zealand',PL:'Poland',POL:'Poland',
+  PT:'Portugal',PRT:'Portugal',RO:'Romania',ROU:'Romania',SK:'Slovakia',SVK:'Slovakia',
+  SI:'Slovenia',SVN:'Slovenia',SE:'Sweden',SWE:'Sweden',CH:'Switzerland',CHE:'Switzerland',
+  TR:'Turkey',TUR:'Turkey',UA:'Ukraine',UKR:'Ukraine',US:'United States',USA:'United States',
+  ZA:'South Africa',ZAF:'South Africa'
+};
+
+function pilotDisplay(name,country){
+  let cleanName=String(name || '').trim();
+  let cleanCountry=String(country || '').trim();
+
+  if(cleanCountry){
+    const code=cleanCountry.split(/\s+/)[0].toUpperCase();
+    cleanCountry=countryCodes[code] || cleanCountry;
+  }
+
+  if(!cleanCountry){
+    for(const candidate of countryNames){
+      const re=new RegExp('\\s+'+candidate.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'$','i');
+      if(re.test(cleanName)){
+        cleanCountry=candidate;
+        cleanName=cleanName.replace(re,'').trim();
+        break;
+      }
+    }
+  }
+
+  return {name:cleanName,country:cleanCountry};
+}
+
 function renderTable(rows, movementByPilot={}){
   if(!rows.length){
     standings.innerHTML='<div class="loading">No results available for this selection.</div>';
@@ -474,8 +530,9 @@ function renderTable(rows, movementByPilot={}){
     }
 
     h+=`<td class="pos">${r.position}</td>`;
-    h+=`<td class="pilot-cell"><a href="/event/${eid}/pilot/${r.competition_number}"><span class="pilot-full">#${r.competition_number} — ${esc(r.pilot)}</span><span class="pilot-compact">#${r.competition_number} ${esc(compactPilotName(r.pilot))}</span></a></td>`;
-    h+=`<td class="country-cell">${esc(r.country||'—')}</td>`;
+    const pilot=pilotDisplay(r.pilot,r.country);
+    h+=`<td class="pilot-cell"><a href="/event/${eid}/pilot/${r.competition_number}"><span class="pilot-full">#${r.competition_number} — ${esc(pilot.name)}</span><span class="pilot-compact">#${r.competition_number} ${esc(compactPilotName(pilot.name))}</span></a></td>`;
+    h+=`<td class="country-cell">${esc(pilot.country||'—')}</td>`;
     h+=`<td class="movement ${movementClass}">${movementText}</td>`;
     h+=`<td class="num total-cell ${hasProv?'total-provisional':''}">${fmt(r.total)}${hasProv?'<span class="prov-mark" title="Total includes provisional result(s)">P</span>':''}</td>`;
     h+=`<td class="num gap gap-cell">${fmt(gapTo1)}</td>`;
