@@ -263,7 +263,63 @@ def api_event(eid):
     e=event(eid); c=conn(eid); run=latest_run(c,eid); out=e|{"latest_import":dict(run) if run else None,"tasks":all_tasks(c,eid),"flights":[dict(r) for r in c.execute("SELECT * FROM flights WHERE competition_id=? ORDER BY sort_order",(eid,)).fetchall()]}; c.close(); return jsonify(out)
 @app.get("/api/event/<eid>/standings")
 def api_standings(eid):
-    mode,start,end=common_filters(); return jsonify({"mode":mode,"from":start,"to":end,"rows":standings_data(eid,mode,start,end)})
+    mode,start,end=common_filters()
+    rows=standings_data(eid,mode,start,end)
+    movement={}
+
+    # The event standings page uses this endpoint (not the flight-specific
+    # endpoint), so movement must be supplied here. Compare the cumulative
+    # position at the latest flown flight in the selected task range with the
+    # immediately previous flown flight. Provisional scores are included
+    # when the selected mode includes them.
+    c=conn(eid)
+    run=latest_run(c,eid)
+    if run:
+        params=[run["id"],eid]
+        where="r.import_run_id=? AND t.competition_id=?"
+        if start is not None:
+            where += " AND t.task_number>=?"
+            params.append(start)
+        if end is not None:
+            where += " AND t.task_number<=?"
+            params.append(end)
+
+        latest_flight=c.execute(f"""
+            SELECT f.id,f.sort_order
+            FROM results r
+            JOIN tasks t ON t.id=r.task_id
+            JOIN flights f ON f.id=t.flight_id
+            WHERE {where}
+            GROUP BY f.id,f.sort_order
+            ORDER BY f.sort_order DESC
+            LIMIT 1
+        """,params).fetchone()
+
+        if latest_flight:
+            prev=c.execute("""
+                SELECT f.id,f.sort_order
+                FROM results r
+                JOIN tasks t ON t.id=r.task_id
+                JOIN flights f ON f.id=t.flight_id
+                WHERE r.import_run_id=? AND t.competition_id=?
+                  AND f.sort_order<?
+                GROUP BY f.id,f.sort_order
+                ORDER BY f.sort_order DESC
+                LIMIT 1
+            """,(run["id"],eid,latest_flight["sort_order"])).fetchone()
+
+            if prev:
+                current_cumulative=flight_standings(eid,latest_flight["id"],mode,True)
+                prior_cumulative=flight_standings(eid,prev["id"],mode,True)
+                old={r["competition_number"]:r["position"] for r in prior_cumulative}
+                movement={
+                    r["competition_number"]:
+                    (old[r["competition_number"]]-r["position"])
+                    if r["competition_number"] in old else None
+                    for r in current_cumulative
+                }
+    c.close()
+    return jsonify({"mode":mode,"from":start,"to":end,"rows":rows,"movement":movement})
 @app.get("/api/event/<eid>/tasks")
 def api_tasks(eid):
     c=conn(eid); out=all_tasks(c,eid); c.close(); return jsonify(out)
