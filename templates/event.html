@@ -1,30 +1,543 @@
-{% extends 'base.html' %} {% block title %}{{event.title}}{% endblock %} {% block content %}
-{{event.location}}
-{{event.title}}
-{{event.dates}}
+{% extends 'base.html' %}
+{% block title %}{{event.title}}{% endblock %}
 
-Compare pilots
-{{pilot_count}}Pilots
-{{tasks|length}}Task occurrences
-{{flights|length}}Flights
-Competition standings
-Current standings with task scores, country, and movement from the previous task. Published provisional results are marked P.
+{% block content %}
+<div class="event-head">
+  <div>
+    <div class="eyebrow">{{event.location}}</div>
+    <h1>{{event.title}}</h1>
+    <p class="muted">{{event.dates}}</p>
+  </div>
+  <a class="button" href="/event/{{event.id}}/compare">Compare pilots</a>
+</div>
+<div class="stats">
+  <div><b>{{pilot_count}}</b><span>Pilots</span></div>
+  <div><b>{{tasks|length}}</b><span>Task occurrences</span></div>
+  <div><b>{{flights|length}}</b><span>Flights</span></div>
+</div>
+<div class="card">
+  <div class="section-head">
+    <div>
+      <h2>Competition standings</h2>
+      <p class="muted">Current standings with task scores, country, and movement from the previous task. Published provisional results are marked <strong>P</strong>.</p>
+    </div>
+    <div class="controls">
+      <select id="mode">
+        <option value="all" selected>Include provisional</option>
+        <option value="official">Official only</option>
+      </select>
+      <label>From
+        <select id="from">
+          <option value="">1</option>
+          {% for n in range(2,tasks_max+1) %}
+          <option>{{n}}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label>To
+        <select id="to">
+          <option value="">Latest</option>
+          {% for n in range(1,tasks_max+1) %}
+          <option>{{n}}</option>
+          {% endfor %}
+        </select>
+      </label>
+    </div>
+  </div>
+  <div class="results-legend">
+    <span><b class="legend-p">P</b> Provisional result</span>
+    <span>Totals and rankings include provisional scores when selected</span>
+  </div>
 
+  <div class="mobile-scroll-hint">← Swipe left/right to view all task columns →</div>
+  <div id="standings" class="loading">Loading…</div>
+</div>
+<div class="card">
+  <div class="section-head">
+    <div>
+      <div class="card">
+  <div class="section-head">
+    <div>
+      <h2>Ranking progression</h2>
+      <p class="muted">See how the top eight pilots moved through the competition.</p>
+    </div>
+    <a class="button" href="/event/{{event.id}}/progression">View progression</a>
+  </div>
+</div>
+      <div class="card">
+  <h2>Tasks</h2>
+  <div class="task-grid">
+    {% for t in tasks %}
+    <a class="task-chip" href="/event/{{event.id}}/task/{{t.task_number}}">
+      <strong>T{{t.task_number}}</strong>
+      <span>{{t.name}}</span>
+      <em>{{t.status}}</em>
+      {% if t.flight_date %}<small>{{t.flight_date}}</small>{% endif %}
+    </a>
+    {% endfor %}
+  </div>
+</div>
+<div class="card">
+  <h2>Flights</h2>
+  <div class="flight-grid">
+    {% for f in flights %}
+    <a class="flight-card" href="/event/{{event.id}}/flight/{{f.id}}">
+      <strong>{{f.flight_number}}</strong>
+      <span>{{f.date_label}}</span>
+    </a>
+    {% endfor %}
+  </div>
+</div>
+<style>
+.results-legend{
+  display:flex;
+  gap:18px;
+  flex-wrap:wrap;
+  align-items:center;
+  margin:-4px 0 14px;
+  color:#687384;
+  font-size:13px;
+}
+.legend-p{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:22px;
+  height:22px;
+  margin-right:5px;
+  border-radius:6px;
+  background:#fff0c2;
+  color:#8a5b00;
+  font-size:11px;
+}
+.results-table{
+  min-width:1180px;
+  font-variant-numeric:tabular-nums;
+}
+.results-table th,
+.results-table td{
+  white-space:nowrap;
+}
+.results-table th{
+  position:sticky;
+  top:0;
+  z-index:2;
+}
+.results-table th:first-child,
+.results-table td:first-child{
+  position:sticky;
+  left:0;
+  z-index:3;
+  background:#fff;
+}
+.results-table th:nth-child(2),
+.results-table td:nth-child(2){
+  position:sticky;
+  left:55px;
+  z-index:3;
+  background:#fff;
+  box-shadow:5px 0 8px rgba(24,33,43,.06);
+}
+.results-table th:first-child,
+.results-table th:nth-child(2){
+  z-index:4;
+  background:var(--soft);
+}
+.results-table .pilot-cell{
+  min-width:250px;
+}
+.results-table .pilot-cell a{
+  font-weight:750;
+}
+.results-table .flag{
+  font-size:21px;
+  width:48px;
+  text-align:center;
+}
+.results-table .pos{
+  font-weight:850;
+  text-align:center;
+  width:55px;
+}
+.results-table .num{
+  text-align:right;
+  min-width:74px;
+}
+.results-table .total-cell{
+  font-weight:900;
+  background:#f4f8fc;
+}
+.results-table .gap{
+  color:#657285;
+}
+.results-table .task-score{
+  text-align:right;
+  min-width:64px;
+}
+.results-table .movement{
+  min-width:72px;
+  text-align:center;
+  font-weight:900;
+  white-space:nowrap;
+}
+.results-table .move-up{
+  color:#16803c;
+  background:#eef9f1;
+}
+.results-table .move-down{
+  color:#c0392b;
+  background:#fff1ef;
+}
+.results-table .move-flat{
+  color:#7b8794;
+}
+.results-table .provisional{
+  background:#fff3c9 !important;
+  color:#7d5400;
+  font-weight:850;
+}
+.results-table .prov-mark{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:18px;
+  height:18px;
+  margin-left:5px;
+  border-radius:5px;
+  background:#e7b94f;
+  color:#fff;
+  font-size:9px;
+  font-weight:900;
+  vertical-align:middle;
+}
+.results-table .total-provisional{
+  background:#fff3c9 !important;
+  color:#7d5400;
+}
+.results-table .podium-1 td{background:#fffaf0}
+.results-table .podium-2 td{background:#f8fafc}
+.results-table .podium-3 td{background:#fff7f2}
+.results-table .podium-1 .total-cell,
+.results-table .podium-2 .total-cell,
+.results-table .podium-3 .total-cell{
+  background:#f1f6fa;
+}
+.results-table .podium-1 td:first-child{box-shadow:inset 4px 0 #d4a72c}
+.results-table .podium-2 td:first-child{box-shadow:inset 4px 0 #9aa5b1}
+.results-table .podium-3 td:first-child{box-shadow:inset 4px 0 #b77b50}
+.results-table tbody tr:hover td:not(.provisional):not(.total-provisional){
+  background:#f8fbfe;
+}
+.mobile-scroll-hint{
+  display:none;
+  margin:-4px 0 12px;
+  padding:8px 10px;
+  border:1px solid #dbe5ee;
+  border-radius:9px;
+  background:#f5f8fb;
+  color:#687789;
+  font-size:11px;
+  font-weight:750;
+  text-align:center;
+}
 
-Include provisional
- From 
-1
- To 
-Latest
-P Provisional result
-Totals and rankings include provisional scores when selected
-Loading…
-Ranking progression
-See how the top eight pilots moved through the competition.
+/* Mobile standings: keep POS + compact pilot + movement + total visible.
+   Task columns continue horizontally to the right. */
+@media (max-width:620px){
+  .mobile-scroll-hint{display:block}
 
-View progression
-Tasks
-{% for t in tasks %} T{{t.task_number}} {{t.name}} {{t.status}} {% if t.flight_date %}{{t.flight_date}}{% endif %} {% endfor %}
-Flights
-{% for f in flights %} {{f.flight_number}} {{f.date_label}} {% endfor %}
+  .results-table{
+    min-width:760px;
+  }
+
+  .results-table th,
+  .results-table td{
+    padding:9px 6px;
+  }
+
+  .results-table .pos{
+    width:42px;
+    min-width:42px;
+    font-size:14px;
+  }
+
+  .results-table .pilot-cell{
+    width:142px;
+    min-width:142px;
+    max-width:142px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+
+  .results-table .pilot-cell a{
+    font-size:14px;
+    font-weight:800;
+  }
+
+  .results-table .flag{
+    display:none;
+  }
+
+  /* Country is useful elsewhere, but on a phone it costs too much width. */
+  .results-table .country-cell{
+    display:none;
+  }
+
+  .results-table .movement{
+    width:48px;
+    min-width:48px;
+    padding-left:3px;
+    padding-right:3px;
+    font-size:15px;
+  }
+
+  .results-table .movement .movement-heading{
+    display:none;
+  }
+
+  .results-table .num{
+    min-width:68px;
+    width:68px;
+    font-size:13px;
+  }
+
+  .results-table .total-cell{
+    font-size:14px;
+  }
+
+  /* Hide secondary summary columns on phones so the total and task columns
+     are reached immediately. */
+  .results-table .gap-cell,
+  .results-table .avg-cell{
+    display:none;
+  }
+
+  /* Rebuild sticky positions after hiding Country. */
+  .results-table th:nth-child(1),
+  .results-table td:nth-child(1){
+    left:0;
+    width:42px;
+    min-width:42px;
+  }
+
+  .results-table th:nth-child(2),
+  .results-table td:nth-child(2){
+    left:42px;
+    width:142px;
+    min-width:142px;
+    max-width:142px;
+  }
+
+  .results-table th:nth-child(3),
+  .results-table td:nth-child(3){
+    display:none;
+  }
+
+  .results-table th:nth-child(4),
+  .results-table td:nth-child(4){
+    position:sticky;
+    left:184px;
+    width:48px;
+    min-width:48px;
+    z-index:5;
+    background:#fff;
+  }
+
+  .results-table th:nth-child(5),
+  .results-table td:nth-child(5){
+    position:sticky;
+    left:232px;
+    width:68px;
+    min-width:68px;
+    z-index:5;
+    background:#f3f8fc;
+  }
+
+  .results-table th:nth-child(6),
+  .results-table td:nth-child(6),
+  .results-table th:nth-child(7),
+  .results-table td:nth-child(7),
+  .results-table th:nth-child(8),
+  .results-table td:nth-child(8){
+    display:none;
+  }
+
+  .results-table th:nth-child(n+9),
+  .results-table td:nth-child(n+9){
+    position:static;
+  }
+
+  .results-table th:nth-child(5){
+    background:#edf4f8;
+  }
+
+  .results-table td.total-cell{
+    box-shadow:7px 0 12px rgba(24,37,54,.09);
+  }
+
+  .results-table .task-score{
+    min-width:58px;
+    width:58px;
+    font-size:13px;
+  }
+
+  .results-table .prov-mark{
+    width:15px;
+    height:15px;
+    margin-left:3px;
+    font-size:8px;
+  }
+}
+</style>
+<script>
+const eid={{event.id|tojson}},
+      standings=document.getElementById('standings'),
+      mode=document.getElementById('mode'),
+      from=document.getElementById('from'),
+      to=document.getElementById('to'),
+      taskNumbers=[{% for n in range(1,tasks_max+1) %}{{n}},{% endfor %}];
+
+function qs(){
+  const p=new URLSearchParams({mode:mode.value});
+  if(from.value)p.set('from',from.value);
+  if(to.value)p.set('to',to.value);
+  return p;
+}
+
+function esc(value){
+  return String(value ?? '').replace(/[&<>"']/g,m=>({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  }[m]));
+}
+
+function fmt(value){
+  if(value===null || value===undefined || value==='') return '—';
+  return Number(value).toLocaleString('en-GB');
+}
+
+/* On phones, use surname + first initial so the Total column remains visible. */
+function compactPilotName(name){
+  const raw=String(name || '').trim();
+  if(!raw) return '';
+  const parts=raw.split(/\s*,\s*/);
+  if(parts.length>=2){
+    const surname=parts[0].trim();
+    const given=parts.slice(1).join(',').trim();
+    const initial=given ? given.charAt(0).toUpperCase()+'.' : '';
+    return initial ? `${surname}, ${initial}` : surname;
+  }
+  const words=raw.split(/\s+/).filter(Boolean);
+  if(words.length>=2){
+    return `${words.slice(0,-1).join(' ')} ${words.at(-1).charAt(0).toUpperCase()}.`;
+  }
+  return raw;
+}
+
+function renderTable(rows, movementByPilot={}){
+  if(!rows.length){
+    standings.innerHTML='<div class="loading">No results available for this selection.</div>';
+    return;
+  }
+
+  const headers=[
+    '<th class="pos">POS</th>',
+    '<th class="pilot-cell">Pilot Name</th>',
+    '<th class="country-cell">Country</th>',
+    '<th class="movement"><span class="movement-heading">Movement</span></th>',
+    '<th class="num total-header">Total</th>',
+    '<th class="num gap-cell">Gap to 1</th>',
+    '<th class="num gap-cell">Gap to Next</th>',
+    '<th class="num avg-cell">Avg</th>',
+    ...taskNumbers.map(n=>`<th class="task-score">T${n}</th>`)
+  ];
+
+  let h='<div class="table-scroll"><table class="results-table"><thead><tr>';
+  h+=headers.join('');
+  h+='</tr></thead><tbody>';
+
+  rows.forEach((r,i)=>{
+    const next=rows[i+1];
+    const gapTo1=i===0 ? 0 : rows[0].total-r.total;
+    const gapToNext=next ? r.total-next.total : 0;
+    const taskValues=taskNumbers.map(n=>r.tasks?.[n] ?? null);
+    const scored=taskValues.filter(v=>v!==null && v!==undefined && v!=='').length;
+    const avg=scored ? r.total/scored : null;
+    const hasProv=Object.values(r.statuses||{}).some(s=>s==='PROVISIONAL');
+    const podium=i<3 ? ` podium-${i+1}` : '';
+    h+=`<tr class="${podium.trim()}">`;
+
+    const movement = movementByPilot[r.competition_number];
+    let movementText='—', movementClass='move-flat';
+    if(movement!==null && movement!==undefined){
+      if(Number(movement)>0){movementText='▲ '+Math.abs(Number(movement)); movementClass='move-up';}
+      else if(Number(movement)<0){movementText='▼ '+Math.abs(Number(movement)); movementClass='move-down';}
+    }
+
+    h+=`<td class="pos">${r.position}</td>`;
+    h+=`<td class="pilot-cell"><a href="/event/${eid}/pilot/${r.competition_number}"><span class="pilot-full">#${r.competition_number} — ${esc(r.pilot)}</span><span class="pilot-compact">#${r.competition_number} ${esc(compactPilotName(r.pilot))}</span></a></td>`;
+    h+=`<td class="country-cell">${esc(r.country||'—')}</td>`;
+    h+=`<td class="movement ${movementClass}">${movementText}</td>`;
+    h+=`<td class="num total-cell ${hasProv?'total-provisional':''}">${fmt(r.total)}${hasProv?'<span class="prov-mark" title="Total includes provisional result(s)">P</span>':''}</td>`;
+    h+=`<td class="num gap gap-cell">${fmt(gapTo1)}</td>`;
+    h+=`<td class="num gap gap-cell">${next ? fmt(gapToNext) : '—'}</td>`;
+    h+=`<td class="num avg-cell">${avg===null?'—':avg.toFixed(1)}</td>`;
+
+    taskNumbers.forEach(n=>{
+      const value=r.tasks?.[n];
+      const status=r.statuses?.[n];
+      const provisional=status==='PROVISIONAL';
+      h+=`<td class="task-score ${provisional?'provisional':''}">`;
+      h+=value===undefined || value===null ? '—' : fmt(value);
+      if(provisional) h+='<span class="prov-mark" title="Provisional result">P</span>';
+      h+='</td>';
+    });
+
+    h+='</tr>';
+  });
+
+  h+='</tbody></table></div>';
+  standings.innerHTML=h;
+}
+
+async function load(){
+  standings.innerHTML='<div class="loading">Loading…</div>';
+  try{
+    const params=qs();
+    const [d,p] = await Promise.all([
+      fetch(`/api/event/${eid}/standings?${params}`).then(r=>{
+        if(!r.ok) throw new Error('Standings request failed');
+        return r.json();
+      }),
+      fetch(`/api/event/${eid}/progression?${params}`).then(r=>{
+        if(!r.ok) throw new Error('Progression request failed');
+        return r.json();
+      })
+    ]);
+
+    const progression=p.progression||[];
+    const current=progression.at(-1)?.rows||[];
+    const previous=progression.length>1 ? progression[progression.length-2].rows||[] : [];
+
+    const currentPos={};
+    const previousPos={};
+    current.forEach(r=>currentPos[r.competition_number]=r.position);
+    previous.forEach(r=>previousPos[r.competition_number]=r.position);
+
+    const movementByPilot={};
+    d.rows.forEach(r=>{
+      const c=currentPos[r.competition_number];
+      const old=previousPos[r.competition_number];
+      movementByPilot[r.competition_number]=(c!=null && old!=null) ? old-c : null;
+    });
+
+    renderTable(d.rows, movementByPilot);
+  }catch(err){
+    standings.innerHTML='<div class="loading">Unable to load standings.</div>';
+    console.error(err);
+  }
+}
+
+[mode,from,to].forEach(x=>x.addEventListener('change',load));
+load();
+</script>
 {% endblock %}
