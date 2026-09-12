@@ -296,9 +296,83 @@ def api_events():
 @app.get("/api/event/<eid>")
 def api_event(eid):
     e=event(eid); c=conn(eid); run=latest_run(c,eid); out=e|{"latest_import":dict(run) if run else None,"tasks":all_tasks(c,eid),"flights":[dict(r) for r in c.execute("SELECT * FROM flights WHERE competition_id=? ORDER BY sort_order",(eid,)).fetchall()]}; c.close(); return jsonify(out)
+def flight_movement_for_latest_completed_flights(eid, mode="official"):
+    """Return rank movement between the last two completed competition flights.
+
+    Practice flights are ignored. A competition flight counts only when every
+    non-cancelled task assigned to it has at least one result in the latest
+    import run. This keeps movement stable while a flight's individual tasks
+    are being released: movement changes only when the next flight is complete.
+    """
+    statuses=mode_statuses(mode)
+    c=conn(eid); run=latest_run(c,eid)
+    if not run:
+        c.close(); return {}
+
+    flights=c.execute(
+        "SELECT id,sort_order,flight_number FROM flights WHERE competition_id=? ORDER BY sort_order",
+        (eid,)
+    ).fetchall()
+    completed=[]
+    qs=','.join('?'*len(statuses))
+
+    for f in flights:
+        if "practice" in str(f["flight_number"] or "").lower():
+            continue
+        tasks=c.execute(
+            "SELECT id,status FROM tasks WHERE competition_id=? AND flight_id=? ORDER BY task_number",
+            (eid,f["id"])
+        ).fetchall()
+        active_tasks=[t for t in tasks if str(t["status"] or "").upper() != "CANCELLED"]
+        if not active_tasks:
+            continue
+        complete=True
+        for t in active_tasks:
+            hit=c.execute(
+                f"SELECT 1 FROM results WHERE import_run_id=? AND task_id=? AND status IN ({qs}) LIMIT 1",
+                (run["id"],t["id"],*statuses)
+            ).fetchone()
+            if not hit:
+                complete=False
+                break
+        if complete:
+            completed.append(f)
+
+    if len(completed)<2:
+        c.close(); return {}
+
+    current=completed[-1]
+    previous=completed[-2]
+    current_last=c.execute(
+        "SELECT MAX(task_number) AS last_task FROM tasks WHERE competition_id=? AND flight_id=?",
+        (eid,current["id"])
+    ).fetchone()["last_task"]
+    previous_last=c.execute(
+        "SELECT MAX(task_number) AS last_task FROM tasks WHERE competition_id=? AND flight_id=?",
+        (eid,previous["id"])
+    ).fetchone()["last_task"]
+    c.close()
+
+    if previous_last is None or current_last is None:
+        return {}
+
+    previous_rows=standings_data(eid,mode,None,previous_last)
+    current_rows=standings_data(eid,mode,None,current_last)
+    old={r["competition_number"]:r["position"] for r in previous_rows}
+    return {
+        r["competition_number"]:(old[r["competition_number"]]-r["position"])
+        if r["competition_number"] in old else None
+        for r in current_rows
+    }
+
 @app.get("/api/event/<eid>/standings")
 def api_standings(eid):
-    mode,start,end=common_filters(); return jsonify({"mode":mode,"from":start,"to":end,"rows":standings_data(eid,mode,start,end)})
+    mode,start,end=common_filters()
+    rows=standings_data(eid,mode,start,end)
+    movement=flight_movement_for_latest_completed_flights(eid,mode)
+    for row in rows:
+        row["movement"]=movement.get(row["competition_number"])
+    return jsonify({"mode":mode,"from":start,"to":end,"rows":rows})
 @app.get("/api/event/<eid>/tasks")
 def api_tasks(eid):
     c=conn(eid); out=all_tasks(c,eid); c.close(); return jsonify(out)
