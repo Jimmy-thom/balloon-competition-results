@@ -19,7 +19,7 @@
   <div class="section-head">
     <div>
       <h2>Competition standings</h2>
-      <p class="muted">Current standings with task scores, country, and movement from the previous task. Published provisional results are marked <strong>P</strong>.</p>
+      <p class="muted">Current standings with task scores, country, and movement from the previous flight. Published provisional results are marked <strong>P</strong>.</p>
     </div>
     <div class="controls">
       <select id="mode">
@@ -560,34 +560,15 @@ async function load(){
   standings.innerHTML='<div class="loading">Loading…</div>';
   try{
     const params=qs();
-    const [d,p] = await Promise.all([
-      fetch(`/api/event/${eid}/standings?${params}`).then(r=>{
-        if(!r.ok) throw new Error('Standings request failed');
-        return r.json();
-      }),
-      fetch(`/api/event/${eid}/progression?${params}`).then(r=>{
-        if(!r.ok) throw new Error('Progression request failed');
-        return r.json();
-      })
-    ]);
-
-    const progression=p.progression||[];
-    const current=progression.at(-1)?.rows||[];
-    const previous=progression.length>1 ? progression[progression.length-2].rows||[] : [];
-
-    const currentPos={};
-    const previousPos={};
-    current.forEach(r=>currentPos[r.competition_number]=r.position);
-    previous.forEach(r=>previousPos[r.competition_number]=r.position);
-
-    const movementByPilot={};
-    d.rows.forEach(r=>{
-      const c=currentPos[r.competition_number];
-      const old=previousPos[r.competition_number];
-      movementByPilot[r.competition_number]=(c!=null && old!=null) ? old-c : null;
+    const d = await fetch(`/api/event/${eid}/standings?${params}`).then(r=>{
+      if(!r.ok) throw new Error('Standings request failed');
+      return r.json();
     });
 
-    renderTable(d.rows, movementByPilot);
+    // Movement is calculated by the server from the latest flown
+    // competition flight versus the previous flown competition flight.
+    // A competition with only one flown flight therefore has no movement.
+    renderTable(d.rows, d.movement || {});
   }catch(err){
     standings.innerHTML='<div class="loading">Unable to load standings.</div>';
     console.error(err);
