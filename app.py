@@ -6,6 +6,7 @@ import hmac
 from urllib.parse import urlparse, parse_qs
 from db import connect, is_postgres, init_postgres
 from watcher import add_event, ensure_schema, purge_event, refresh_lifecycle
+from countries import clean_pilot_identity
 
 BASE = Path(__file__).resolve().parent
 DATA_DIR = BASE / "data"
@@ -64,7 +65,10 @@ def standings_data(eid,mode="official",start=None,end=None):
         statuses_by.setdefault(n,{})[r["task_number"]]=r["status"]
     pilots={r["competition_number"]:dict(r) for r in c.execute("SELECT competition_number,name,country FROM pilots WHERE competition_id=?",(eid,)).fetchall()}
     ordered=sorted(totals,key=lambda n:(-totals[n],pilots[n]["name"]))
-    out=[{"position":i,"competition_number":n,"pilot":pilots[n]["name"],"country":pilots[n]["country"],"total":totals[n],"tasks":scores.get(n,{}),"statuses":statuses_by.get(n,{})} for i,n in enumerate(ordered,1)]
+    out=[]
+    for i,n in enumerate(ordered,1):
+        name, country = clean_pilot_identity(pilots[n]["name"], pilots[n]["country"])
+        out.append({"position":i,"competition_number":n,"pilot":name,"country":country,"total":totals[n],"tasks":scores.get(n,{}),"statuses":statuses_by.get(n,{})})
     c.close(); return out
 def progression_data(eid,mode="official",start=None,end=None):
     c=conn(eid); nums=[r["task_number"] for r in c.execute("SELECT DISTINCT task_number FROM tasks WHERE competition_id=? ORDER BY task_number",(eid,)).fetchall()]; c.close()
@@ -105,7 +109,10 @@ def flight_standings(eid,flight_id,mode="all",cumulative=False):
         n=r["competition_number"]; totals[n]=totals.get(n,0)+(r["score"] or 0)
     pilots={r["competition_number"]:dict(r) for r in c.execute("SELECT competition_number,name,country FROM pilots WHERE competition_id=?",(eid,)).fetchall()}
     ordered=sorted(totals,key=lambda n:(-totals[n],pilots[n]["name"]))
-    out=[{"position":i,"competition_number":n,"pilot":pilots[n]["name"],"country":pilots[n]["country"],"total":totals[n]} for i,n in enumerate(ordered,1)]
+    out=[]
+    for i,n in enumerate(ordered,1):
+        name, country = clean_pilot_identity(pilots[n]["name"], pilots[n]["country"])
+        out.append({"position":i,"competition_number":n,"pilot":name,"country":country,"total":totals[n]})
     c.close(); return out
 def task_navigation(c,eid,num):
     rows=c.execute("SELECT task_number,name,status FROM tasks WHERE competition_id=? ORDER BY task_number",(eid,)).fetchall()
@@ -172,33 +179,9 @@ def pilot_page(eid,number):
     pilot=dict(p)
 
     # Clean imported country prefixes/suffixes for this display page only.
-    country_raw=(pilot.get("country") or "").strip()
-    country_map={
-        "AU":"Australia","AUS":"Australia","GB":"United Kingdom","GBR":"United Kingdom",
-        "AT":"Austria","AUT":"Austria","HR":"Croatia","HRV":"Croatia",
-        "CZ":"Czech Republic","CZE":"Czech Republic","DE":"Germany","DEU":"Germany",
-        "HU":"Hungary","HUN":"Hungary","LT":"Lithuania","LTU":"Lithuania",
-        "NL":"Netherlands","NLD":"Netherlands","PL":"Poland","POL":"Poland",
-        "SK":"Slovakia","SVK":"Slovakia","SI":"Slovenia","SVN":"Slovenia",
-        "NZ":"New Zealand","NZL":"New Zealand","FR":"France","FRA":"France",
-        "IT":"Italy","ITA":"Italy","ES":"Spain","ESP":"Spain",
-        "CH":"Switzerland","CHE":"Switzerland","US":"United States","USA":"United States",
-        "CA":"Canada","CAN":"Canada"
-    }
-    parts=country_raw.split()
-    if parts and parts[0].upper() in country_map:
-        pilot["country"]=country_map[parts[0].upper()]
-    else:
-        pilot["country"]=country_raw
-
-    # Some imported names have the country appended. Remove a recognised
-    # country suffix from the display name without changing the database.
-    name=(pilot.get("name") or "").strip()
-    for country_name in sorted(set(country_map.values()), key=len, reverse=True):
-        if name.lower().endswith(" " + country_name.lower()):
-            name=name[:-(len(country_name)+1)].rstrip()
-            break
-    pilot["name"]=name
+    pilot["name"], pilot["country"] = clean_pilot_identity(
+        pilot.get("name", ""), pilot.get("country", "")
+    )
 
     c.close()
     return render_template("pilot.html",event=e,pilot=pilot,results=results,flights=flights)
@@ -229,28 +212,10 @@ def search_page(eid):
         pilots=[dict(r) for r in c.execute(sql,(eid,like,like,q)).fetchall()]
 
     # Match the clean country/name presentation used on the pilot page.
-    country_map={
-        "AU":"Australia","AUS":"Australia","GB":"United Kingdom","GBR":"United Kingdom",
-        "AT":"Austria","AUT":"Austria","HR":"Croatia","HRV":"Croatia",
-        "CZ":"Czech Republic","CZE":"Czech Republic","DE":"Germany","DEU":"Germany",
-        "HU":"Hungary","HUN":"Hungary","LT":"Lithuania","LTU":"Lithuania",
-        "NL":"Netherlands","NLD":"Netherlands","PL":"Poland","POL":"Poland",
-        "SK":"Slovakia","SVK":"Slovakia","SI":"Slovenia","SVN":"Slovenia",
-        "NZ":"New Zealand","NZL":"New Zealand","FR":"France","FRA":"France",
-        "IT":"Italy","ITA":"Italy","ES":"Spain","ESP":"Spain",
-        "CH":"Switzerland","CHE":"Switzerland","US":"United States","USA":"United States",
-        "CA":"Canada","CAN":"Canada"
-    }
     for pilot in pilots:
-        raw=(pilot.get("country") or "").strip()
-        parts=raw.split()
-        pilot["country"]=country_map.get(parts[0].upper(),raw) if parts else ""
-        name=(pilot.get("name") or "").strip()
-        for country_name in sorted(set(country_map.values()), key=len, reverse=True):
-            if name.lower().endswith(" " + country_name.lower()):
-                name=name[:-(len(country_name)+1)].rstrip()
-                break
-        pilot["name"]=name
+        pilot["name"], pilot["country"] = clean_pilot_identity(
+            pilot.get("name", ""), pilot.get("country", "")
+        )
 
     # Add the current official standing to each result when available.
     standings={}
@@ -296,83 +261,9 @@ def api_events():
 @app.get("/api/event/<eid>")
 def api_event(eid):
     e=event(eid); c=conn(eid); run=latest_run(c,eid); out=e|{"latest_import":dict(run) if run else None,"tasks":all_tasks(c,eid),"flights":[dict(r) for r in c.execute("SELECT * FROM flights WHERE competition_id=? ORDER BY sort_order",(eid,)).fetchall()]}; c.close(); return jsonify(out)
-def flight_movement_for_latest_completed_flights(eid, mode="official"):
-    """Return rank movement between the last two completed competition flights.
-
-    Practice flights are ignored. A competition flight counts only when every
-    non-cancelled task assigned to it has at least one result in the latest
-    import run. This keeps movement stable while a flight's individual tasks
-    are being released: movement changes only when the next flight is complete.
-    """
-    statuses=mode_statuses(mode)
-    c=conn(eid); run=latest_run(c,eid)
-    if not run:
-        c.close(); return {}
-
-    flights=c.execute(
-        "SELECT id,sort_order,flight_number FROM flights WHERE competition_id=? ORDER BY sort_order",
-        (eid,)
-    ).fetchall()
-    completed=[]
-    qs=','.join('?'*len(statuses))
-
-    for f in flights:
-        if "practice" in str(f["flight_number"] or "").lower():
-            continue
-        tasks=c.execute(
-            "SELECT id,status FROM tasks WHERE competition_id=? AND flight_id=? ORDER BY task_number",
-            (eid,f["id"])
-        ).fetchall()
-        active_tasks=[t for t in tasks if str(t["status"] or "").upper() != "CANCELLED"]
-        if not active_tasks:
-            continue
-        complete=True
-        for t in active_tasks:
-            hit=c.execute(
-                f"SELECT 1 FROM results WHERE import_run_id=? AND task_id=? AND status IN ({qs}) LIMIT 1",
-                (run["id"],t["id"],*statuses)
-            ).fetchone()
-            if not hit:
-                complete=False
-                break
-        if complete:
-            completed.append(f)
-
-    if len(completed)<2:
-        c.close(); return {}
-
-    current=completed[-1]
-    previous=completed[-2]
-    current_last=c.execute(
-        "SELECT MAX(task_number) AS last_task FROM tasks WHERE competition_id=? AND flight_id=?",
-        (eid,current["id"])
-    ).fetchone()["last_task"]
-    previous_last=c.execute(
-        "SELECT MAX(task_number) AS last_task FROM tasks WHERE competition_id=? AND flight_id=?",
-        (eid,previous["id"])
-    ).fetchone()["last_task"]
-    c.close()
-
-    if previous_last is None or current_last is None:
-        return {}
-
-    previous_rows=standings_data(eid,mode,None,previous_last)
-    current_rows=standings_data(eid,mode,None,current_last)
-    old={r["competition_number"]:r["position"] for r in previous_rows}
-    return {
-        r["competition_number"]:(old[r["competition_number"]]-r["position"])
-        if r["competition_number"] in old else None
-        for r in current_rows
-    }
-
 @app.get("/api/event/<eid>/standings")
 def api_standings(eid):
-    mode,start,end=common_filters()
-    rows=standings_data(eid,mode,start,end)
-    movement=flight_movement_for_latest_completed_flights(eid,mode)
-    for row in rows:
-        row["movement"]=movement.get(row["competition_number"])
-    return jsonify({"mode":mode,"from":start,"to":end,"rows":rows})
+    mode,start,end=common_filters(); return jsonify({"mode":mode,"from":start,"to":end,"rows":standings_data(eid,mode,start,end)})
 @app.get("/api/event/<eid>/tasks")
 def api_tasks(eid):
     c=conn(eid); out=all_tasks(c,eid); c.close(); return jsonify(out)
