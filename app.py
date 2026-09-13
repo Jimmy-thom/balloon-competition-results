@@ -29,6 +29,37 @@ def mode_statuses(mode):
     abort(400, description="mode must be official or all")
 
 
+COUNTRY_MAP = {
+    "AU":"Australia","AUS":"Australia","GB":"United Kingdom","GBR":"United Kingdom",
+    "AT":"Austria","AUT":"Austria","HR":"Croatia","HRV":"Croatia",
+    "CZ":"Czech Republic","CZE":"Czech Republic","DE":"Germany","DEU":"Germany",
+    "HU":"Hungary","HUN":"Hungary","LT":"Lithuania","LTU":"Lithuania",
+    "NL":"Netherlands","NLD":"Netherlands","PL":"Poland","POL":"Poland",
+    "SK":"Slovakia","SVK":"Slovakia","SI":"Slovenia","SVN":"Slovenia",
+    "NZ":"New Zealand","NZL":"New Zealand","FR":"France","FRA":"France",
+    "IT":"Italy","ITA":"Italy","ES":"Spain","ESP":"Spain",
+    "CH":"Switzerland","CHE":"Switzerland","US":"United States","USA":"United States",
+    "CA":"Canada","CAN":"Canada",
+}
+
+def _clean_pilot_name_country(name, country):
+    """Clean display-only pilot name/country values from imported data."""
+    clean_name=str(name or "").strip()
+    raw_country=str(country or "").strip()
+    country_display=COUNTRY_MAP.get(raw_country.upper(), raw_country)
+
+    # Some WatchMeFly records append the country to the pilot name while the
+    # separate country field is empty. Recover only recognised country names.
+    for country_name in sorted(set(COUNTRY_MAP.values()), key=len, reverse=True):
+        suffix=" " + country_name
+        if clean_name.lower().endswith(suffix.lower()):
+            clean_name=clean_name[:-len(suffix)].rstrip()
+            if not country_display:
+                country_display=country_name
+            break
+
+    return clean_name, country_display
+
 def _flight_columns_available(c):
     """Return whether the current flights table has the importer flight metadata."""
     try:
@@ -273,11 +304,12 @@ def _movement_for_latest_completed_flight(c, eid, mode, end=None):
     if not earlier:
         return {}
 
-    # Prefer an explicitly completed flight.  If the source has no usable
-    # completion metadata, fall back to the nearest earlier scored flight.
-    previous=next((f for f in reversed(earlier) if _flight_is_completed(f)),None)
-    if previous is None:
-        previous=earlier[-1]
+    # The previous checkpoint is the nearest earlier flight that actually has
+    # eligible results. Do not skip an earlier in-progress flight merely because
+    # it is not marked COMPLETE: once a flight has published results, it is the
+    # previous flown checkpoint for movement. Practice/cancelled flights have
+    # already been removed by _competition_flights_with_results().
+    previous=earlier[-1]
 
     run=latest_run(c,eid)
     if not run:
@@ -409,7 +441,8 @@ def standings_data(eid,mode="official",start=None,end=None):
         totals[n]=totals.get(n,0)+score
         scores.setdefault(n,{})[num]=r["score"]
         statuses_by.setdefault(n,{})[num]=r["status"]
-        pilots[n]={"competition_number":n,"name":r["name"],"country":r["country"]}
+        clean_name, country_display = _clean_pilot_name_country(r["name"], r["country"])
+        pilots[n]={"competition_number":n,"name":clean_name,"country":country_display}
 
     ordered=sorted(totals,key=lambda n:(-totals[n],pilots[n]["name"]))
     out=[{
