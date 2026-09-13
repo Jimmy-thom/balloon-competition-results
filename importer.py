@@ -930,6 +930,7 @@ def import_event(url, out_root):
                     date_label=?,
                     time_label=?,
                     sort_order=?,
+                    source_url=?,
                     status=?,
                     flight_type=?
                 WHERE id=?
@@ -939,6 +940,9 @@ def import_event(url, out_root):
                     flight.get('date_label', ''),
                     flight.get('time_label', ''),
                     sort_order,
+                    flight.get('task_links', [''])[0]
+                    if flight.get('task_links')
+                    else url,
                     flight.get('status', 'UNKNOWN'),
                     flight.get('flight_type', 'UNKNOWN'),
                     fid
@@ -969,12 +973,16 @@ def import_event(url, out_root):
                         flight_id,published,source_url
                     )
                     VALUES (?,?,?,?,?,?,?,?)
-                    ON CONFLICT(id) DO UPDATE SET
+                    ON CONFLICT(
+                        competition_id,
+                        task_number,
+                        published,
+                        source_url
+                    )
+                    DO UPDATE SET
                         name=EXCLUDED.name,
                         status=EXCLUDED.status,
-                        flight_id=EXCLUDED.flight_id,
-                        published=EXCLUDED.published,
-                        source_url=EXCLUDED.source_url
+                        flight_id=EXCLUDED.flight_id
                     """,
                     (
                         tid,
@@ -990,25 +998,61 @@ def import_event(url, out_root):
 
             else:
 
-                c.execute(
+                existing_task = c.execute(
                     """
-                    INSERT OR REPLACE INTO tasks(
-                        id,competition_id,task_number,name,status,
-                        flight_id,published,source_url
-                    )
-                    VALUES (?,?,?,?,?,?,?,?)
+                    SELECT id
+                    FROM tasks
+                    WHERE competition_id=?
+                      AND task_number=?
+                      AND published=?
+                      AND source_url=?
+                    LIMIT 1
                     """,
                     (
-                        tid,
                         event_id,
                         task['task_number'],
-                        task['name'],
-                        task['status'],
-                        fid,
                         task['published'],
                         task['source_url']
                     )
-                )
+                ).fetchone()
+
+                if existing_task:
+                    tid = existing_task[0]
+                    c.execute(
+                        """
+                        UPDATE tasks
+                        SET name=?,
+                            status=?,
+                            flight_id=?
+                        WHERE id=?
+                        """,
+                        (
+                            task['name'],
+                            task['status'],
+                            fid,
+                            tid
+                        )
+                    )
+                else:
+                    c.execute(
+                        """
+                        INSERT INTO tasks(
+                            id,competition_id,task_number,name,status,
+                            flight_id,published,source_url
+                        )
+                        VALUES (?,?,?,?,?,?,?,?)
+                        """,
+                        (
+                            tid,
+                            event_id,
+                            task['task_number'],
+                            task['name'],
+                            task['status'],
+                            fid,
+                            task['published'],
+                            task['source_url']
+                        )
+                    )
 
             # Results are only written when WatchMeFly actually provides
             # pilot result rows.
