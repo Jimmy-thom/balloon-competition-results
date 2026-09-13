@@ -202,13 +202,12 @@ def _competition_flights_with_results(c, eid, mode="all"):
             grouped[key]=(candidate,f)
 
     out=[item[1] for item in grouped.values()]
-    # The corrected importer deliberately assigns sort_order in real
-    # chronological order (oldest flight first).  Use that as the primary
-    # sequence for movement/progression so a cancelled earlier flight cannot
-    # cause us to jump over the actual previous flown flight.  The chronology
-    # key remains a deterministic fallback for older imported data.
+    # Use the actual flight date/time as the authoritative chronology.
+    # WatchMeFly/import history can contain duplicate or non-monotonic
+    # sort_order values (for example a PM flight can have a lower sort_order
+    # than an AM flight on the same date).  Movement must follow real-world
+    # flight order, not import order.
     out.sort(key=lambda f:(
-        int(_flight_value(f,"sort_order",0) or 0),
         _flight_chronology_key(f),
         str(_flight_value(f,"id",""))
     ))
@@ -234,12 +233,12 @@ def _effective_task_ids_through_flight(c, eid, flight_row, run_id, mode):
     statuses=mode_statuses(mode)
     qs=','.join('?'*len(statuses))
     all_flights=c.execute(
-        "SELECT * FROM flights WHERE competition_id=? ORDER BY sort_order",
+        "SELECT * FROM flights WHERE competition_id=?",
         (eid,)
     ).fetchall()
-    cutoff_sort=int(_flight_value(flight_row,"sort_order",0) or 0)
+    cutoff_key=_flight_chronology_key(flight_row)
     allowed=[f["id"] for f in all_flights
-             if int(_flight_value(f,"sort_order",0) or 0)<=cutoff_sort
+             if _flight_chronology_key(f)<=cutoff_key
              and not _flight_is_practice(f)
              and not _flight_is_cancelled(f)]
     if not allowed:
@@ -310,82 +309,46 @@ def _standings_for_task_ids(c, eid, run_id, task_ids, mode):
 
 
 def _movement_for_latest_completed_flight(c, eid, mode, end=None):
-    """Compare the current scored flight with the previous completed flight.
+    """Compare the latest flown competition flight with the immediately prior flown flight.
 
-    The current checkpoint may be in progress and provisional.  The previous
-    checkpoint is always the nearest earlier completed/flown competition
-    flight, skipping practice and cancelled flights.  If flight metadata is
-    unavailable, a scored flight is treated as flown, which keeps older events
-    compatible with the newer logic.
+    Flight order is based on the real date/time labels, not sort_order.
+    Cancelled and practice flights are excluded.  The latest flight with
+    eligible results is the current checkpoint, including provisional data.
     """
     flights=_competition_flights_with_results(c,eid,mode)
     if not flights:
         return {}
 
-    # The latest real competition flight with selected results is the current
-    # checkpoint, whether COMPLETE or still publishing provisional results.
-    current=flights[-1]
     if end is not None:
+        # Keep only flights that contain a usable task at or before the
+        # requested task number.  Reuse the same real-world chronology.
         candidates=[]
-        current_sort=int(_flight_value(current,"sort_order",0) or 0)
         for f in flights:
-            if int(_flight_value(f,"sort_order",0) or 0)>current_sort:
-                continue
-            if c.execute(
-                """SELECT 1 FROM tasks
-                    WHERE competition_id=? AND flight_id=? AND task_number<=?
-                    AND UPPER(COALESCE(status,'')) NOT IN ('CANCELLED','CANCELED')
+            has_task=c.execute(
+                """SELECT 1 FROM tasks t
+                    WHERE t.competition_id=? AND t.flight_id=?
+                      AND t.task_number<=?
+                      AND UPPER(COALESCE(t.status,'')) NOT IN ('CANCELLED','CANCELED')
+                      AND EXISTS (SELECT 1 FROM results r
+                                  WHERE r.task_id=t.id AND r.status IN (?,?,?))
                     LIMIT 1""",
-                (eid,f["id"],end)
-            ).fetchone():
+                (eid,f["id"],end,*mode_statuses(mode))
+            ).fetchone()
+            if has_task:
                 candidates.append(f)
-        if not candidates:
+        flights=candidates
+        if not flights:
             return {}
-        current=candidates[-1]
 
-    current_sort=int(_flight_value(current,"sort_order",0) or 0)
-
-    # Find the immediately preceding real competition flight from the full
-    # flight sequence.  Do not require that flight to appear in
-    # _competition_flights_with_results(): an older imported flight row can
-    # legitimately have its scores stored elsewhere while the task results
-    # themselves are still available for the cumulative standings.
-    all_flights=c.execute(
-        "SELECT * FROM flights WHERE competition_id=? ORDER BY sort_order",
-        (eid,)
-    ).fetchall()
-    earlier=[f for f in all_flights
-             if int(_flight_value(f,"sort_order",0) or 0)<current_sort
-             and not _flight_is_practice(f)
-             and not _flight_is_cancelled(f)]
-    if not earlier:
-        return {}
-
-    # Walk backwards until we find the nearest earlier flight that actually
-    # has at least one eligible, non-cancelled task result.  This skips empty
-    # placeholders but never skips a flown flight such as Flight 2 merely
-    # because its flight row was not selected by the earlier helper.
-    previous=None
-    for candidate in reversed(earlier):
-        has_result=c.execute(
-            f"""SELECT 1
-                   FROM tasks t JOIN results r ON r.task_id=t.id
-                  WHERE t.competition_id=?
-                    AND t.flight_id=?
-                    AND UPPER(COALESCE(t.status,'')) NOT IN ('CANCELLED','CANCELED')
-                    AND r.status IN ({','.join('?'*len(mode_statuses(mode)))})
-                  LIMIT 1""",
-            (eid,candidate["id"],*mode_statuses(mode))
-        ).fetchone()
-        if has_result:
-            previous=candidate
-            break
+    current=flights[-1]
+    previous=flights[-2] if len(flights)>=2 else None
     if previous is None:
         return {}
 
     run=latest_run(c,eid)
     if not run:
         return {}
+
     current_ids=_effective_task_ids_through_flight(c,eid,current,run["id"],mode)
     previous_ids=_effective_task_ids_through_flight(c,eid,previous,run["id"],mode)
     current_rows=_standings_for_task_ids(c,eid,run["id"],current_ids,mode)
@@ -679,111 +642,6 @@ def api_events():
 @app.get("/api/event/<eid>")
 def api_event(eid):
     e=event(eid); c=conn(eid); run=latest_run(c,eid); out=e|{"latest_import":dict(run) if run else None,"tasks":all_tasks(c,eid),"flights":[dict(r) for r in c.execute("SELECT * FROM flights WHERE competition_id=? ORDER BY sort_order",(eid,)).fetchall()]}; c.close(); return jsonify(out)
-@app.get("/api/event/<eid>/movement-debug")
-def api_movement_debug(eid):
-    """Temporary read-only diagnostic for movement flight selection.
-
-    This endpoint deliberately does not alter movement or standings. It exposes
-    the flight/task/result facts needed to identify why a previous-flight
-    comparison may be selecting the wrong checkpoint.
-    """
-    mode=request.args.get("mode","all")
-    mode_statuses(mode)  # validate mode
-    c=conn(eid)
-    try:
-        all_flights=c.execute(
-            "SELECT * FROM flights WHERE competition_id=? ORDER BY sort_order",
-            (eid,)
-        ).fetchall()
-        flights=[]
-        for f in all_flights:
-            task_rows=c.execute(
-                """SELECT t.id,t.task_number,t.status,t.published,
-                          COUNT(r.id) AS eligible_results
-                     FROM tasks t
-                     LEFT JOIN results r
-                       ON r.task_id=t.id
-                      AND r.status IN (?,?,?)
-                    WHERE t.competition_id=? AND t.flight_id=?
-                    GROUP BY t.id,t.task_number,t.status,t.published
-                    ORDER BY t.task_number,t.id""",
-                (*mode_statuses(mode),eid,f["id"])
-            ).fetchall()
-            eligible=sum(int(t["eligible_results"] or 0) for t in task_rows)
-            flights.append({
-                "id":str(f["id"]),
-                "flight_number":f["flight_number"],
-                "date_label":f["date_label"],
-                "time_label":f["time_label"],
-                "sort_order":f["sort_order"],
-                "status":_flight_value(f,"status"),
-                "flight_type":_flight_value(f,"flight_type"),
-                "is_practice":_flight_is_practice(f),
-                "is_cancelled":_flight_is_cancelled(f),
-                "is_completed":_flight_is_completed(f),
-                "chronology_key":str(_flight_chronology_key(f)),
-                "eligible_result_count":eligible,
-                "tasks":[{
-                    "id":str(t["id"]),
-                    "task_number":t["task_number"],
-                    "status":t["status"],
-                    "published":t["published"],
-                    "eligible_results":t["eligible_results"]
-                } for t in task_rows]
-            })
-
-        selected=_competition_flights_with_results(c,eid,mode)
-        selected_ids={str(f["id"]) for f in selected}
-
-        usable=[f for f in all_flights
-                if str(f["id"]) in selected_ids]
-        current=usable[-1] if usable else None
-        previous=None
-        if current:
-            current_sort=int(_flight_value(current,"sort_order",0) or 0)
-            earlier=[f for f in all_flights
-                     if int(_flight_value(f,"sort_order",0) or 0)<current_sort
-                     and not _flight_is_practice(f)
-                     and not _flight_is_cancelled(f)]
-            for candidate in reversed(earlier):
-                has_result=c.execute(
-                    """SELECT 1
-                         FROM tasks t JOIN results r ON r.task_id=t.id
-                        WHERE t.competition_id=? AND t.flight_id=?
-                          AND UPPER(COALESCE(t.status,'')) NOT IN ('CANCELLED','CANCELED')
-                          AND r.status IN (?,?,?)
-                        LIMIT 1""",
-                    (eid,candidate["id"],*mode_statuses(mode))
-                ).fetchone()
-                if has_result:
-                    previous=candidate
-                    break
-
-        def task_numbers_for(f):
-            if not f:
-                return []
-            return [r["task_number"] for r in c.execute(
-                """SELECT t.task_number FROM tasks t
-                    WHERE t.competition_id=? AND t.flight_id=?
-                      AND UPPER(COALESCE(t.status,'')) NOT IN ('CANCELLED','CANCELED')
-                      AND EXISTS (SELECT 1 FROM results r
-                                  WHERE r.task_id=t.id AND r.status IN (?,?,?))
-                    ORDER BY t.task_number,t.id""",
-                (eid,f["id"],*mode_statuses(mode))
-            ).fetchall()]
-
-        return jsonify({
-            "mode":mode,
-            "selected_scored_flights":[str(f["id"]) for f in selected],
-            "current":str(current["id"]) if current else None,
-            "previous":str(previous["id"]) if previous else None,
-            "current_task_numbers":task_numbers_for(current),
-            "previous_task_numbers":task_numbers_for(previous),
-            "flights":flights,
-        })
-    finally:
-        c.close()
-
 @app.get("/api/event/<eid>/standings")
 def api_standings(eid):
     mode,start,end=common_filters()
