@@ -52,6 +52,8 @@ COUNTRY_MAP = {
     "CH":"Switzerland", "CHE":"Switzerland",
     "US":"United States", "USA":"United States",
     "CA":"Canada", "CAN":"Canada",
+    "BE":"Belgium", "BEL":"Belgium",
+    "BR":"Brazil", "BRA":"Brazil",
 }
 
 def _clean_pilot_name_country(name, country):
@@ -139,8 +141,9 @@ def _competition_flights_with_results(c, eid, mode="all"):
     """Return one row for each real competition flight that has usable results.
 
     Flight identity is the WatchMeFly flight number + date + time.  The source
-    page is newest-first, so database sort_order is deliberately NOT used for
-    chronology.  Practice and cancelled flights are excluded.  A flight can
+    page is newest-first, while the corrected importer stores sort_order in
+    oldest-to-newest chronological order.  Practice and cancelled flights are
+    excluded.  A flight can
     be incomplete and still be returned: that is required while provisional
     results are appearing for the current flight.
     """
@@ -199,7 +202,16 @@ def _competition_flights_with_results(c, eid, mode="all"):
             grouped[key]=(candidate,f)
 
     out=[item[1] for item in grouped.values()]
-    out.sort(key=_flight_chronology_key)
+    # The corrected importer deliberately assigns sort_order in real
+    # chronological order (oldest flight first).  Use that as the primary
+    # sequence for movement/progression so a cancelled earlier flight cannot
+    # cause us to jump over the actual previous flown flight.  The chronology
+    # key remains a deterministic fallback for older imported data.
+    out.sort(key=lambda f:(
+        int(_flight_value(f,"sort_order",0) or 0),
+        _flight_chronology_key(f),
+        str(_flight_value(f,"id",""))
+    ))
     return out
 
 
@@ -220,8 +232,9 @@ def _effective_task_ids_through_flight(c, eid, flight_row, run_id, mode):
     statuses=mode_statuses(mode)
     qs=','.join('?'*len(statuses))
     flights=_competition_flights_with_results(c,eid,mode)
-    cutoff=_flight_chronology_key(flight_row)
-    allowed=[f["id"] for f in flights if _flight_chronology_key(f)<=cutoff]
+    cutoff_sort=int(_flight_value(flight_row,"sort_order",0) or 0)
+    allowed=[f["id"] for f in flights
+             if int(_flight_value(f,"sort_order",0) or 0)<=cutoff_sort]
     if not allowed:
         return []
 
@@ -243,7 +256,7 @@ def _effective_task_ids_through_flight(c, eid, flight_row, run_id, mode):
     rows=sorted(
         rows,
         key=lambda r:(
-            _flight_chronology_key({"date_label":r["date_label"],"time_label":r["time_label"],"sort_order":r["sort_order"],"id":r["flight_id"]}),
+            int(r["sort_order"] or 0),
             0 if str(r["status"] or "").upper()=="FINAL" else 1 if str(r["status"] or "").upper()=="OFFICIAL" else 2,
             r["published"] or "",
             str(r["id"])
@@ -307,8 +320,9 @@ def _movement_for_latest_completed_flight(c, eid, mode, end=None):
     current=flights[-1]
     if end is not None:
         candidates=[]
+        current_sort=int(_flight_value(current,"sort_order",0) or 0)
         for f in flights:
-            if _flight_chronology_key(f)>_flight_chronology_key(current):
+            if int(_flight_value(f,"sort_order",0) or 0)>current_sort:
                 continue
             if c.execute(
                 """SELECT 1 FROM tasks
@@ -322,8 +336,9 @@ def _movement_for_latest_completed_flight(c, eid, mode, end=None):
             return {}
         current=candidates[-1]
 
-    current_key=_flight_chronology_key(current)
-    earlier=[f for f in flights if _flight_chronology_key(f)<current_key]
+    current_sort=int(_flight_value(current,"sort_order",0) or 0)
+    earlier=[f for f in flights
+             if int(_flight_value(f,"sort_order",0) or 0)<current_sort]
     if not earlier:
         return {}
 
