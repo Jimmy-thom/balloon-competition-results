@@ -462,7 +462,7 @@ function renderTable(rows, movementByPilot={}){
   rows.forEach((r,i)=>{
     const next=rows[i+1];
     const gapTo1=i===0 ? 0 : rows[0].total-r.total;
-    const gapToNext=next ? r.total-next.total : 0;
+    const gapToNext=i===0 ? 0 : rows[i-1].total-r.total;
     const taskValues=taskNumbers.map(n=>r.tasks?.[n] ?? null);
     const scored=taskValues.filter(v=>v!==null && v!==undefined && v!=='').length;
     const avg=scored ? r.total/scored : null;
