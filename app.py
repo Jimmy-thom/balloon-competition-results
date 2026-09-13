@@ -147,53 +147,127 @@ def active_task(c,eid,num):
                CASE t.status WHEN 'FINAL' THEN 0 WHEN 'OFFICIAL' THEN 1 WHEN 'PROVISIONAL' THEN 2 ELSE 3 END,
                f.date_label DESC LIMIT 1""",(eid,num)).fetchone()
 def standings_data(eid,mode="official",start=None,end=None):
-    statuses=mode_statuses(mode); c=conn(eid); run=latest_run(c,eid)
-    if not run: c.close(); return []
-    qs=','.join('?'*len(statuses))
-    params=[*statuses,*statuses,run["id"],*statuses,eid]
-    where="t.competition_id=?"
-    if start is not None: where += " AND t.task_number>=?"; params.append(start)
-    if end is not None: where += " AND t.task_number<=?"; params.append(end)
+    """Build cumulative standings while retaining task scores from prior imports.
 
-    # A watcher/import run can contain only the task results that were
-    # available when that snapshot was fetched.  Keep the latest import run
-    # as the current snapshot, but fall back to the most recent stored result
-    # for an unchanged older task when that snapshot has no row for it.
-    # This is especially important when T1-T5 were imported earlier and T6-T8
-    # were added in a later WatchMeFly update.
-    rows=c.execute(f"""SELECT p.competition_number,p.name,p.country,t.task_number,r.score,r.status
-      FROM tasks t
-      JOIN pilots p ON p.competition_id=t.competition_id
-      JOIN results r ON r.task_id=t.id
-       AND r.status IN ({qs})
-       AND r.id = (
-         SELECT r2.id FROM results r2
-          WHERE r2.task_id=t.id
-            AND r2.pilot_id=r.pilot_id
-            AND r2.status IN ({qs})
-          ORDER BY CASE WHEN r2.import_run_id=? THEN 0 ELSE 1 END,
-                   r2.id DESC
-          LIMIT 1
-       )
-      WHERE {where}
-        AND t.id = (
-          SELECT t2.id FROM tasks t2 WHERE t2.competition_id=t.competition_id AND t2.task_number=t.task_number
-          ORDER BY CASE WHEN EXISTS (
-                       SELECT 1 FROM results r2
-                        WHERE r2.task_id=t2.id AND r2.status IN ({qs})
-                     ) THEN 0 ELSE 1 END,
-                   CASE t2.status WHEN 'FINAL' THEN 0 WHEN 'OFFICIAL' THEN 1 WHEN 'PROVISIONAL' THEN 2 ELSE 3 END,
-                   t2.published DESC, t2.id DESC LIMIT 1
-        )""",params).fetchall()
-    totals={}; scores={}; statuses_by={}
+    A watcher run is a snapshot of what WatchMeFly exposed at that moment, so a
+    later run may contain T6-T8 without repeating the older T1-T5 result rows.
+    Select the effective task occurrence first, then take the newest stored
+    result for each pilot/task from any import run, restricted to the selected
+    result statuses.
+    """
+    statuses=mode_statuses(mode)
+    c=conn(eid)
+
+    # Work out the task numbers in the requested range.
+    task_params=[eid]
+    task_where="competition_id=?"
+    if start is not None:
+        task_where += " AND task_number>=?"
+        task_params.append(start)
+    if end is not None:
+        task_where += " AND task_number<=?"
+        task_params.append(end)
+    task_numbers=[r["task_number"] for r in c.execute(
+        f"SELECT DISTINCT task_number FROM tasks WHERE {task_where} ORDER BY task_number",
+        task_params
+    ).fetchall()]
+
+    if not task_numbers:
+        c.close()
+        return []
+
+    # Pick one effective task occurrence per task number.  Prefer an occurrence
+    # that actually has results in the selected mode, then prefer FINAL/OFFICIAL
+    # over PROVISIONAL, then the newest published/id.  This preserves the
+    # existing re-flight behaviour without allowing an empty task placeholder
+    # to hide a scored occurrence.
+    task_ids=[]
+    for num in task_numbers:
+        qs=','.join('?'*len(statuses))
+        t=c.execute(f"""
+            SELECT t.id,t.task_number,t.status,t.published
+            FROM tasks t
+            WHERE t.competition_id=? AND t.task_number=?
+            ORDER BY
+              CASE WHEN EXISTS (
+                SELECT 1 FROM results r
+                WHERE r.task_id=t.id AND r.status IN ({qs})
+              ) THEN 0 ELSE 1 END,
+              CASE t.status
+                WHEN 'FINAL' THEN 0
+                WHEN 'OFFICIAL' THEN 1
+                WHEN 'PROVISIONAL' THEN 2
+                ELSE 3
+              END,
+              t.published DESC,
+              t.id DESC
+            LIMIT 1
+        """,(eid,num,*statuses)).fetchone()
+        if t:
+            task_ids.append(t["id"])
+
+    if not task_ids:
+        c.close()
+        return []
+
+    # Pull the newest eligible result for each pilot/task.  The result may have
+    # been written by an earlier import run; that is intentional and fixes the
+    # case where T1-T5 were unchanged while a later run added T6-T8.
+    qids=','.join('?'*len(task_ids))
+    qs=','.join('?'*len(statuses))
+    rows=c.execute(f"""
+        SELECT p.competition_number,p.name,p.country,
+               r.task_id,r.score,r.status,r.id
+        FROM results r
+        JOIN pilots p ON p.id=r.pilot_id
+        WHERE r.task_id IN ({qids})
+          AND r.status IN ({qs})
+          AND r.id=(
+            SELECT r2.id
+            FROM results r2
+            WHERE r2.task_id=r.task_id
+              AND r2.pilot_id=r.pilot_id
+              AND r2.status IN ({qs})
+            ORDER BY r2.id DESC
+            LIMIT 1
+          )
+    """,(*task_ids,*statuses,*statuses)).fetchall()
+
+    # Map task ids back to task numbers.
+    id_to_num={}
+    for tid in task_ids:
+        tr=c.execute("SELECT task_number FROM tasks WHERE id=?",(tid,)).fetchone()
+        if tr:
+            id_to_num[tid]=tr["task_number"]
+
+    totals={}
+    scores={}
+    statuses_by={}
+    pilots={}
     for r in rows:
-        n=r["competition_number"]; totals[n]=totals.get(n,0)+(r["score"] or 0)
-        scores.setdefault(n,{})[r["task_number"]]=r["score"]
-        statuses_by.setdefault(n,{})[r["task_number"]]=r["status"]
-    pilots={r["competition_number"]:dict(r) for r in c.execute("SELECT competition_number,name,country FROM pilots WHERE competition_id=?",(eid,)).fetchall()}
+        n=r["competition_number"]
+        num=id_to_num.get(r["task_id"])
+        if num is None:
+            continue
+        score=r["score"] or 0
+        totals[n]=totals.get(n,0)+score
+        scores.setdefault(n,{})[num]=r["score"]
+        statuses_by.setdefault(n,{})[num]=r["status"]
+        pilots[n]={"competition_number":n,"name":r["name"],"country":r["country"]}
+
     ordered=sorted(totals,key=lambda n:(-totals[n],pilots[n]["name"]))
-    out=[{"position":i,"competition_number":n,"pilot":pilots[n]["name"],"country":pilots[n]["country"],"total":totals[n],"tasks":scores.get(n,{}),"statuses":statuses_by.get(n,{})} for i,n in enumerate(ordered,1)]
-    c.close(); return out
+    out=[{
+        "position":i,
+        "competition_number":n,
+        "pilot":pilots[n]["name"],
+        "country":pilots[n]["country"],
+        "total":totals[n],
+        "tasks":scores.get(n,{}),
+        "statuses":statuses_by.get(n,{})
+    } for i,n in enumerate(ordered,1)]
+    c.close()
+    return out
+
 def progression_data(eid,mode="official",start=None,end=None):
     c=conn(eid); nums=[r["task_number"] for r in c.execute("SELECT DISTINCT task_number FROM tasks WHERE competition_id=? ORDER BY task_number",(eid,)).fetchall()]; c.close()
     if start is not None: nums=[n for n in nums if n>=start]
