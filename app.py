@@ -679,6 +679,111 @@ def api_events():
 @app.get("/api/event/<eid>")
 def api_event(eid):
     e=event(eid); c=conn(eid); run=latest_run(c,eid); out=e|{"latest_import":dict(run) if run else None,"tasks":all_tasks(c,eid),"flights":[dict(r) for r in c.execute("SELECT * FROM flights WHERE competition_id=? ORDER BY sort_order",(eid,)).fetchall()]}; c.close(); return jsonify(out)
+@app.get("/api/event/<eid>/movement-debug")
+def api_movement_debug(eid):
+    """Temporary read-only diagnostic for movement flight selection.
+
+    This endpoint deliberately does not alter movement or standings. It exposes
+    the flight/task/result facts needed to identify why a previous-flight
+    comparison may be selecting the wrong checkpoint.
+    """
+    mode=request.args.get("mode","all")
+    mode_statuses(mode)  # validate mode
+    c=conn(eid)
+    try:
+        all_flights=c.execute(
+            "SELECT * FROM flights WHERE competition_id=? ORDER BY sort_order",
+            (eid,)
+        ).fetchall()
+        flights=[]
+        for f in all_flights:
+            task_rows=c.execute(
+                """SELECT t.id,t.task_number,t.status,t.published,
+                          COUNT(r.id) AS eligible_results
+                     FROM tasks t
+                     LEFT JOIN results r
+                       ON r.task_id=t.id
+                      AND r.status IN (?,?,?)
+                    WHERE t.competition_id=? AND t.flight_id=?
+                    GROUP BY t.id,t.task_number,t.status,t.published
+                    ORDER BY t.task_number,t.id""",
+                (*mode_statuses(mode),eid,f["id"])
+            ).fetchall()
+            eligible=sum(int(t["eligible_results"] or 0) for t in task_rows)
+            flights.append({
+                "id":str(f["id"]),
+                "flight_number":f["flight_number"],
+                "date_label":f["date_label"],
+                "time_label":f["time_label"],
+                "sort_order":f["sort_order"],
+                "status":_flight_value(f,"status"),
+                "flight_type":_flight_value(f,"flight_type"),
+                "is_practice":_flight_is_practice(f),
+                "is_cancelled":_flight_is_cancelled(f),
+                "is_completed":_flight_is_completed(f),
+                "chronology_key":str(_flight_chronology_key(f)),
+                "eligible_result_count":eligible,
+                "tasks":[{
+                    "id":str(t["id"]),
+                    "task_number":t["task_number"],
+                    "status":t["status"],
+                    "published":t["published"],
+                    "eligible_results":t["eligible_results"]
+                } for t in task_rows]
+            })
+
+        selected=_competition_flights_with_results(c,eid,mode)
+        selected_ids={str(f["id"]) for f in selected}
+
+        usable=[f for f in all_flights
+                if str(f["id"]) in selected_ids]
+        current=usable[-1] if usable else None
+        previous=None
+        if current:
+            current_sort=int(_flight_value(current,"sort_order",0) or 0)
+            earlier=[f for f in all_flights
+                     if int(_flight_value(f,"sort_order",0) or 0)<current_sort
+                     and not _flight_is_practice(f)
+                     and not _flight_is_cancelled(f)]
+            for candidate in reversed(earlier):
+                has_result=c.execute(
+                    """SELECT 1
+                         FROM tasks t JOIN results r ON r.task_id=t.id
+                        WHERE t.competition_id=? AND t.flight_id=?
+                          AND UPPER(COALESCE(t.status,'')) NOT IN ('CANCELLED','CANCELED')
+                          AND r.status IN (?,?,?)
+                        LIMIT 1""",
+                    (eid,candidate["id"],*mode_statuses(mode))
+                ).fetchone()
+                if has_result:
+                    previous=candidate
+                    break
+
+        def task_numbers_for(f):
+            if not f:
+                return []
+            return [r["task_number"] for r in c.execute(
+                """SELECT t.task_number FROM tasks t
+                    WHERE t.competition_id=? AND t.flight_id=?
+                      AND UPPER(COALESCE(t.status,'')) NOT IN ('CANCELLED','CANCELED')
+                      AND EXISTS (SELECT 1 FROM results r
+                                  WHERE r.task_id=t.id AND r.status IN (?,?,?))
+                    ORDER BY t.task_number,t.id""",
+                (eid,f["id"],*mode_statuses(mode))
+            ).fetchall()]
+
+        return jsonify({
+            "mode":mode,
+            "selected_scored_flights":[str(f["id"]) for f in selected],
+            "current":str(current["id"]) if current else None,
+            "previous":str(previous["id"]) if previous else None,
+            "current_task_numbers":task_numbers_for(current),
+            "previous_task_numbers":task_numbers_for(previous),
+            "flights":flights,
+        })
+    finally:
+        c.close()
+
 @app.get("/api/event/<eid>/standings")
 def api_standings(eid):
     mode,start,end=common_filters()
