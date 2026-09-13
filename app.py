@@ -149,7 +149,7 @@ def active_task(c,eid,num):
 def standings_data(eid,mode="official",start=None,end=None):
     statuses=mode_statuses(mode); c=conn(eid); run=latest_run(c,eid)
     if not run: c.close(); return []
-    qs=','.join('?'*len(statuses)); params=[run["id"],eid,*statuses]
+    qs=','.join('?'*len(statuses)); params=[run["id"],eid,*statuses,*statuses]
     where=f"r.import_run_id=? AND p.competition_id=? AND r.status IN ({qs})"
     if start is not None: where += " AND t.task_number>=?"; params.append(start)
     if end is not None: where += " AND t.task_number<=?"; params.append(end)
@@ -158,7 +158,7 @@ def standings_data(eid,mode="official",start=None,end=None):
       WHERE {where}
         AND t.id = (
           SELECT t2.id FROM tasks t2 WHERE t2.competition_id=t.competition_id AND t2.task_number=t.task_number
-          ORDER BY CASE WHEN EXISTS (SELECT 1 FROM results r2 WHERE r2.task_id=t2.id AND r2.import_run_id=r.import_run_id) THEN 0 ELSE 1 END,
+          ORDER BY CASE WHEN EXISTS (SELECT 1 FROM results r2 WHERE r2.task_id=t2.id AND r2.import_run_id=r.import_run_id AND r2.status IN ({qs})) THEN 0 ELSE 1 END,
                    CASE t2.status WHEN 'FINAL' THEN 0 WHEN 'OFFICIAL' THEN 1 WHEN 'PROVISIONAL' THEN 2 ELSE 3 END,
                    t2.published DESC, t2.id DESC LIMIT 1
         )""",params).fetchall()
