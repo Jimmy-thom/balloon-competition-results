@@ -54,7 +54,7 @@ def _completed_competition_flights(c, eid):
                  FROM flights f
                 WHERE f.competition_id=?
                   AND UPPER(COALESCE(f.flight_type,'')) NOT IN ('PRACTICE','TRAINING')
-                  AND UPPER(COALESCE(f.flight_number,'')) NOT LIKE 'PRACTICE%'
+                  AND LEFT(UPPER(COALESCE(f.flight_number,'')), 8) <> 'PRACTICE'
                   AND UPPER(COALESCE(f.status,'')) NOT IN ('CANCELLED','CANCELED')
                   AND EXISTS (
                       SELECT 1
@@ -70,7 +70,7 @@ def _completed_competition_flights(c, eid):
             """SELECT f.*
                  FROM flights f
                 WHERE f.competition_id=?
-                  AND UPPER(COALESCE(f.flight_number,'')) NOT LIKE 'PRACTICE%'
+                  AND LEFT(UPPER(COALESCE(f.flight_number,'')), 8) <> 'PRACTICE'
                   AND EXISTS (
                       SELECT 1
                         FROM tasks t JOIN results r ON r.task_id=t.id
@@ -99,7 +99,7 @@ def _effective_task_ids_through_flight(c, eid, flight_sort_order, run_id, mode):
              FROM tasks t JOIN flights f ON f.id=t.flight_id
             WHERE t.competition_id=? AND f.sort_order<=?
               AND UPPER(COALESCE(f.flight_type,'')) NOT IN ('PRACTICE','TRAINING')
-              AND UPPER(COALESCE(f.flight_number,'')) NOT LIKE 'PRACTICE%'
+              AND LEFT(UPPER(COALESCE(f.flight_number,'')), 8) <> 'PRACTICE'
               AND UPPER(COALESCE(f.status,'')) NOT IN ('CANCELLED','CANCELED')
               AND EXISTS (
                   SELECT 1 FROM results r
