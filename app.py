@@ -149,16 +149,39 @@ def active_task(c,eid,num):
 def standings_data(eid,mode="official",start=None,end=None):
     statuses=mode_statuses(mode); c=conn(eid); run=latest_run(c,eid)
     if not run: c.close(); return []
-    qs=','.join('?'*len(statuses)); params=[run["id"],eid,*statuses,*statuses]
-    where=f"r.import_run_id=? AND p.competition_id=? AND r.status IN ({qs})"
+    qs=','.join('?'*len(statuses))
+    params=[*statuses,*statuses,run["id"],*statuses,eid]
+    where="t.competition_id=?"
     if start is not None: where += " AND t.task_number>=?"; params.append(start)
     if end is not None: where += " AND t.task_number<=?"; params.append(end)
+
+    # A watcher/import run can contain only the task results that were
+    # available when that snapshot was fetched.  Keep the latest import run
+    # as the current snapshot, but fall back to the most recent stored result
+    # for an unchanged older task when that snapshot has no row for it.
+    # This is especially important when T1-T5 were imported earlier and T6-T8
+    # were added in a later WatchMeFly update.
     rows=c.execute(f"""SELECT p.competition_number,p.name,p.country,t.task_number,r.score,r.status
-      FROM results r JOIN tasks t ON t.id=r.task_id JOIN pilots p ON p.id=r.pilot_id
+      FROM tasks t
+      JOIN pilots p ON p.competition_id=t.competition_id
+      JOIN results r ON r.task_id=t.id
+       AND r.status IN ({qs})
+       AND r.id = (
+         SELECT r2.id FROM results r2
+          WHERE r2.task_id=t.id
+            AND r2.pilot_id=r.pilot_id
+            AND r2.status IN ({qs})
+          ORDER BY CASE WHEN r2.import_run_id=? THEN 0 ELSE 1 END,
+                   r2.id DESC
+          LIMIT 1
+       )
       WHERE {where}
         AND t.id = (
           SELECT t2.id FROM tasks t2 WHERE t2.competition_id=t.competition_id AND t2.task_number=t.task_number
-          ORDER BY CASE WHEN EXISTS (SELECT 1 FROM results r2 WHERE r2.task_id=t2.id AND r2.import_run_id=r.import_run_id AND r2.status IN ({qs})) THEN 0 ELSE 1 END,
+          ORDER BY CASE WHEN EXISTS (
+                       SELECT 1 FROM results r2
+                        WHERE r2.task_id=t2.id AND r2.status IN ({qs})
+                     ) THEN 0 ELSE 1 END,
                    CASE t2.status WHEN 'FINAL' THEN 0 WHEN 'OFFICIAL' THEN 1 WHEN 'PROVISIONAL' THEN 2 ELSE 3 END,
                    t2.published DESC, t2.id DESC LIMIT 1
         )""",params).fetchall()
