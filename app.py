@@ -224,17 +224,24 @@ def _completed_competition_flights(c, eid):
 def _effective_task_ids_through_flight(c, eid, flight_row, run_id, mode):
     """Select the effective scored occurrence of each task through a flight.
 
+    Use the actual flight sequence, not the subset of flights that happen to
+    have been recognised by the movement helper.  This is important when an
+    older flight has results stored under a different imported flight row.
     Later real flights replace earlier occurrences of the same task number.
     Within the same flight, FINAL beats OFFICIAL, which beats PROVISIONAL.
-    Cancelled tasks never contribute.  This works for both completed and
-    currently-in-progress flights.
+    Cancelled tasks never contribute.
     """
     statuses=mode_statuses(mode)
     qs=','.join('?'*len(statuses))
-    flights=_competition_flights_with_results(c,eid,mode)
+    all_flights=c.execute(
+        "SELECT * FROM flights WHERE competition_id=? ORDER BY sort_order",
+        (eid,)
+    ).fetchall()
     cutoff_sort=int(_flight_value(flight_row,"sort_order",0) or 0)
-    allowed=[f["id"] for f in flights
-             if int(_flight_value(f,"sort_order",0) or 0)<=cutoff_sort]
+    allowed=[f["id"] for f in all_flights
+             if int(_flight_value(f,"sort_order",0) or 0)<=cutoff_sort
+             and not _flight_is_practice(f)
+             and not _flight_is_cancelled(f)]
     if not allowed:
         return []
 
@@ -337,17 +344,44 @@ def _movement_for_latest_completed_flight(c, eid, mode, end=None):
         current=candidates[-1]
 
     current_sort=int(_flight_value(current,"sort_order",0) or 0)
-    earlier=[f for f in flights
-             if int(_flight_value(f,"sort_order",0) or 0)<current_sort]
+
+    # Find the immediately preceding real competition flight from the full
+    # flight sequence.  Do not require that flight to appear in
+    # _competition_flights_with_results(): an older imported flight row can
+    # legitimately have its scores stored elsewhere while the task results
+    # themselves are still available for the cumulative standings.
+    all_flights=c.execute(
+        "SELECT * FROM flights WHERE competition_id=? ORDER BY sort_order",
+        (eid,)
+    ).fetchall()
+    earlier=[f for f in all_flights
+             if int(_flight_value(f,"sort_order",0) or 0)<current_sort
+             and not _flight_is_practice(f)
+             and not _flight_is_cancelled(f)]
     if not earlier:
         return {}
 
-    # The previous checkpoint is the nearest earlier real competition flight
-    # that has eligible results.  Do not skip it merely because WatchMeFly has
-    # not marked the flight COMPLETE yet: published provisional results make it
-    # a flown checkpoint for movement. Practice/cancelled flights were already
-    # removed by _competition_flights_with_results().
-    previous=earlier[-1]
+    # Walk backwards until we find the nearest earlier flight that actually
+    # has at least one eligible, non-cancelled task result.  This skips empty
+    # placeholders but never skips a flown flight such as Flight 2 merely
+    # because its flight row was not selected by the earlier helper.
+    previous=None
+    for candidate in reversed(earlier):
+        has_result=c.execute(
+            f"""SELECT 1
+                   FROM tasks t JOIN results r ON r.task_id=t.id
+                  WHERE t.competition_id=?
+                    AND t.flight_id=?
+                    AND UPPER(COALESCE(t.status,'')) NOT IN ('CANCELLED','CANCELED')
+                    AND r.status IN ({','.join('?'*len(mode_statuses(mode)))})
+                  LIMIT 1""",
+            (eid,candidate["id"],*mode_statuses(mode))
+        ).fetchone()
+        if has_result:
+            previous=candidate
+            break
+    if previous is None:
+        return {}
 
     run=latest_run(c,eid)
     if not run:
