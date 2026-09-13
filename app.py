@@ -29,36 +29,59 @@ def mode_statuses(mode):
     abort(400, description="mode must be official or all")
 
 
+# WatchMeFly can sometimes place the country directly after the pilot name
+# while leaving the separate country field empty.  Keep that source data
+# untouched, but normalise it whenever standings data is prepared for display.
 COUNTRY_MAP = {
-    "AU":"Australia","AUS":"Australia","GB":"United Kingdom","GBR":"United Kingdom",
-    "AT":"Austria","AUT":"Austria","HR":"Croatia","HRV":"Croatia",
-    "CZ":"Czech Republic","CZE":"Czech Republic","DE":"Germany","DEU":"Germany",
-    "HU":"Hungary","HUN":"Hungary","LT":"Lithuania","LTU":"Lithuania",
-    "NL":"Netherlands","NLD":"Netherlands","PL":"Poland","POL":"Poland",
-    "SK":"Slovakia","SVK":"Slovakia","SI":"Slovenia","SVN":"Slovenia",
-    "NZ":"New Zealand","NZL":"New Zealand","FR":"France","FRA":"France",
-    "IT":"Italy","ITA":"Italy","ES":"Spain","ESP":"Spain",
-    "CH":"Switzerland","CHE":"Switzerland","US":"United States","USA":"United States",
-    "CA":"Canada","CAN":"Canada",
+    "AU":"Australia", "AUS":"Australia",
+    "GB":"United Kingdom", "GBR":"United Kingdom",
+    "AT":"Austria", "AUT":"Austria",
+    "HR":"Croatia", "HRV":"Croatia",
+    "CZ":"Czech Republic", "CZE":"Czech Republic",
+    "DE":"Germany", "DEU":"Germany",
+    "HU":"Hungary", "HUN":"Hungary",
+    "LT":"Lithuania", "LTU":"Lithuania",
+    "NL":"Netherlands", "NLD":"Netherlands",
+    "PL":"Poland", "POL":"Poland",
+    "SK":"Slovakia", "SVK":"Slovakia",
+    "SI":"Slovenia", "SVN":"Slovenia",
+    "NZ":"New Zealand", "NZL":"New Zealand",
+    "FR":"France", "FRA":"France",
+    "IT":"Italy", "ITA":"Italy",
+    "ES":"Spain", "ESP":"Spain",
+    "CH":"Switzerland", "CHE":"Switzerland",
+    "US":"United States", "USA":"United States",
+    "CA":"Canada", "CAN":"Canada",
 }
 
 def _clean_pilot_name_country(name, country):
-    """Clean display-only pilot name/country values from imported data."""
-    clean_name=str(name or "").strip()
-    raw_country=str(country or "").strip()
-    country_display=COUNTRY_MAP.get(raw_country.upper(), raw_country)
+    name = str(name or "").strip()
+    country_raw = str(country or "").strip()
 
-    # Some WatchMeFly records append the country to the pilot name while the
-    # separate country field is empty. Recover only recognised country names.
-    for country_name in sorted(set(COUNTRY_MAP.values()), key=len, reverse=True):
-        suffix=" " + country_name
-        if clean_name.lower().endswith(suffix.lower()):
-            clean_name=clean_name[:-len(suffix)].rstrip()
-            if not country_display:
-                country_display=country_name
+    # Normalise a country code if WatchMeFly supplied one.
+    country_clean = country_raw
+    first = country_raw.split()[0].upper() if country_raw else ""
+    if first in COUNTRY_MAP:
+        country_clean = COUNTRY_MAP[first]
+    else:
+        for canonical in COUNTRY_MAP.values():
+            if country_raw.lower() == canonical.lower():
+                country_clean = canonical
+                break
+
+    # Some imported pilot names have a recognised country appended.  If the
+    # separate country field is blank, recover that country; in all cases
+    # remove the suffix from the displayed pilot name.
+    for canonical in sorted(set(COUNTRY_MAP.values()), key=len, reverse=True):
+        suffix = " " + canonical
+        if name.lower().endswith(suffix.lower()):
+            name = name[:-len(suffix)].rstrip()
+            if not country_clean or country_clean in ("—", "-"):
+                country_clean = canonical
             break
 
-    return clean_name, country_display
+    return name, (country_clean or "")
+
 
 def _flight_columns_available(c):
     """Return whether the current flights table has the importer flight metadata."""
@@ -304,11 +327,11 @@ def _movement_for_latest_completed_flight(c, eid, mode, end=None):
     if not earlier:
         return {}
 
-    # The previous checkpoint is the nearest earlier flight that actually has
-    # eligible results. Do not skip an earlier in-progress flight merely because
-    # it is not marked COMPLETE: once a flight has published results, it is the
-    # previous flown checkpoint for movement. Practice/cancelled flights have
-    # already been removed by _competition_flights_with_results().
+    # The previous checkpoint is the nearest earlier real competition flight
+    # that has eligible results.  Do not skip it merely because WatchMeFly has
+    # not marked the flight COMPLETE yet: published provisional results make it
+    # a flown checkpoint for movement. Practice/cancelled flights were already
+    # removed by _competition_flights_with_results().
     previous=earlier[-1]
 
     run=latest_run(c,eid)
@@ -441,8 +464,8 @@ def standings_data(eid,mode="official",start=None,end=None):
         totals[n]=totals.get(n,0)+score
         scores.setdefault(n,{})[num]=r["score"]
         statuses_by.setdefault(n,{})[num]=r["status"]
-        clean_name, country_display = _clean_pilot_name_country(r["name"], r["country"])
-        pilots[n]={"competition_number":n,"name":clean_name,"country":country_display}
+        clean_name, clean_country = _clean_pilot_name_country(r["name"], r["country"])
+        pilots[n]={"competition_number":n,"name":clean_name,"country":clean_country}
 
     ordered=sorted(totals,key=lambda n:(-totals[n],pilots[n]["name"]))
     out=[{
