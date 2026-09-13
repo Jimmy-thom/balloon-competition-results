@@ -1,12 +1,8 @@
 from __future__ import annotations
 from pathlib import Path
-from flask import Flask, abort, jsonify, render_template, request, redirect, url_for, render_template_string
+from flask import Flask, abort, jsonify, render_template, request
 import os
-import hmac
-from urllib.parse import urlparse, parse_qs
 from db import connect, is_postgres, init_postgres
-from watcher import add_event, ensure_schema, purge_event, refresh_lifecycle
-from countries import clean_pilot_identity
 
 BASE = Path(__file__).resolve().parent
 DATA_DIR = BASE / "data"
@@ -31,6 +27,114 @@ def mode_statuses(mode):
     if mode == "official": return ("FINAL","OFFICIAL")
     if mode == "all": return ("FINAL","OFFICIAL","PROVISIONAL")
     abort(400, description="mode must be official or all")
+
+
+def _flight_columns_available(c):
+    """Return whether the current flights table has the importer flight metadata."""
+    try:
+        c.execute("SELECT status, flight_type FROM flights LIMIT 1").fetchone()
+        return True
+    except Exception:
+        return False
+
+
+def _completed_competition_flights(c, eid):
+    """Return only completed, non-practice competition flights in flight order."""
+    if _flight_columns_available(c):
+        return c.execute(
+            """SELECT * FROM flights
+               WHERE competition_id=?
+                 AND UPPER(COALESCE(flight_type,''))='COMPETITION'
+                 AND UPPER(COALESCE(status,'')) IN ('COMPLETE','COMPLETED','FINAL')
+               ORDER BY sort_order, id""",
+            (eid,)
+        ).fetchall()
+    return c.execute(
+        """SELECT * FROM flights
+           WHERE competition_id=?
+             AND UPPER(COALESCE(flight_number,'')) NOT LIKE 'PRACTICE%'
+           ORDER BY sort_order, id""",
+        (eid,)
+    ).fetchall()
+
+
+def _effective_task_ids_through_flight(c, eid, flight_sort_order, run_id, mode):
+    """Select one effective scored occurrence of each task through a flown flight."""
+    statuses=mode_statuses(mode)
+    qs=','.join('?'*len(statuses))
+    rows=c.execute(
+        f"""SELECT t.id,t.task_number,t.status,t.published,t.source_url,
+                  f.sort_order,f.status AS flight_status,f.flight_type
+             FROM tasks t JOIN flights f ON f.id=t.flight_id
+            WHERE t.competition_id=? AND f.sort_order<=?
+              AND UPPER(COALESCE(f.flight_type,''))='COMPETITION'
+              AND UPPER(COALESCE(f.status,'')) IN ('COMPLETE','COMPLETED','FINAL')
+              AND EXISTS (
+                  SELECT 1 FROM results r
+                   WHERE r.task_id=t.id AND r.import_run_id=?
+                     AND r.status IN ({qs})
+              )
+            ORDER BY f.sort_order DESC,
+                     CASE t.status WHEN 'FINAL' THEN 0 WHEN 'OFFICIAL' THEN 1
+                                   WHEN 'PROVISIONAL' THEN 2 ELSE 3 END,
+                     t.published DESC, t.id DESC""",
+        (eid,flight_sort_order,run_id,*statuses)
+    ).fetchall()
+    selected={}
+    for row in rows:
+        if row["task_number"] not in selected:
+            selected[row["task_number"]]=row["id"]
+    return list(selected.values())
+
+
+def _standings_for_task_ids(c, eid, run_id, task_ids, mode):
+    """Build cumulative standings from an explicit set of effective task IDs."""
+    if not task_ids:
+        return []
+    statuses=mode_statuses(mode)
+    qids=','.join('?'*len(task_ids)); qs=','.join('?'*len(statuses))
+    rows=c.execute(
+        f"""SELECT r.score,p.competition_number,p.name,p.country
+             FROM results r JOIN pilots p ON p.id=r.pilot_id
+            WHERE r.import_run_id=? AND r.task_id IN ({qids})
+              AND r.status IN ({qs})""",
+        (run_id,*task_ids,*statuses)
+    ).fetchall()
+    totals={}
+    for r in rows:
+        n=r["competition_number"]
+        totals[n]=totals.get(n,0)+(r["score"] or 0)
+    pilots={r["competition_number"]:dict(r) for r in c.execute(
+        "SELECT competition_number,name,country FROM pilots WHERE competition_id=?",(eid,)
+    ).fetchall()}
+    ordered=sorted(totals,key=lambda n:(-totals[n],pilots[n]["name"]))
+    return [{"position":i,"competition_number":n,"pilot":pilots[n]["name"],
+             "country":pilots[n]["country"],"total":totals[n]}
+            for i,n in enumerate(ordered,1)]
+
+
+def _movement_for_latest_completed_flight(c, eid, mode, end=None):
+    """Calculate movement between the latest two completed competition flights."""
+    run=latest_run(c,eid)
+    if not run:
+        return {}
+    flights=_completed_competition_flights(c,eid)
+    if end is not None:
+        flights=[f for f in flights if c.execute(
+            """SELECT 1 FROM tasks WHERE competition_id=? AND flight_id=?
+               AND task_number<=? LIMIT 1""",(eid,f["id"],end)
+        ).fetchone()]
+    if len(flights)<2:
+        return {}
+    current,previous=flights[-1],flights[-2]
+    current_ids=_effective_task_ids_through_flight(c,eid,current["sort_order"],run["id"],mode)
+    previous_ids=_effective_task_ids_through_flight(c,eid,previous["sort_order"],run["id"],mode)
+    current_rows=_standings_for_task_ids(c,eid,run["id"],current_ids,mode)
+    previous_rows=_standings_for_task_ids(c,eid,run["id"],previous_ids,mode)
+    current_pos={r["competition_number"]:r["position"] for r in current_rows}
+    previous_pos={r["competition_number"]:r["position"] for r in previous_rows}
+    return {n:(previous_pos[n]-pos) if n in previous_pos else None for n,pos in current_pos.items()}
+
 def all_tasks(c,eid):
     return [dict(r) for r in c.execute("""SELECT t.*, f.flight_number, f.date_label AS flight_date
       FROM tasks t LEFT JOIN flights f ON f.id=t.flight_id
@@ -65,10 +169,7 @@ def standings_data(eid,mode="official",start=None,end=None):
         statuses_by.setdefault(n,{})[r["task_number"]]=r["status"]
     pilots={r["competition_number"]:dict(r) for r in c.execute("SELECT competition_number,name,country FROM pilots WHERE competition_id=?",(eid,)).fetchall()}
     ordered=sorted(totals,key=lambda n:(-totals[n],pilots[n]["name"]))
-    out=[]
-    for i,n in enumerate(ordered,1):
-        name, country = clean_pilot_identity(pilots[n]["name"], pilots[n]["country"])
-        out.append({"position":i,"competition_number":n,"pilot":name,"country":country,"total":totals[n],"tasks":scores.get(n,{}),"statuses":statuses_by.get(n,{})})
+    out=[{"position":i,"competition_number":n,"pilot":pilots[n]["name"],"country":pilots[n]["country"],"total":totals[n],"tasks":scores.get(n,{}),"statuses":statuses_by.get(n,{})} for i,n in enumerate(ordered,1)]
     c.close(); return out
 def progression_data(eid,mode="official",start=None,end=None):
     c=conn(eid); nums=[r["task_number"] for r in c.execute("SELECT DISTINCT task_number FROM tasks WHERE competition_id=? ORDER BY task_number",(eid,)).fetchall()]; c.close()
@@ -109,10 +210,7 @@ def flight_standings(eid,flight_id,mode="all",cumulative=False):
         n=r["competition_number"]; totals[n]=totals.get(n,0)+(r["score"] or 0)
     pilots={r["competition_number"]:dict(r) for r in c.execute("SELECT competition_number,name,country FROM pilots WHERE competition_id=?",(eid,)).fetchall()}
     ordered=sorted(totals,key=lambda n:(-totals[n],pilots[n]["name"]))
-    out=[]
-    for i,n in enumerate(ordered,1):
-        name, country = clean_pilot_identity(pilots[n]["name"], pilots[n]["country"])
-        out.append({"position":i,"competition_number":n,"pilot":name,"country":country,"total":totals[n]})
+    out=[{"position":i,"competition_number":n,"pilot":pilots[n]["name"],"country":pilots[n]["country"],"total":totals[n]} for i,n in enumerate(ordered,1)]
     c.close(); return out
 def task_navigation(c,eid,num):
     rows=c.execute("SELECT task_number,name,status FROM tasks WHERE competition_id=? ORDER BY task_number",(eid,)).fetchall()
@@ -136,19 +234,6 @@ def index():
 def event_page(eid):
     e=event(eid); c=conn(eid); ts=all_tasks(c,eid); fs=[dict(r) for r in c.execute("SELECT * FROM flights WHERE competition_id=? ORDER BY sort_order",(eid,)).fetchall()]; pc=c.execute("SELECT COUNT(*) FROM pilots WHERE competition_id=?",(eid,)).fetchone()[0]; run=latest_run(c,eid); task_max=max([r["task_number"] for r in c.execute("SELECT task_number FROM tasks WHERE competition_id=?",(eid,)).fetchall()] or [1]); c.close()
     return render_template("event.html",event=e,tasks=ts,flights=fs,pilot_count=pc,latest_import=dict(run) if run else None,tasks_max=task_max)
-@app.get("/event/<eid>/progression")
-def progression_page(eid):
-    e=event(eid)
-    c=conn(eid)
-    task_max=max([r["task_number"] for r in c.execute(
-        "SELECT task_number FROM tasks WHERE competition_id=?",(eid,)
-    ).fetchall()] or [1])
-    c.close()
-    return render_template(
-        "progression.html",
-        event=e,
-        tasks_max=task_max
-    )
 @app.get("/event/<eid>/task/<int:num>")
 def task_page(eid,num):
     e=event(eid); mode=request.args.get("mode","all"); t,rs=task_results(eid,num,mode); c=conn(eid); prev,nxt=task_navigation(c,eid,num); c.close()
@@ -179,9 +264,33 @@ def pilot_page(eid,number):
     pilot=dict(p)
 
     # Clean imported country prefixes/suffixes for this display page only.
-    pilot["name"], pilot["country"] = clean_pilot_identity(
-        pilot.get("name", ""), pilot.get("country", "")
-    )
+    country_raw=(pilot.get("country") or "").strip()
+    country_map={
+        "AU":"Australia","AUS":"Australia","GB":"United Kingdom","GBR":"United Kingdom",
+        "AT":"Austria","AUT":"Austria","HR":"Croatia","HRV":"Croatia",
+        "CZ":"Czech Republic","CZE":"Czech Republic","DE":"Germany","DEU":"Germany",
+        "HU":"Hungary","HUN":"Hungary","LT":"Lithuania","LTU":"Lithuania",
+        "NL":"Netherlands","NLD":"Netherlands","PL":"Poland","POL":"Poland",
+        "SK":"Slovakia","SVK":"Slovakia","SI":"Slovenia","SVN":"Slovenia",
+        "NZ":"New Zealand","NZL":"New Zealand","FR":"France","FRA":"France",
+        "IT":"Italy","ITA":"Italy","ES":"Spain","ESP":"Spain",
+        "CH":"Switzerland","CHE":"Switzerland","US":"United States","USA":"United States",
+        "CA":"Canada","CAN":"Canada"
+    }
+    parts=country_raw.split()
+    if parts and parts[0].upper() in country_map:
+        pilot["country"]=country_map[parts[0].upper()]
+    else:
+        pilot["country"]=country_raw
+
+    # Some imported names have the country appended. Remove a recognised
+    # country suffix from the display name without changing the database.
+    name=(pilot.get("name") or "").strip()
+    for country_name in sorted(set(country_map.values()), key=len, reverse=True):
+        if name.lower().endswith(" " + country_name.lower()):
+            name=name[:-(len(country_name)+1)].rstrip()
+            break
+    pilot["name"]=name
 
     c.close()
     return render_template("pilot.html",event=e,pilot=pilot,results=results,flights=flights)
@@ -192,61 +301,12 @@ def compare_page(eid):
 @app.get("/event/<eid>/search")
 def search_page(eid):
     e=event(eid); q=request.args.get("q","").strip(); c=conn(eid); pilots=[]
-
     if q:
-        like="%"+q+"%"
-        if is_postgres():
-            sql="""SELECT competition_number,name,country
-                     FROM pilots
-                     WHERE competition_id=?
-                       AND (name ILIKE ? OR CAST(competition_number AS TEXT) ILIKE ?)
-                     ORDER BY CASE WHEN CAST(competition_number AS TEXT)=? THEN 0 ELSE 1 END, name
-                     LIMIT 100"""
-        else:
-            sql="""SELECT competition_number,name,country
-                     FROM pilots
-                     WHERE competition_id=?
-                       AND (name LIKE ? OR CAST(competition_number AS TEXT) LIKE ?)
-                     ORDER BY CASE WHEN CAST(competition_number AS TEXT)=? THEN 0 ELSE 1 END, name
-                     LIMIT 100"""
-        pilots=[dict(r) for r in c.execute(sql,(eid,like,like,q)).fetchall()]
-
-    # Match the clean country/name presentation used on the pilot page.
-    for pilot in pilots:
-        pilot["name"], pilot["country"] = clean_pilot_identity(
-            pilot.get("name", ""), pilot.get("country", "")
-        )
-
-    # Add the current official standing to each result when available.
-    standings={}
-    if pilots:
-        for row in standings_data(eid,"official"):
-            standings[row["competition_number"]]=row
-    for pilot in pilots:
-        row=standings.get(pilot["competition_number"],{})
-        pilot["position"]=row.get("position")
-        pilot["total"]=row.get("total")
-
+        like="%"+q+"%"; pilots=[dict(r) for r in c.execute("SELECT competition_number,name,country FROM pilots WHERE competition_id=? AND (name LIKE ? OR CAST(competition_number AS TEXT) LIKE ?)",(eid,like,like)).fetchall()]
     c.close(); return render_template("search.html",event=e,q=q,pilots=pilots)
 @app.get("/event/<eid>/history")
 def history_page(eid):
-    e=event(eid); c=conn(eid)
-    raw_runs=c.execute("SELECT * FROM import_runs WHERE competition_id=? ORDER BY imported_at DESC",(eid,)).fetchall()
-    runs=[]
-    for i,row in enumerate(raw_runs):
-        run=dict(row)
-        rid=run.get("id")
-        stats=c.execute("""SELECT COUNT(*) AS results,
-                                COUNT(DISTINCT pilot_id) AS pilots,
-                                COUNT(DISTINCT task_id) AS tasks
-                         FROM results WHERE import_run_id=?""",(rid,)).fetchone()
-        run["results_count"]=stats["results"] if stats else 0
-        run["pilots_count"]=stats["pilots"] if stats else 0
-        run["tasks_count"]=stats["tasks"] if stats else 0
-        run["is_latest"]=(i==0)
-        runs.append(run)
-    c.close()
-    return render_template("history.html",event=e,runs=runs)
+    e=event(eid); c=conn(eid); runs=[dict(r) for r in c.execute("SELECT * FROM import_runs WHERE competition_id=? ORDER BY imported_at DESC",(eid,)).fetchall()]; c.close(); return render_template("history.html",event=e,runs=runs)
 @app.get("/event/<eid>/flight/<flight_id>")
 def flight_page(eid,flight_id):
     e=event(eid); c=conn(eid); f=c.execute("SELECT * FROM flights WHERE competition_id=? AND id=?",(eid,flight_id)).fetchone()
@@ -265,59 +325,8 @@ def api_event(eid):
 def api_standings(eid):
     mode,start,end=common_filters()
     rows=standings_data(eid,mode,start,end)
-    movement={}
-
-    # The event standings page uses this endpoint (not the flight-specific
-    # endpoint), so movement must be supplied here. Compare the cumulative
-    # position at the latest flown flight in the selected task range with the
-    # immediately previous flown flight. Provisional scores are included
-    # when the selected mode includes them.
     c=conn(eid)
-    run=latest_run(c,eid)
-    if run:
-        params=[run["id"],eid]
-        where="r.import_run_id=? AND t.competition_id=?"
-        if start is not None:
-            where += " AND t.task_number>=?"
-            params.append(start)
-        if end is not None:
-            where += " AND t.task_number<=?"
-            params.append(end)
-
-        latest_flight=c.execute(f"""
-            SELECT f.id,f.sort_order
-            FROM results r
-            JOIN tasks t ON t.id=r.task_id
-            JOIN flights f ON f.id=t.flight_id
-            WHERE {where}
-            GROUP BY f.id,f.sort_order
-            ORDER BY f.sort_order DESC
-            LIMIT 1
-        """,params).fetchone()
-
-        if latest_flight:
-            prev=c.execute("""
-                SELECT f.id,f.sort_order
-                FROM results r
-                JOIN tasks t ON t.id=r.task_id
-                JOIN flights f ON f.id=t.flight_id
-                WHERE r.import_run_id=? AND t.competition_id=?
-                  AND f.sort_order<?
-                GROUP BY f.id,f.sort_order
-                ORDER BY f.sort_order DESC
-                LIMIT 1
-            """,(run["id"],eid,latest_flight["sort_order"])).fetchone()
-
-            if prev:
-                current_cumulative=flight_standings(eid,latest_flight["id"],mode,True)
-                prior_cumulative=flight_standings(eid,prev["id"],mode,True)
-                old={r["competition_number"]:r["position"] for r in prior_cumulative}
-                movement={
-                    r["competition_number"]:
-                    (old[r["competition_number"]]-r["position"])
-                    if r["competition_number"] in old else None
-                    for r in current_cumulative
-                }
+    movement=_movement_for_latest_completed_flight(c,eid,mode,end)
     c.close()
     return jsonify({"mode":mode,"from":start,"to":end,"rows":rows,"movement":movement})
 @app.get("/api/event/<eid>/tasks")
@@ -337,23 +346,25 @@ def api_progression(eid):
 @app.get("/api/event/<eid>/flight/<flight_id>/standings")
 def api_flight_standings(eid,flight_id):
     mode=request.args.get("mode","all"); cumulative=request.args.get("view","flight")=="cumulative"
-    current=flight_standings(eid,flight_id,mode,cumulative)
-    movement={}
-
-    # Movement is always calculated from cumulative standings, even when
-    # the current flight's displayed results are still provisional.
-    # This lets the movement column work on flight 2 while keeping the
-    # displayed provisional scores/rankings exactly as selected.
-    c=conn(eid)
-    f=c.execute("SELECT sort_order FROM flights WHERE competition_id=? AND id=?",(eid,flight_id)).fetchone()
-    prev=c.execute("SELECT id FROM flights WHERE competition_id=? AND sort_order<? ORDER BY sort_order DESC LIMIT 1",(eid,f["sort_order"])).fetchone() if f else None
-    c.close()
-    if prev:
-        current_cumulative=flight_standings(eid,flight_id,mode,True)
-        prior=flight_standings(eid,prev["id"],mode,True)
-        old={r["competition_number"]:r["position"] for r in prior}
-        movement={r["competition_number"]:(old[r["competition_number"]]-r["position"]) if r["competition_number"] in old else None for r in current_cumulative}
-
+    current=flight_standings(eid,flight_id,mode,cumulative); movement={}
+    if cumulative:
+        c=conn(eid)
+        f=c.execute("SELECT * FROM flights WHERE competition_id=? AND id=?",(eid,flight_id)).fetchone()
+        completed=_completed_competition_flights(c,eid)
+        ids=[str(x["id"]) for x in completed]
+        if f and str(f["id"]) in ids:
+            idx=ids.index(str(f["id"]))
+            if idx>0:
+                run=latest_run(c,eid)
+                if run:
+                    current_ids=_effective_task_ids_through_flight(c,eid,f["sort_order"],run["id"],mode)
+                    previous_flight=completed[idx-1]
+                    previous_ids=_effective_task_ids_through_flight(c,eid,previous_flight["sort_order"],run["id"],mode)
+                    current_rows=_standings_for_task_ids(c,eid,run["id"],current_ids,mode)
+                    previous_rows=_standings_for_task_ids(c,eid,run["id"],previous_ids,mode)
+                    old={r["competition_number"]:r["position"] for r in previous_rows}
+                    movement={r["competition_number"]:(old[r["competition_number"]]-r["position"]) if r["competition_number"] in old else None for r in current_rows}
+        c.close()
     return jsonify({"mode":mode,"view":"cumulative" if cumulative else "flight","rows":current,"movement":movement})
 @app.get("/api/event/<eid>/compare")
 def api_compare(eid):
@@ -364,234 +375,10 @@ def api_compare(eid):
     nums=list(dict.fromkeys(nums))[:8]; mode=request.args.get("mode","official"); start=request.args.get("from",type=int); end=request.args.get("to",type=int); prog=progression_data(eid,mode,start,end)
     series={n:[] for n in nums}
     for point in prog:
-        lookup={r["competition_number"]:r for r in point["rows"]}
-        for n in nums:
-            r=lookup.get(n)
-            series[n].append({
-                "task":point["through_task"],
-                "position":r["position"] if r else None,
-                "total":r["total"] if r else None,
-                "score":(r.get("tasks") or {}).get(point["through_task"]) if r else None,
-                "status":(r.get("statuses") or {}).get(point["through_task"]) if r else None
-            })
-    c=conn(eid); names={r["competition_number"]:{"name":r["name"],"country":r["country"]} for r in c.execute("SELECT competition_number,name,country FROM pilots WHERE competition_id=?",(eid,)).fetchall()}; c.close()
-    return jsonify({"mode":mode,"pilots":[{"competition_number":n,"name":names.get(n,{}).get("name",str(n)),"country":names.get(n,{}).get("country",""),"series":series[n]} for n in nums]})
-
-
-ADMIN_TEMPLATE = """
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Admin — Balloon Competition Results</title>
-  <style>
-    body{font-family:Arial,sans-serif;max-width:980px;margin:40px auto;padding:0 20px;color:#222}
-    .card{border:1px solid #ddd;border-radius:12px;padding:24px;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.05);margin-bottom:20px}
-    h1,h2{margin-top:0}
-    label{display:block;font-weight:600;margin:18px 0 7px}
-    input{box-sizing:border-box;width:100%;padding:12px;border:1px solid #bbb;border-radius:8px;font-size:16px}
-    button{margin-top:20px;padding:12px 18px;border:0;border-radius:8px;font-size:16px;cursor:pointer}
-    .danger{background:#f5d6d6;color:#8a1c1c}
-    .message{padding:12px 14px;border-radius:8px;margin-bottom:18px}
-    .error{background:#fde8e8;color:#8a1c1c}
-    .success{background:#e8f7e8;color:#1d6b2b}
-    .muted{color:#666}
-    a{color:#175ea8}
-    table{width:100%;border-collapse:collapse;margin-top:14px}
-    th,td{padding:10px 8px;border-bottom:1px solid #e5e5e5;text-align:left;vertical-align:top}
-    th{font-size:13px;color:#555}
-    .status{font-weight:700}
-    .active{color:#1d6b2b}
-    .finished{color:#9a6200}
-    .small{font-size:13px;color:#666}
-    .inline{display:inline}
-    .inline button{margin:0;padding:7px 10px;font-size:13px}
-  </style>
-</head>
-<body>
-  <div class="card">
-    <h1>Competition Administration</h1>
-    <p class="muted">Import WatchMeFly competitions, monitor them automatically, and manage their retention lifecycle.</p>
-
-    {% if error %}
-      <div class="message error">{{ error }}</div>
-    {% endif %}
-
-    {% if success %}
-      <div class="message success">
-        {{ success_message }}
-        {% if event_url %}<br><br><a href="{{ event_url }}">Open competition</a>{% endif %}
-      </div>
-    {% endif %}
-
-    <form method="post" action="{{ url_for('admin_import') }}">
-      <label for="token">Import token</label>
-      <input id="token" name="token" type="password" autocomplete="off" required>
-
-      <label for="url">WatchMeFly competition URL</label>
-      <input id="url" name="url" type="url" placeholder="https://watchmefly.net/events/event.php?e=croatia2026" required>
-
-      <button type="submit">Import Competition</button>
-    </form>
-  </div>
-
-  <div class="card">
-    <h2>Competition lifecycle</h2>
-    <p class="muted">Events are automatically marked <strong>FINISHED</strong> after their recorded end date. The default retention period is 7 days. Automatic deletion is currently disabled while we test this system safely.</p>
-    {% if competitions %}
-    <table>
-      <thead><tr><th>Competition</th><th>Status</th><th>Event end</th><th>Purge after</th><th>Monitoring</th><th>Last checked</th><th>Last import</th><th>Action</th></tr></thead>
-      <tbody>
-      {% for c in competitions %}
-        <tr>
-          <td><a href="/event/{{c.competition_id}}">{{c.title or c.competition_id}}</a><br><span class="small">{{c.competition_id}}</span></td>
-          <td class="status {{ 'finished' if c.lifecycle_status == 'FINISHED' else 'active' }}">{{c.lifecycle_status}}</td>
-          <td>{{c.event_end_date or 'Not detected'}}</td>
-          <td>{{c.purge_after or '—'}}</td>
-          <td>{{'Enabled' if c.enabled else 'Disabled'}}</td>
-          <td class="small">{{c.last_checked_at or '—'}}</td>
-          <td class="small">{{c.last_import_at or '—'}}</td>
-          <td>
-            {% if c.lifecycle_status == 'FINISHED' %}
-            <form class="inline" method="post" action="{{url_for('admin_purge')}}">
-              <input type="hidden" name="token" value="">
-              <input type="hidden" name="event_id" value="{{c.competition_id}}">
-              <button class="danger" type="submit" onclick="this.form.token.value=document.getElementById('token').value; return confirm('Permanently delete {{c.competition_id}} and all of its stored results? WatchMeFly will remain the source of record.');">Purge data</button>
-            </form>
-            {% else %}
-              <span class="small">Retained</span>
-            {% endif %}
-          </td>
-        </tr>
-      {% endfor %}
-      </tbody>
-    </table>
-    {% else %}
-      <p class="muted">No competitions are currently registered.</p>
-    {% endif %}
-    <p class="small">For a purge action, enter your token in the import-token field above first; the purge button uses the same protected admin credential.</p>
-  </div>
-</body>
-</html>
-"""
-
-
-def admin_competitions():
-    c = conn()
-    try:
-        ensure_schema(c)
-        rows = c.execute(
-            """SELECT m.competition_id,m.enabled,m.lifecycle_status,m.event_end_date,m.finished_at,m.purge_after,
-                      m.last_checked_at,m.last_import_at,
-                      c.title,c.dates
-               FROM competition_monitoring m
-               LEFT JOIN competitions c ON c.id=m.competition_id
-               ORDER BY CASE WHEN m.lifecycle_status='ACTIVE' THEN 0 ELSE 1 END, c.title, m.competition_id"""
-        ).fetchall()
-        return [dict(r) for r in rows]
-    finally:
-        c.close()
-
-
-@app.get("/admin")
-def admin_page():
-    if not os.getenv("IMPORT_TOKEN"):
-        abort(503, description="IMPORT_TOKEN is not configured.")
-    return render_template_string(
-        ADMIN_TEMPLATE,
-        error=None,
-        success=False,
-        success_message=None,
-        event_id=None,
-        event_url=None,
-        competitions=admin_competitions(),
-    )
-
-
-@app.post("/admin/import")
-def admin_import():
-    configured_token = os.getenv("IMPORT_TOKEN", "")
-    if not configured_token:
-        abort(503, description="IMPORT_TOKEN is not configured.")
-
-    supplied_token = request.form.get("token", "")
-    if not hmac.compare_digest(supplied_token, configured_token):
-        return render_template_string(
-            ADMIN_TEMPLATE, error="Invalid import token.", success=False, success_message=None, event_id=None, event_url=None, competitions=admin_competitions()
-        ), 403
-
-    source_url = request.form.get("url", "").strip()
-    parsed = urlparse(source_url)
-    event_id = parse_qs(parsed.query).get("e", [""])[0].strip()
-
-    if (
-        parsed.scheme not in ("http", "https")
-        or parsed.netloc.lower() not in ("watchmefly.net", "www.watchmefly.net")
-        or not parsed.path.startswith("/events/")
-        or not event_id
-    ):
-        return render_template_string(
-            ADMIN_TEMPLATE, error="Please enter a valid WatchMeFly competition URL.", success=False, success_message=None, event_id=None, event_url=None, competitions=admin_competitions()
-        ), 400
-
-    try:
-        add_event(source_url)
-    except Exception as exc:
-        return render_template_string(
-            ADMIN_TEMPLATE, error=f"Import failed: {exc}", success=False, success_message=None, event_id=None, event_url=None, competitions=admin_competitions()
-        ), 500
-
-    return render_template_string(
-        ADMIN_TEMPLATE,
-        error=None,
-        success=True,
-        success_message=f"Competition {event_id} was imported successfully and monitoring is enabled.",
-        event_id=event_id,
-        event_url=url_for("event_page", eid=event_id),
-        competitions=admin_competitions(),
-    )
-
-
-@app.post("/admin/purge")
-def admin_purge():
-    configured_token = os.getenv("IMPORT_TOKEN", "")
-    if not configured_token:
-        abort(503, description="IMPORT_TOKEN is not configured.")
-    supplied_token = request.form.get("token", "")
-    if not hmac.compare_digest(supplied_token, configured_token):
-        return "Invalid import token.", 403
-
-    event_id = request.form.get("event_id", "").strip()
-    if not event_id:
-        return "Missing competition ID.", 400
-
-    c = conn()
-    try:
-        ensure_schema(c)
-        result = purge_event(c, event_id)
-    except Exception as exc:
-        c.close()
-        return render_template_string(
-            ADMIN_TEMPLATE, error=f"Purge failed: {exc}", success=False, success_message=None, event_id=None, event_url=None, competitions=admin_competitions()
-        ), 400
-    finally:
-        try:
-            c.close()
-        except Exception:
-            pass
-
-    return render_template_string(
-        ADMIN_TEMPLATE,
-        error=None,
-        success=True,
-        success_message=f"Competition {event_id} has been permanently purged from this site.",
-        event_id=event_id,
-        event_url=None,
-        competitions=admin_competitions(),
-    )
-
-
+        ranks={r["competition_number"]:r["position"] for r in point["rows"]}
+        for n in nums: series[n].append({"task":point["through_task"],"position":ranks.get(n)})
+    c=conn(eid); names={r["competition_number"]:r["name"] for r in c.execute("SELECT competition_number,name FROM pilots WHERE competition_id=?",(eid,)).fetchall()}; c.close()
+    return jsonify({"mode":mode,"pilots":[{"competition_number":n,"name":names.get(n)} for n in nums],"series":series})
 @app.get("/healthz")
 def healthz(): return "ok",200
 if __name__=="__main__":
