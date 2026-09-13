@@ -39,27 +39,58 @@ def _flight_columns_available(c):
 
 
 def _completed_competition_flights(c, eid):
-    """Return only completed, non-practice competition flights in flight order."""
-    if _flight_columns_available(c):
-        return c.execute(
-            """SELECT * FROM flights
-               WHERE competition_id=?
-                 AND UPPER(COALESCE(flight_type,''))='COMPETITION'
-                 AND UPPER(COALESCE(status,'')) IN ('COMPLETE','COMPLETED','FINAL')
-               ORDER BY sort_order, id""",
+    """Return flown competition flights, excluding practice/cancelled/empty flights.
+
+    Do not rely solely on the optional flight metadata columns: older imported
+    flight rows can have those fields empty even though their tasks/results are
+    valid. A flight is considered flown when it is not practice/cancelled and it
+    has at least one task with a scored result. This also naturally excludes an
+    empty future flight and a cancelled flight with no scores.
+    """
+    columns = _flight_columns_available(c)
+    if columns:
+        rows = c.execute(
+            """SELECT f.*
+                 FROM flights f
+                WHERE f.competition_id=?
+                  AND UPPER(COALESCE(f.flight_type,'')) NOT IN ('PRACTICE','TRAINING')
+                  AND UPPER(COALESCE(f.flight_number,'')) NOT LIKE 'PRACTICE%'
+                  AND UPPER(COALESCE(f.status,'')) NOT IN ('CANCELLED','CANCELED')
+                  AND EXISTS (
+                      SELECT 1
+                        FROM tasks t JOIN results r ON r.task_id=t.id
+                       WHERE t.flight_id=f.id
+                         AND r.score IS NOT NULL
+                  )
+                ORDER BY f.sort_order, f.id""",
             (eid,)
         ).fetchall()
-    return c.execute(
-        """SELECT * FROM flights
-           WHERE competition_id=?
-             AND UPPER(COALESCE(flight_number,'')) NOT LIKE 'PRACTICE%'
-           ORDER BY sort_order, id""",
-        (eid,)
-    ).fetchall()
+    else:
+        rows = c.execute(
+            """SELECT f.*
+                 FROM flights f
+                WHERE f.competition_id=?
+                  AND UPPER(COALESCE(f.flight_number,'')) NOT LIKE 'PRACTICE%'
+                  AND EXISTS (
+                      SELECT 1
+                        FROM tasks t JOIN results r ON r.task_id=t.id
+                       WHERE t.flight_id=f.id
+                         AND r.score IS NOT NULL
+                  )
+                ORDER BY f.sort_order, f.id""",
+            (eid,)
+        ).fetchall()
+    return rows
 
 
 def _effective_task_ids_through_flight(c, eid, flight_sort_order, run_id, mode):
-    """Select one effective scored occurrence of each task through a flown flight."""
+    """Select one effective scored occurrence of each task through a flown flight.
+
+    Movement checkpoints must work across watcher snapshots: an earlier flight's
+    scores may have been stored by an earlier import run while the latest run
+    contains only newer tasks. Therefore task selection checks all stored results,
+    not just the latest run. The run_id argument is retained for call compatibility.
+    """
     statuses=mode_statuses(mode)
     qs=','.join('?'*len(statuses))
     rows=c.execute(
@@ -67,18 +98,19 @@ def _effective_task_ids_through_flight(c, eid, flight_sort_order, run_id, mode):
                   f.sort_order,f.status AS flight_status,f.flight_type
              FROM tasks t JOIN flights f ON f.id=t.flight_id
             WHERE t.competition_id=? AND f.sort_order<=?
-              AND UPPER(COALESCE(f.flight_type,''))='COMPETITION'
-              AND UPPER(COALESCE(f.status,'')) IN ('COMPLETE','COMPLETED','FINAL')
+              AND UPPER(COALESCE(f.flight_type,'')) NOT IN ('PRACTICE','TRAINING')
+              AND UPPER(COALESCE(f.flight_number,'')) NOT LIKE 'PRACTICE%'
+              AND UPPER(COALESCE(f.status,'')) NOT IN ('CANCELLED','CANCELED')
               AND EXISTS (
                   SELECT 1 FROM results r
-                   WHERE r.task_id=t.id AND r.import_run_id=?
+                   WHERE r.task_id=t.id
                      AND r.status IN ({qs})
               )
             ORDER BY f.sort_order DESC,
                      CASE t.status WHEN 'FINAL' THEN 0 WHEN 'OFFICIAL' THEN 1
                                    WHEN 'PROVISIONAL' THEN 2 ELSE 3 END,
                      t.published DESC, t.id DESC""",
-        (eid,flight_sort_order,run_id,*statuses)
+        (eid,flight_sort_order,*statuses)
     ).fetchall()
     selected={}
     for row in rows:
@@ -88,17 +120,31 @@ def _effective_task_ids_through_flight(c, eid, flight_sort_order, run_id, mode):
 
 
 def _standings_for_task_ids(c, eid, run_id, task_ids, mode):
-    """Build cumulative standings from an explicit set of effective task IDs."""
+    """Build cumulative standings from effective task IDs using stored results.
+
+    For movement, results can span multiple watcher import runs. Pick the newest
+    eligible result for each pilot/task so an unchanged earlier task remains part
+    of the cumulative checkpoint when later tasks arrive.
+    """
     if not task_ids:
         return []
     statuses=mode_statuses(mode)
     qids=','.join('?'*len(task_ids)); qs=','.join('?'*len(statuses))
     rows=c.execute(
-        f"""SELECT r.score,p.competition_number,p.name,p.country
+        f"""SELECT r.score,p.competition_number,p.name,p.country,r.task_id,r.id
              FROM results r JOIN pilots p ON p.id=r.pilot_id
-            WHERE r.import_run_id=? AND r.task_id IN ({qids})
-              AND r.status IN ({qs})""",
-        (run_id,*task_ids,*statuses)
+            WHERE r.task_id IN ({qids})
+              AND r.status IN ({qs})
+              AND r.id=(
+                  SELECT r2.id
+                    FROM results r2
+                   WHERE r2.task_id=r.task_id
+                     AND r2.pilot_id=r.pilot_id
+                     AND r2.status IN ({qs})
+                   ORDER BY r2.id DESC
+                   LIMIT 1
+              )""",
+        (*task_ids,*statuses,*statuses)
     ).fetchall()
     totals={}
     for r in rows:
