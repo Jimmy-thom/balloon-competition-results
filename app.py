@@ -38,14 +38,30 @@ def _flight_columns_available(c):
         return False
 
 
-def _completed_competition_flights(c, eid):
-    """Return flown competition flights, excluding practice/cancelled/empty flights.
+def _flight_chronology_key(f):
+    """Return a sortable real-world date/time key for a flight row."""
+    from datetime import datetime
+    date_text=str(f["date_label"] or "").strip()
+    time_text=str(f["time_label"] or "").strip().upper()
+    for fmt in ("%d %b %Y", "%d %B %Y"):
+        try:
+            dt=datetime.strptime(date_text,fmt)
+            if time_text in ("AM","PM"):
+                hour=0 if time_text=="AM" else 12
+                dt=dt.replace(hour=hour)
+            return (0,dt)
+        except ValueError:
+            pass
+    return (1,int(f["sort_order"] or 0),str(f["id"]))
 
-    Do not rely solely on the optional flight metadata columns: older imported
-    flight rows can have those fields empty even though their tasks/results are
-    valid. A flight is considered flown when it is not practice/cancelled and it
-    has at least one task with a scored result. This also naturally excludes an
-    empty future flight and a cancelled flight with no scores.
+
+def _completed_competition_flights(c, eid):
+    """Return unique flown competition flights in chronological order.
+
+    WatchMeFly lists newest flights first, so importer sort_order is not a
+    chronological ordering.  A flight identity is flight number + date + time;
+    duplicate database rows for the same real flight are collapsed, preferring
+    the row that has the greatest number of scored tasks.
     """
     columns = _flight_columns_available(c)
     if columns:
@@ -57,12 +73,10 @@ def _completed_competition_flights(c, eid):
                   AND LEFT(UPPER(COALESCE(f.flight_number,'')), 8) <> 'PRACTICE'
                   AND UPPER(COALESCE(f.status,'')) NOT IN ('CANCELLED','CANCELED')
                   AND EXISTS (
-                      SELECT 1
-                        FROM tasks t JOIN results r ON r.task_id=t.id
-                       WHERE t.flight_id=f.id
-                         AND r.score IS NOT NULL
+                      SELECT 1 FROM tasks t JOIN results r ON r.task_id=t.id
+                       WHERE t.flight_id=f.id AND r.score IS NOT NULL
                   )
-                ORDER BY f.sort_order, f.id""",
+                """,
             (eid,)
         ).fetchall()
     else:
@@ -72,46 +86,73 @@ def _completed_competition_flights(c, eid):
                 WHERE f.competition_id=?
                   AND LEFT(UPPER(COALESCE(f.flight_number,'')), 8) <> 'PRACTICE'
                   AND EXISTS (
-                      SELECT 1
-                        FROM tasks t JOIN results r ON r.task_id=t.id
-                       WHERE t.flight_id=f.id
-                         AND r.score IS NOT NULL
+                      SELECT 1 FROM tasks t JOIN results r ON r.task_id=t.id
+                       WHERE t.flight_id=f.id AND r.score IS NOT NULL
                   )
-                ORDER BY f.sort_order, f.id""",
+                """,
             (eid,)
         ).fetchall()
-    return rows
+
+    grouped={}
+    for f in rows:
+        key=(str(f["flight_number"] or "").strip(),
+             str(f["date_label"] or "").strip(),
+             str(f["time_label"] or "").strip().upper())
+        scored=c.execute(
+            """SELECT COUNT(*) AS n FROM tasks t JOIN results r ON r.task_id=t.id
+               WHERE t.flight_id=? AND r.score IS NOT NULL""",
+            (f["id"],)
+        ).fetchone()["n"]
+        candidate=(scored,_flight_chronology_key(f),str(f["id"]))
+        if key not in grouped or candidate>grouped[key][0]:
+            grouped[key]=(candidate,f)
+
+    out=[item[1] for item in grouped.values()]
+    out.sort(key=_flight_chronology_key)
+    return out
 
 
-def _effective_task_ids_through_flight(c, eid, flight_sort_order, run_id, mode):
-    """Select one effective scored occurrence of each task through a flown flight.
+def _effective_task_ids_through_flight(c, eid, flight_row, run_id, mode):
+    """Select one effective scored task occurrence through a real flight.
 
-    Movement checkpoints must work across watcher snapshots: an earlier flight's
-    scores may have been stored by an earlier import run while the latest run
-    contains only newer tasks. Therefore task selection checks all stored results,
-    not just the latest run. The run_id argument is retained for call compatibility.
+    Chronology is based on the flight's actual date/time, not WatchMeFly's
+    reverse-page sort_order.  This is what lets Flight 3 provisional results be
+    compared with the completed Flight 2 checkpoint.
     """
     statuses=mode_statuses(mode)
     qs=','.join('?'*len(statuses))
+
+    # Build the set of real competition flights up to and including the
+    # requested checkpoint.  Practice/cancelled flights are already excluded.
+    flights=_completed_competition_flights(c,eid)
+    cutoff=_flight_chronology_key(flight_row)
+    allowed=[f["id"] for f in flights if _flight_chronology_key(f)<=cutoff]
+    if not allowed:
+        return []
+
+    qf=','.join('?'*len(allowed))
     rows=c.execute(
-        f"""SELECT t.id,t.task_number,t.status,t.published,t.source_url,
-                  f.sort_order,f.status AS flight_status,f.flight_type
+        f"""SELECT t.id,t.task_number,t.status,t.published,
+                  f.date_label,f.time_label,f.sort_order,f.id AS flight_id
              FROM tasks t JOIN flights f ON f.id=t.flight_id
-            WHERE t.competition_id=? AND f.sort_order<=?
-              AND UPPER(COALESCE(f.flight_type,'')) NOT IN ('PRACTICE','TRAINING')
-              AND LEFT(UPPER(COALESCE(f.flight_number,'')), 8) <> 'PRACTICE'
-              AND UPPER(COALESCE(f.status,'')) NOT IN ('CANCELLED','CANCELED')
+            WHERE t.competition_id=? AND f.id IN ({qf})
               AND EXISTS (
                   SELECT 1 FROM results r
-                   WHERE r.task_id=t.id
-                     AND r.status IN ({qs})
+                   WHERE r.task_id=t.id AND r.status IN ({qs})
               )
-            ORDER BY f.sort_order DESC,
+            ORDER BY f.date_label, f.time_label, f.id,
                      CASE t.status WHEN 'FINAL' THEN 0 WHEN 'OFFICIAL' THEN 1
                                    WHEN 'PROVISIONAL' THEN 2 ELSE 3 END,
                      t.published DESC, t.id DESC""",
-        (eid,flight_sort_order,*statuses)
+        (eid,*allowed,*statuses)
     ).fetchall()
+
+    # Process newest flight first so a later re-flight/version wins.
+    rows=sorted(rows,key=lambda r:(
+        _flight_chronology_key({"date_label":r["date_label"],"time_label":r["time_label"],"sort_order":r["sort_order"],"id":r["flight_id"]}),
+        0 if r["status"]=="FINAL" else 1 if r["status"]=="OFFICIAL" else 2,
+        r["published"] or "", str(r["id"])
+    ),reverse=True)
     selected={}
     for row in rows:
         if row["task_number"] not in selected:
@@ -160,26 +201,63 @@ def _standings_for_task_ids(c, eid, run_id, task_ids, mode):
 
 
 def _movement_for_latest_completed_flight(c, eid, mode, end=None):
-    """Calculate movement between the latest two completed competition flights."""
+    """Compare the latest scored competition flight with the prior completed one.
+
+    The current checkpoint may be IN PROGRESS when provisional results are
+    appearing.  The previous checkpoint must be an earlier completed flight.
+    """
     run=latest_run(c,eid)
     if not run:
         return {}
+
     flights=_completed_competition_flights(c,eid)
+    if not flights:
+        return {}
+
+    # The latest scored flight is the current checkpoint.  If Flight 3 is in
+    # progress with provisional results, it is included here even though its
+    # status is not COMPLETE.  The helper already requires scored results and
+    # excludes cancelled/practice flights.
+    current=flights[-1]
+
+    # Optional task-number filter should not make us jump to an older flight
+    # merely because the current flight has only newer task numbers.
     if end is not None:
-        flights=[f for f in flights if c.execute(
+        eligible=[f for f in flights if c.execute(
             """SELECT 1 FROM tasks WHERE competition_id=? AND flight_id=?
                AND task_number<=? LIMIT 1""",(eid,f["id"],end)
         ).fetchone()]
-    if len(flights)<2:
+        if eligible:
+            current=eligible[-1]
+        else:
+            return {}
+
+    idx=next((i for i,f in enumerate(flights) if str(f["id"])==str(current["id"])),None)
+    if idx is None or idx==0:
         return {}
-    current,previous=flights[-1],flights[-2]
-    current_ids=_effective_task_ids_through_flight(c,eid,current["sort_order"],run["id"],mode)
-    previous_ids=_effective_task_ids_through_flight(c,eid,previous["sort_order"],run["id"],mode)
+
+    # Find the most recent earlier flight that is actually COMPLETE/FINAL when
+    # metadata is available.  This deliberately skips cancelled/in-progress
+    # flights while allowing the current checkpoint to be in progress.
+    previous=None
+    if _flight_columns_available(c):
+        for f in reversed(flights[:idx]):
+            if str(f["status"] or "").upper() in ("COMPLETE","COMPLETED","FINAL"):
+                previous=f
+                break
+    else:
+        previous=flights[idx-1]
+    if previous is None:
+        return {}
+
+    current_ids=_effective_task_ids_through_flight(c,eid,current,run["id"],mode)
+    previous_ids=_effective_task_ids_through_flight(c,eid,previous,run["id"],mode)
     current_rows=_standings_for_task_ids(c,eid,run["id"],current_ids,mode)
     previous_rows=_standings_for_task_ids(c,eid,run["id"],previous_ids,mode)
     current_pos={r["competition_number"]:r["position"] for r in current_rows}
     previous_pos={r["competition_number"]:r["position"] for r in previous_rows}
     return {n:(previous_pos[n]-pos) if n in previous_pos else None for n,pos in current_pos.items()}
+
 
 def all_tasks(c,eid):
     return [dict(r) for r in c.execute("""SELECT t.*, f.flight_number, f.date_label AS flight_date
@@ -500,9 +578,9 @@ def api_flight_standings(eid,flight_id):
             if idx>0:
                 run=latest_run(c,eid)
                 if run:
-                    current_ids=_effective_task_ids_through_flight(c,eid,f["sort_order"],run["id"],mode)
+                    current_ids=_effective_task_ids_through_flight(c,eid,f,run["id"],mode)
                     previous_flight=completed[idx-1]
-                    previous_ids=_effective_task_ids_through_flight(c,eid,previous_flight["sort_order"],run["id"],mode)
+                    previous_ids=_effective_task_ids_through_flight(c,eid,previous_flight,run["id"],mode)
                     current_rows=_standings_for_task_ids(c,eid,run["id"],current_ids,mode)
                     previous_rows=_standings_for_task_ids(c,eid,run["id"],previous_ids,mode)
                     old={r["competition_number"]:r["position"] for r in previous_rows}
