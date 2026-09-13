@@ -19,7 +19,7 @@
   <div class="section-head">
     <div>
       <h2>Competition standings</h2>
-      <p class="muted">Current standings with task scores, country, and movement from the previous task. Published provisional results are marked <strong>P</strong>.</p>
+      <p class="muted">Current standings with task scores, country, and movement from the previous flight. Published provisional results are marked <strong>P</strong>.</p>
     </div>
     <div class="controls">
       <select id="mode">
@@ -55,16 +55,13 @@
 <div class="card">
   <div class="section-head">
     <div>
-      <div class="card">
-  <div class="section-head">
-    <div>
       <h2>Ranking progression</h2>
       <p class="muted">See how the top eight pilots moved through the competition.</p>
     </div>
     <a class="button" href="/event/{{event.id}}/progression">View progression</a>
   </div>
 </div>
-      <div class="card">
+<div class="card">
   <h2>Tasks</h2>
   <div class="task-grid">
     {% for t in tasks %}
@@ -145,6 +142,10 @@
 }
 .results-table .pilot-cell{
   min-width:250px;
+}
+
+.results-table .pilot-compact{
+  display:none;
 }
 .results-table .pilot-cell a{
   font-weight:750;
@@ -273,6 +274,9 @@
     font-size:14px;
     font-weight:800;
   }
+
+  .results-table .pilot-full{display:none;}
+  .results-table .pilot-compact{display:inline;}
 
   .results-table .flag{
     display:none;
