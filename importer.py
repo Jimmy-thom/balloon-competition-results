@@ -145,52 +145,128 @@ def stable(*parts):
 
 
 def parse_event(html, url):
+    """Extract competition metadata from a WatchMeFly event page.
+
+    WatchMeFly currently uses a generic HTML page title ("WatchMeFly | Event")
+    and presents the real competition title/location/dates in the page body.
+    Older pages exposed labelled table fields, so keep those as fallbacks.
+    """
     soup = BeautifulSoup(html, 'html.parser')
 
-    title = clean(soup.title.get_text()) if soup.title else ''
-
     fields = {}
-
     for tr in soup.find_all('tr'):
         cells = [
             clean(x.get_text(' ', strip=True))
             for x in tr.find_all(['th', 'td'])
         ]
-
         if len(cells) >= 2:
             k = cells[0].rstrip(':')
             v = cells[1]
-
             if k and v and len(k) < 60:
                 fields.setdefault(k, v)
 
     text = clean(soup.get_text(' ', strip=True))
 
+    # Older WatchMeFly pages sometimes expose explicit metadata labels.
+    title = ''
     m = re.search(
         r'Event title:\s*([^|]+?)(?:\s+Event Location:|\s+Event Dates:)',
-        text
+        text,
+        re.I
     )
-
     if m:
         title = clean(m.group(1))
 
+    # Current WatchMeFly pages use a generic <title> but put the real event
+    # name in a heading near the top of the page.
+    if not title:
+        ignored = {
+            'event details', 'results', 'task data', 'noticeboard',
+            'pilots', 'officials', 'details', 'tasks', 'enb'
+        }
+        for tag in soup.find_all(['h1', 'h2', 'h3']):
+            candidate = clean(tag.get_text(' ', strip=True))
+            if not candidate:
+                continue
+            if candidate.lower() in ignored:
+                continue
+            if re.match(r'^(?:practice\s+)?flight\s+\d+', candidate, re.I):
+                continue
+            if re.match(r'^task\s+\d+', candidate, re.I):
+                continue
+            title = candidate
+            break
+
+    if not title:
+        title = clean(soup.title.get_text()) if soup.title else ''
+
+    title = title.replace('WatchMeFly |', '').strip()
+    if title.lower() == 'event':
+        title = ''
+
     location = fields.get('Event Location', '')
     dates = fields.get('Event Dates', '')
+
+    # Current WatchMeFly pages show the location in the DOM immediately after
+    # the event heading. Do not search the flattened page text here because
+    # navigation text can contain "Home Competitions <event title>".
+    if title and not location:
+        for tag in soup.find_all(['h1', 'h2', 'h3']):
+            if clean(tag.get_text(' ', strip=True)) != title:
+                continue
+            for node in tag.next_elements:
+                if getattr(node, 'name', None) in {'h1', 'h2', 'h3'}:
+                    break
+                if getattr(node, 'name', None) == 'a':
+                    candidate = clean(node.get_text(' ', strip=True))
+                    if candidate.lower() == 'image':
+                        continue
+                elif isinstance(node, str):
+                    candidate = clean(str(node))
+                else:
+                    continue
+                if not candidate:
+                    continue
+                if candidate.lower().startswith('local time:'):
+                    break
+                if candidate.lower() == 'image':
+                    continue
+                if candidate.lower() not in {'event details', 'results', 'task data', 'noticeboard', 'pilots', 'officials', 'details', 'tasks', 'enb'}:
+                    location = candidate.split('Local Time:', 1)[0].strip()
+                    break
+            if location:
+                break
+
+    if not dates:
+        range_patterns = [
+            r'(\d{1,2}\s+[A-Za-z]{3,9}\s+\d{4}\s*[-–]\s*\d{1,2}\s+[A-Za-z]{3,9}\s+\d{4})',
+            r'(\d{1,2}[./-]\d{1,2}[./-]\d{4}\s*[-–]\s*\d{1,2}[./-]\d{1,2}[./-]\d{4})',
+        ]
+        for pattern in range_patterns:
+            m = re.search(pattern, text)
+            if m:
+                dates = clean(m.group(1))
+                break
+
     organiser = fields.get('Organiser', '')
     director = (
         fields.get('Event Director', '')
         or fields.get('Director', '')
     )
 
+    if not director:
+        m = re.search(r'\bDirector:\s*([^|]+?)(?=\s+Combined Logger/Marker Event|\s+Contact Details|$)', text, re.I)
+        if m:
+            director = clean(m.group(1))
+
     return {
-        'title': title.replace('WatchMeFly |', '').strip() or url,
+        'title': title or url,
         'location': location,
         'dates': dates,
         'organiser': organiser,
         'director': director,
         'source_url': url
     }
-
 
 # ---------------------------------------------------------------------------
 # FLIGHT PARSING
