@@ -359,9 +359,41 @@ def _movement_for_latest_completed_flight(c, eid, mode, end=None):
             for n,pos in current_pos.items()}
 
 def all_tasks(c,eid):
-    return [dict(r) for r in c.execute("""SELECT t.*, f.flight_number, f.date_label AS flight_date
+    """Return one effective record for each unique competition task number.
+
+    WatchMeFly can expose multiple versions of the same task (for example
+    PROVISIONAL, OFFICIAL and FINAL).  Those versions remain in the database,
+    but the event/task list must represent them as one task.
+    """
+    rows=c.execute("""SELECT t.*, f.flight_number, f.date_label AS flight_date
       FROM tasks t LEFT JOIN flights f ON f.id=t.flight_id
-      WHERE t.competition_id=? ORDER BY t.task_number, f.date_label""",(eid,)).fetchall()]
+      WHERE t.competition_id=?""",(eid,)).fetchall()
+
+    grouped={}
+    for r in rows:
+        key=r["task_number"]
+
+        # Prefer a version that actually has results, then FINAL/OFFICIAL/
+        # PROVISIONAL, then the newest published record and finally the newest id.
+        has_results=c.execute(
+            "SELECT 1 FROM results WHERE task_id=? LIMIT 1",(r["id"],)
+        ).fetchone() is not None
+        status_rank={
+            "FINAL":0,
+            "OFFICIAL":1,
+            "PROVISIONAL":2,
+        }.get(str(r["status"] or "").upper(),3)
+        candidate=(
+            0 if has_results else 1,
+            status_rank,
+            str(r["published"] or ""),
+            str(r["id"])
+        )
+
+        if key not in grouped or candidate < grouped[key][0]:
+            grouped[key]=(candidate,r)
+
+    return [dict(grouped[n][1]) for n in sorted(grouped)]
 def active_task(c,eid,num):
     return c.execute("""SELECT t.*,f.flight_number,f.date_label AS flight_date
       FROM tasks t LEFT JOIN flights f ON f.id=t.flight_id
@@ -553,8 +585,37 @@ def index():
     return render_template("index.html",events=events)
 @app.get("/event/<eid>")
 def event_page(eid):
-    e=event(eid); c=conn(eid); ts=all_tasks(c,eid); fs=[dict(r) for r in c.execute("SELECT * FROM flights WHERE competition_id=? ORDER BY sort_order",(eid,)).fetchall()]; pc=c.execute("SELECT COUNT(*) FROM pilots WHERE competition_id=?",(eid,)).fetchone()[0]; run=latest_run(c,eid); task_max=max([r["task_number"] for r in c.execute("SELECT task_number FROM tasks WHERE competition_id=?",(eid,)).fetchall()] or [1]); c.close()
-    return render_template("event.html",event=e,tasks=ts,flights=fs,pilot_count=pc,latest_import=dict(run) if run else None,tasks_max=task_max)
+    e=event(eid)
+    c=conn(eid)
+
+    # Tasks are deduplicated by task number; provisional/official/final
+    # versions of the same task remain in the database but count as one task.
+    ts=all_tasks(c,eid)
+
+    # Event-level flight count/list contains only real competition flights.
+    # Practice/training and cancelled flights are excluded, and duplicate
+    # WatchMeFly versions of the same flight are collapsed by the helper.
+    fs=[dict(r) for r in _competition_flights_with_results(c,eid,"all")]
+
+    pc=c.execute(
+        "SELECT COUNT(*) FROM pilots WHERE competition_id=?",(eid,)
+    ).fetchone()[0]
+    run=latest_run(c,eid)
+    task_max=max(
+        [r["task_number"] for r in c.execute(
+            "SELECT task_number FROM tasks WHERE competition_id=?",(eid,)
+        ).fetchall()] or [1]
+    )
+    c.close()
+    return render_template(
+        "event.html",
+        event=e,
+        tasks=ts,
+        flights=fs,
+        pilot_count=pc,
+        latest_import=dict(run) if run else None,
+        tasks_max=task_max
+    )
 @app.get("/event/<eid>/task/<int:num>")
 def task_page(eid,num):
     e=event(eid); mode=request.args.get("mode","all"); t,rs=task_results(eid,num,mode); c=conn(eid); prev,nxt=task_navigation(c,eid,num); c.close()
