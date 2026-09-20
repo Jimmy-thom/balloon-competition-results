@@ -524,6 +524,72 @@ def standings_data(eid,mode="official",start=None,end=None):
     c.close()
     return out
 
+
+def nation_ranking_data(eid,mode="official",start=None,end=None):
+    """Build the provisional/live Nation Ranking from the current standings.
+
+    FAI Nation Ranking is based on the average total score, before rounding,
+    of all scored competitors belonging to the relevant NAC.  A nation must
+    have at least two scored competitors, and the ranking requires at least
+    four qualifying NACs overall.
+
+    The existing standings_data() is deliberately reused so this view follows
+    the same task selection, provisional/official handling, re-flight logic,
+    and cumulative scoring as the pilot standings.
+    """
+    pilot_rows=standings_data(eid,mode,start,end)
+    groups={}
+
+    for r in pilot_rows:
+        country=str(r.get("country") or "").strip()
+        if not country:
+            continue
+
+        # A competitor counts as scored only when at least one selected task
+        # has an actual numeric score. This avoids counting pilots for whom
+        # there is only a placeholder/no-result row.
+        task_scores=r.get("tasks") or {}
+        scored_tasks=[
+            v for v in task_scores.values()
+            if v is not None and v != ""
+        ]
+        if not scored_tasks:
+            continue
+
+        groups.setdefault(country,[]).append({
+            "competition_number": r["competition_number"],
+            "pilot": r["pilot"],
+            "total": r["total"],
+        })
+
+    qualifying=[]
+    for country,pilots in groups.items():
+        if len(pilots) < 2:
+            continue
+        total_sum=sum(float(p["total"] or 0) for p in pilots)
+        average=total_sum/len(pilots)
+        qualifying.append({
+            "nation": country,
+            "pilot_count": len(pilots),
+            "average": average,
+            "total_sum": total_sum,
+            "pilots": sorted(
+                pilots,
+                key=lambda p:(-float(p["total"] or 0),p["pilot"])
+            ),
+        })
+
+    qualifying.sort(key=lambda r:(-r["average"],r["nation"]))
+    for i,row in enumerate(qualifying,1):
+        row["position"]=i
+
+    return {
+        "rows": qualifying,
+        "qualifying_nations": len(qualifying),
+        "minimum_nations": 4,
+        "minimum_pilots_per_nation": 2,
+    }
+
 def progression_data(eid,mode="official",start=None,end=None):
     c=conn(eid); nums=[r["task_number"] for r in c.execute("SELECT DISTINCT task_number FROM tasks WHERE competition_id=? ORDER BY task_number",(eid,)).fetchall()]; c.close()
     if start is not None: nums=[n for n in nums if n>=start]
@@ -616,6 +682,17 @@ def event_page(eid):
         latest_import=dict(run) if run else None,
         tasks_max=task_max
     )
+@app.get("/event/<eid>/nations")
+def nation_ranking_page(eid):
+    e=event(eid)
+    c=conn(eid)
+    task_max=max(
+        [r["task_number"] for r in c.execute(
+            "SELECT task_number FROM tasks WHERE competition_id=?",(eid,)
+        ).fetchall()] or [1]
+    )
+    c.close()
+    return render_template("nation_ranking.html",event=e,tasks_max=task_max)
 @app.get("/event/<eid>/task/<int:num>")
 def task_page(eid,num):
     e=event(eid); mode=request.args.get("mode","all"); t,rs=task_results(eid,num,mode); c=conn(eid); prev,nxt=task_navigation(c,eid,num); c.close()
@@ -711,6 +788,11 @@ def api_standings(eid):
     movement=_movement_for_latest_completed_flight(c,eid,mode,end)
     c.close()
     return jsonify({"mode":mode,"from":start,"to":end,"rows":rows,"movement":movement})
+@app.get("/api/event/<eid>/nations")
+def api_nations(eid):
+    mode,start,end=common_filters()
+    return jsonify({"mode":mode,"from":start,"to":end,**nation_ranking_data(eid,mode,start,end)})
+
 @app.get("/api/event/<eid>/tasks")
 def api_tasks(eid):
     c=conn(eid); out=all_tasks(c,eid); c.close(); return jsonify(out)
