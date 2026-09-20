@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% block title %}Nation Ranking — {{event.title}}{% endblock %}
+
+{% block content %}
+<div class="event-head">
+  <div>
+    <div class="eyebrow">{{event.location}}</div>
+    <h1>Nation Ranking</h1>
+    <p class="muted">{{event.title}}</p>
+  </div>
+  <a class="button" href="/event/{{event.id}}">Back to Event</a>
+</div>
+
+<div class="card">
+  <div class="section-head">
+    <div>
+      <h2>Nation Ranking</h2>
+      <p class="muted">Average total score of all scored competitors for each qualifying nation/NAC.</p>
+    </div>
+    <div class="controls">
+      <select id="mode">
+        <option value="all" selected>Include provisional</option>
+        <option value="official">Official only</option>
+      </select>
+      <label>From
+        <select id="from">
+          <option value="">1</option>
+          {% for n in range(2,tasks_max+1) %}<option>{{n}}</option>{% endfor %}
+        </select>
+      </label>
+      <label>To
+        <select id="to">
+          <option value="">Latest</option>
+          {% for n in range(1,tasks_max+1) %}<option>{{n}}</option>{% endfor %}
+        </select>
+      </label>
+    </div>
+  </div>
+  <div id="nation-note" class="nation-status pending">Loading Nation Ranking…</div>
+  <div id="nations" class="loading">Loading…</div>
+</div>
+
+<style>
+.nation-table{min-width:760px;font-variant-numeric:tabular-nums}
+.nation-table th,.nation-table td{white-space:nowrap}
+.nation-table .nation-rank{width:60px;text-align:center;font-weight:850}
+.nation-table .nation-name{font-weight:800}
+.nation-table .nation-average{font-weight:900;white-space:nowrap}
+.nation-table .nation-pilots{text-align:center;white-space:nowrap}
+.nation-table details{display:inline-block}
+.nation-table summary{cursor:pointer;color:#476b8f;font-weight:750;list-style:none}
+.nation-table summary::-webkit-details-marker{display:none}
+.nation-table summary:before{content:'▼';display:inline-block;margin-right:7px;font-size:10px}
+.nation-table details[open] summary:before{content:'▲'}
+.nation-table .pilot-list{margin:10px 0 4px;padding:0;list-style:none;color:#596777;font-size:13px}
+.nation-table .pilot-list li{display:flex;justify-content:space-between;gap:20px;padding:6px 10px;border-top:1px solid #e7edf3}
+.nation-table tbody tr:hover>td{background:#f8fbfe}
+.nation-status{margin-bottom:12px;padding:10px 12px;border:1px solid #dbe5ee;border-radius:9px;background:#f5f8fb;color:#596777;font-size:13px}
+.nation-status.valid{border-color:#cfe5d6;background:#f1faf3}
+.nation-status.pending{border-color:#ead9a8;background:#fff9e8}
+.nation-status strong{font-weight:850}
+@media(max-width:700px){.nation-table{min-width:620px}.nation-table .hide-mobile{display:none}.nation-table .pilot-list li{gap:10px}}
+</style>
+
+<script>
+const eid={{event.id|tojson}}, nations=document.getElementById('nations'), nationNote=document.getElementById('nation-note'), mode=document.getElementById('mode'), from=document.getElementById('from'), to=document.getElementById('to');
+function esc(value){return String(value ?? '').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
+function fmt(value){if(value===null||value===undefined||value==='')return '—';return Number(value).toLocaleString('en-GB');}
+function qs(){const p=new URLSearchParams({mode:mode.value});if(from.value)p.set('from',from.value);if(to.value)p.set('to',to.value);return p;}
+function renderNation(data){
+  const count=Number(data.qualifying_nations||0), minimum=Number(data.minimum_nations||4);
+  nationNote.className='nation-status '+(count>=minimum?'valid':'pending');
+  nationNote.innerHTML=count>=minimum
+    ? `<strong>${count} nations</strong> currently meet the minimum requirement of ${minimum}. Ranking is provisional/live until the event is final.`
+    : `<strong>${count} nation${count===1?'':'s'}</strong> currently meet the minimum. At least ${minimum} qualifying nations are required for a valid Nation Ranking.`;
+  if(!data.rows?.length){nations.innerHTML='<div class="loading">No qualifying nations yet for this selection.</div>';return;}
+  let h='<div class="table-scroll"><table class="nation-table"><thead><tr><th class="nation-rank">POS</th><th>NATION / NAC</th><th class="nation-pilots">SCORED PILOTS</th><th class="nation-average">AVERAGE TOTAL</th><th>PILOTS</th></tr></thead><tbody>';
+  for(const r of data.rows){
+    const pilots=(r.pilots||[]).map(p=>`<li><span>#${esc(p.competition_number)} — ${esc(p.pilot)}</span><strong>${fmt(p.total)}</strong></li>`).join('');
+    h+=`<tr><td class="nation-rank">${fmt(r.position)}</td><td class="nation-name">${esc(r.nation)}</td><td class="nation-pilots">${fmt(r.pilot_count)}</td><td class="nation-average">${Number(r.average).toFixed(2)}</td><td><details><summary>Show pilots</summary><ul class="pilot-list">${pilots}</ul></details></td></tr>`;
+  }
+  h+='</tbody></table></div>'; nations.innerHTML=h;
+}
+function loadNation(){
+  nations.innerHTML='<div class="loading">Loading…</div>';
+  fetch(`/api/event/${eid}/nations?${qs()}`).then(r=>{if(!r.ok)throw new Error();return r.json();}).then(renderNation).catch(()=>{nations.innerHTML='<div class="loading">Unable to load Nation Ranking.</div>';});
+}
+[mode,from,to].forEach(x=>x.addEventListener('change',loadNation));
+loadNation();
+</script>
+{% endblock %}
