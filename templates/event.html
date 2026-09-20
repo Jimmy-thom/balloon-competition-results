@@ -55,6 +55,15 @@
 <div class="card">
   <div class="section-head">
     <div>
+      <h2>Nation Ranking</h2>
+      <p class="muted">View the current provisional ranking by nation/NAC.</p>
+    </div>
+    <a class="button" href="/event/{{event.id}}/nations">View Nation Ranking</a>
+  </div>
+</div>
+<div class="card">
+  <div class="section-head">
+    <div>
       <h2>Ranking progression</h2>
       <p class="muted">See how the top eight pilots moved through the competition.</p>
     </div>
@@ -392,6 +401,8 @@
     font-size:8px;
   }
 }
+
+
 </style>
 <script>
 const eid={{event.id|tojson}},
@@ -502,6 +513,7 @@ function renderTable(rows, movementByPilot={}){
   h+='</tbody></table></div>';
   standings.innerHTML=h;
 }
+
 
 async function load(){
   standings.innerHTML='<div class="loading">Loading…</div>';
