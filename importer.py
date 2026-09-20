@@ -542,11 +542,58 @@ def parse_task(html, url, event_id):
 
             country = ''
 
+            # WatchMeFly's result-table HTML is not completely consistent:
+            # in some rows the country is separated from the pilot by the
+            # image element, while in others BeautifulSoup's flattened text
+            # becomes e.g. "FUJITA, YudaiImage Japan" or
+            # "FUJITA, Yudai Japan".  Do not rely solely on the literal
+            # "Image" text being present.
+            #
+            # First try the text following the image marker.
             if 'image' in ptxt.lower():
                 tail = clean(ptxt.split('Image', 1)[1])
-
                 if tail:
                     country = tail
+
+            # If the flattened pilot cell contains a country suffix, split
+            # the country from the pilot name.  Longest names are checked
+            # first so "United States" and "South Africa" are handled before
+            # shorter suffixes.
+            COUNTRY_NAMES = [
+                'United States', 'South Africa', 'New Zealand',
+                'Czech Republic', 'United Kingdom', 'The Netherlands',
+                'Netherlands', 'Saudi Arabia', 'United Arab Emirates',
+                'South Korea', 'North Macedonia', 'Costa Rica',
+                'Dominican Republic', 'Hong Kong', 'Chinese Taipei',
+                'Armenia', 'Australia', 'Austria', 'Belgium', 'Brazil',
+                'Canada', 'China', 'Colombia', 'Croatia', 'Denmark',
+                'Estonia', 'Finland', 'France', 'Georgia', 'Germany',
+                'Greece', 'Hungary', 'India', 'Ireland', 'Israel', 'Italy',
+                'Japan', 'Latvia', 'Lithuania', 'Luxembourg', 'Mexico',
+                'Moldova', 'Norway', 'Poland', 'Portugal', 'Romania',
+                'Serbia', 'Singapore', 'Slovakia', 'Slovenia', 'Spain',
+                'Sweden', 'Switzerland', 'Turkey', 'Ukraine'
+            ]
+
+            # The parser above may already have extracted the country.  If
+            # not, recover it from a country suffix in the pilot text.
+            if not country:
+                pilot_text = clean(pname)
+                for cname in sorted(COUNTRY_NAMES, key=len, reverse=True):
+                    if re.search(r'\s+' + re.escape(cname) + r'$', pilot_text, re.I):
+                        pname = clean(pilot_text[:-len(cname)])
+                        country = cname
+                        break
+
+            # If the country was extracted but the pilot name still contains
+            # the same country suffix, remove the duplicate suffix.
+            if country:
+                pname = re.sub(
+                    r'\s+' + re.escape(country) + r'$',
+                    '',
+                    pname,
+                    flags=re.I
+                ).strip()
 
             rows.append({
                 'competition_number': comp_no,
