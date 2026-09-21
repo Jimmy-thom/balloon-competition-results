@@ -590,6 +590,106 @@ def nation_ranking_data(eid,mode="official",start=None,end=None):
         "minimum_pilots_per_nation": 2,
     }
 
+def penalty_tally_data(eid, mode="all"):
+    """Return the current cumulative penalty tally for pilots with penalties.
+
+    One effective task occurrence is used for each task number, matching the
+    competition standings logic: scored occurrences are preferred, then FINAL,
+    OFFICIAL, PROVISIONAL, newest publication, and newest id.  For each
+    effective task, use the newest eligible result for each pilot across all
+    stored import runs.  This prevents provisional/final versions and repeated
+    watcher imports from being counted twice.
+    """
+    statuses=mode_statuses(mode)
+    qs=','.join('?'*len(statuses))
+    c=conn(eid)
+    task_numbers=[r["task_number"] for r in c.execute(
+        "SELECT DISTINCT task_number FROM tasks WHERE competition_id=? ORDER BY task_number",
+        (eid,)
+    ).fetchall()]
+    if not task_numbers:
+        c.close()
+        return []
+
+    task_ids=[]
+    for num in task_numbers:
+        t=c.execute(f"""
+            SELECT t.id,t.task_number,t.status,t.published
+            FROM tasks t
+            WHERE t.competition_id=? AND t.task_number=?
+            ORDER BY
+              CASE WHEN EXISTS (
+                SELECT 1 FROM results r
+                WHERE r.task_id=t.id AND r.status IN ({qs})
+              ) THEN 0 ELSE 1 END,
+              CASE t.status
+                WHEN 'FINAL' THEN 0
+                WHEN 'OFFICIAL' THEN 1
+                WHEN 'PROVISIONAL' THEN 2
+                ELSE 3
+              END,
+              t.published DESC,
+              t.id DESC
+            LIMIT 1
+        """,(eid,num,*statuses)).fetchone()
+        if t:
+            task_ids.append(t["id"])
+
+    if not task_ids:
+        c.close()
+        return []
+
+    qids=','.join('?'*len(task_ids))
+    rows=c.execute(f"""
+        SELECT p.competition_number,p.name,p.country,
+               r.task_id,r.penalty_t,r.penalty_c,r.id
+        FROM results r
+        JOIN pilots p ON p.id=r.pilot_id
+        WHERE r.task_id IN ({qids})
+          AND r.status IN ({qs})
+          AND r.id=(
+            SELECT r2.id
+            FROM results r2
+            WHERE r2.task_id=r.task_id
+              AND r2.pilot_id=r.pilot_id
+              AND r2.status IN ({qs})
+            ORDER BY r2.id DESC
+            LIMIT 1
+          )
+    """,(*task_ids,*statuses,*statuses)).fetchall()
+
+    totals={}
+    for r in rows:
+        task_penalty=float(r["penalty_t"] or 0)
+        comp_penalty=float(r["penalty_c"] or 0)
+        if task_penalty==0 and comp_penalty==0:
+            continue
+        n=r["competition_number"]
+        if n not in totals:
+            clean_name,clean_country=_clean_pilot_name_country(r["name"],r["country"])
+            totals[n]={
+                "competition_number":n,
+                "pilot":clean_name,
+                "country":clean_country,
+                "competition":0,
+                "task":0,
+            }
+        totals[n]["competition"] += comp_penalty
+        totals[n]["task"] += task_penalty
+
+    out=[]
+    for row in totals.values():
+        row["competition"]=int(row["competition"]) if row["competition"].is_integer() else row["competition"]
+        row["task"]=int(row["task"]) if row["task"].is_integer() else row["task"]
+        row["total"]=row["competition"]+row["task"]
+        out.append(row)
+
+    out.sort(key=lambda r:(-float(r["total"]),r["pilot"]))
+    for i,row in enumerate(out,1):
+        row["position"]=i
+    c.close()
+    return out
+
 def progression_data(eid,mode="official",start=None,end=None):
     c=conn(eid); nums=[r["task_number"] for r in c.execute("SELECT DISTINCT task_number FROM tasks WHERE competition_id=? ORDER BY task_number",(eid,)).fetchall()]; c.close()
     if start is not None: nums=[n for n in nums if n>=start]
@@ -693,6 +793,12 @@ def nation_ranking_page(eid):
     )
     c.close()
     return render_template("nation_ranking.html",event=e,tasks_max=task_max)
+@app.get("/event/<eid>/naughty-corner")
+def naughty_corner_page(eid):
+    e=event(eid)
+    rows=penalty_tally_data(eid,"all")
+    return render_template("naughty_corner.html",event=e,rows=rows)
+
 @app.get("/event/<eid>/task/<int:num>")
 def task_page(eid,num):
     e=event(eid); mode=request.args.get("mode","all"); t,rs=task_results(eid,num,mode); c=conn(eid); prev,nxt=task_navigation(c,eid,num); c.close()
