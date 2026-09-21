@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block title %}Naughty Corner — {{event.title}}{% endblock %}
+
+{% block content %}
+<div class="event-head">
+  <div>
+    <div class="eyebrow">{{event.location}}</div>
+    <h1>Naughty Corner</h1>
+    <p class="muted">{{event.title}} · Accumulated competition and task penalty points</p>
+  </div>
+  <a class="button" href="/event/{{event.id}}">Back to Event</a>
+</div>
+
+<div class="card">
+  <div class="section-head">
+    <div>
+      <h2>Naughty Corner</h2>
+      <p class="muted">Only pilots who have incurred penalty points are shown. The tally includes current provisional results.</p>
+    </div>
+  </div>
+
+  {% if rows %}
+  <div class="table-scroll">
+    <table class="naughty-table">
+      <thead>
+        <tr>
+          <th>POS</th>
+          <th>PILOT NAME</th>
+          <th>COUNTRY</th>
+          <th class="right">COMP</th>
+          <th class="right">TASK</th>
+          <th class="right total-cell">TOTAL</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in rows %}
+        <tr>
+          <td><b>{{r.position}}</b></td>
+          <td><b>#{{r.competition_number}} — {{r.pilot}}</b></td>
+          <td>{{r.country or ''}}</td>
+          <td class="right">{{'{:,.0f}'.format(r.competition)}}</td>
+          <td class="right">{{'{:,.0f}'.format(r.task)}}</td>
+          <td class="right total-cell"><strong>{{'{:,.0f}'.format(r.total)}}</strong></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+    <div class="loading">No penalty points have been recorded.</div>
+  {% endif %}
+</div>
+
+<style>
+.naughty-table{width:100%;border-collapse:separate;border-spacing:0;}
+.naughty-table th,.naughty-table td{padding:11px 12px;border-bottom:1px solid #e3eaf1;text-align:left;}
+.naughty-table th{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:#596777;background:#f5f8fb;}
+.naughty-table th:first-child{border-radius:8px 0 0 0;}
+.naughty-table th:last-child{border-radius:0 8px 0 0;}
+.naughty-table tbody tr:hover td{background:#f8fbfe;}
+.naughty-table .right{text-align:right;}
+.naughty-table .total-cell strong{display:inline-block;min-width:58px;padding:5px 9px;border-radius:7px;background:#fff0f0;color:#b42318;}
+@media (max-width:700px){
+  .naughty-table{min-width:620px;}
+}
+</style>
+{% endblock %}
