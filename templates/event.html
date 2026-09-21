@@ -18,15 +18,6 @@
 <div class="card">
   <div class="section-head">
     <div>
-      <h2>Nation Ranking</h2>
-      <p class="muted">View the current provisional ranking by nation/NAC.</p>
-    </div>
-    <a class="button" href="/event/{{event.id}}/nations">View Nation Ranking</a>
-  </div>
-</div>
-<div class="card">
-  <div class="section-head">
-    <div>
       <h2>Competition standings</h2>
       <p class="muted">Current standings with task scores, country, and movement from the previous flight.</p>
     </div>
@@ -61,6 +52,26 @@
   <div class="mobile-scroll-hint">← Swipe left/right to view all task columns →</div>
   <div id="standings" class="loading">Loading…</div>
 </div>
+<div class="feature-grid">
+  <div class="card feature-card">
+    <div class="section-head">
+      <div>
+        <h2>Nation Ranking</h2>
+        <p class="muted">View the current provisional ranking by nation/NAC.</p>
+      </div>
+      <a class="button" href="/event/{{event.id}}/nations">View Nation Ranking</a>
+    </div>
+  </div>
+  <div class="card feature-card">
+    <div class="section-head">
+      <div>
+        <h2>Naughty Corner</h2>
+        <p class="muted">See pilots with accumulated competition and task penalty points.</p>
+      </div>
+      <a class="button" href="/event/{{event.id}}/naughty-corner">View Naughty Corner</a>
+    </div>
+  </div>
+</div>
 <div class="card">
   <div class="section-head">
     <div>
@@ -94,6 +105,22 @@
     {% endfor %}
   </div>
 </div>
+<style>
+.feature-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:16px;
+}
+.feature-card{
+  min-width:0;
+}
+.feature-card .section-head{
+  height:100%;
+}
+@media (max-width:800px){
+  .feature-grid{grid-template-columns:1fr;}
+}
+</style>
 <style>
 .results-legend{
   display:flex;
