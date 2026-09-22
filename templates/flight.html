@@ -169,25 +169,15 @@ const mode=document.getElementById('mode');
 const box=document.getElementById('flight-results');
 const note=document.getElementById('flight-note');
 
-const flags={
-  "United Kingdom":"🇬🇧","UK":"🇬🇧","Australia":"🇦🇺","Belgium":"🇧🇪","Croatia":"🇭🇷",
-  "Czech Republic":"🇨🇿","Czechia":"🇨🇿","Hungary":"🇭🇺","Switzerland":"🇨🇭","Lithuania":"🇱🇹",
-  "Slovenia":"🇸🇮","United States":"🇺🇸","USA":"🇺🇸","Austria":"🇦🇹","Germany":"🇩🇪",
-  "France":"🇫🇷","Poland":"🇵🇱","Slovakia":"🇸🇰","Italy":"🇮🇹","Spain":"🇪🇸",
-  "Netherlands":"🇳🇱","Denmark":"🇩🇰","Norway":"🇳🇴","Sweden":"🇸🇪","Brazil":"🇧🇷",
-  "Canada":"🇨🇦","Japan":"🇯🇵","New Zealand":"🇳🇿","South Africa":"🇿🇦","Ireland":"🇮🇪",
-  "Finland":"🇫🇮","Portugal":"🇵🇹","Romania":"🇷🇴","Serbia":"🇷🇸","Turkey":"🇹🇷","Israel":"🇮🇱",
-  "Mexico":"🇲🇽","Bulgaria":"🇧🇬"
-};
-const countryNames=Object.keys(flags).sort((a,b)=>b.length-a.length);
+function flagFromCode(code){
+  const c=String(code||'').trim().toUpperCase();
+  if(!/^[A-Z]{2}$/.test(c)) return '🏳️';
+  return String.fromCodePoint(...[...c].map(ch=>127397+ch.charCodeAt(0)));
+}
 
 function countryFromPilot(name,country){
-  if(country) return country;
-  const text=String(name||'');
-  const found=countryNames.find(c=>text.endsWith(' '+c));
-  return found||'';
+  return String(country||'').trim();
 }
-function flag(country){return flags[country]||'🏳️'}
 function fmt(n){return Number(n||0).toLocaleString('en-GB')}
 function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 
@@ -237,6 +227,7 @@ function render(d){
   }else{
     d.rows.forEach(r=>{
       const country=countryFromPilot(r.pilot,r.country);
+      const flag=flagFromCode(r.country_code);
       const movement=d.movementByPilot ? d.movementByPilot[r.competition_number] : null;
       let movementText='—', movementClass='move-flat';
       if(movement!==null && movement!==undefined){
@@ -246,7 +237,7 @@ function render(d){
       const provisional=Object.values(r.statuses||{}).some(s=>s==='PROVISIONAL');
       h+='<tr>';
       h+=`<td class="pos">${r.position}</td>`;
-      h+=`<td class="pilot"><span class="flag">${flag(country)}</span><a href="/event/${eid}/pilot/${r.competition_number}">#${r.competition_number} — ${esc(r.pilot)}</a></td>`;
+      h+=`<td class="pilot"><span class="flag">${flag}</span><a href="/event/${eid}/pilot/${r.competition_number}">#${r.competition_number} — ${esc(r.pilot)}</a></td>`;
       h+=`<td class="country">${esc(country||'—')}</td>`;
       h+=`<td class="score">${fmt(r.total)}${provisional?'<span class="prov-mark" title="Includes provisional result(s)">P</span>':''}</td>`;
       h+=`<td class="movement ${movementClass}">${movementText}</td>`;
