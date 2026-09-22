@@ -875,6 +875,33 @@ def pilot_page(eid,number):
 
     c.close()
     return render_template("pilot.html",event=e,pilot=pilot,results=results,flights=flights)
+
+@app.get("/event/<eid>/pilot/<int:number>/progression")
+def pilot_progression_page(eid,number):
+    e=event(eid)
+    c=conn(eid)
+    p=c.execute(
+        "SELECT * FROM pilots WHERE competition_id=? AND competition_number=?",
+        (eid,number)
+    ).fetchone()
+    task_max=max([r["task_number"] for r in c.execute(
+        "SELECT task_number FROM tasks WHERE competition_id=?",(eid,)
+    ).fetchall()] or [1])
+    c.close()
+    if not p:
+        abort(404)
+
+    pilot=dict(p)
+    pilot["name"], pilot["country"] = _clean_pilot_name_country(
+        pilot.get("name", ""), pilot.get("country", "")
+    )
+    return render_template(
+        "pilot_progression.html",
+        event=e,
+        pilot=pilot,
+        tasks_max=task_max
+    )
+
 @app.get("/event/<eid>/compare")
 def compare_page(eid):
     e=event(eid); c=conn(eid); pilots=[dict(r) for r in c.execute("SELECT competition_number,name,country FROM pilots WHERE competition_id=? ORDER BY name",(eid,)).fetchall()]; task_max=max([r["task_number"] for r in c.execute("SELECT task_number FROM tasks WHERE competition_id=?",(eid,)).fetchall()] or [1]); c.close()
