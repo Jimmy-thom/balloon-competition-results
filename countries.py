@@ -550,6 +550,17 @@ COUNTRY_MAP.update({
 
 COUNTRY_NAMES = sorted(set(COUNTRY_MAP.values()), key=len, reverse=True)
 
+# Prefer ISO 3166-1 alpha-2 codes when a country has both 2- and 3-letter entries.
+COUNTRY_CODE_BY_NAME = {}
+for _code, _name in COUNTRY_MAP.items():
+    if len(_code) == 2:
+        COUNTRY_CODE_BY_NAME.setdefault(_name, _code)
+
+def country_code(raw):
+    """Return the preferred ISO alpha-2 code for a country/code value."""
+    canonical = normalise_country(raw)
+    return COUNTRY_CODE_BY_NAME.get(canonical, "")
+
 def normalise_country(raw):
     """Return a consistent country name from a WatchMeFly country/code value."""
     raw = str(raw or "").strip()
