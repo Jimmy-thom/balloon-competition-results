@@ -714,8 +714,13 @@ def flight_standings(eid,flight_id,mode="all",cumulative=False):
     flight=c.execute("SELECT * FROM flights WHERE competition_id=? AND id=?",(eid,flight_id)).fetchone()
     if not flight: c.close(); abort(404)
     if cumulative:
-        tasks=c.execute("""SELECT t.id,t.task_number FROM tasks t JOIN flights f ON f.id=t.flight_id
-          WHERE t.competition_id=? AND f.sort_order<=? ORDER BY f.sort_order,t.task_number""",(eid,flight["sort_order"])).fetchall()
+        # Cumulative standings must follow real competition chronology, not
+        # flights.sort_order.  sort_order can contain an UNKNOWN placeholder,
+        # duplicate values, or practice flights ahead of competition flights.
+        task_ids=_effective_task_ids_through_flight(c,eid,flight,run["id"],mode)
+        if not task_ids:
+            c.close(); return []
+        tasks=[{"id":tid,"task_number":None} for tid in task_ids]
     else:
         tasks=c.execute("SELECT id,task_number FROM tasks WHERE competition_id=? AND flight_id=? ORDER BY task_number",(eid,flight_id)).fetchall()
     task_ids=[r["id"] for r in tasks]
@@ -824,12 +829,21 @@ def pilot_page(eid,number):
     e=event(eid); c=conn(eid); p=c.execute("SELECT * FROM pilots WHERE competition_id=? AND competition_number=?",(eid,number)).fetchone(); run=latest_run(c,eid)
     if not p: abort(404)
 
-    # Load flights in their competition order so the pilot page can display
-    # Flight 1, Flight 2, etc. directly from the server (no JavaScript lookup).
+    # Load real competition flights for navigation/display.  The database
+    # can also contain an UNKNOWN placeholder and practice flights, and its
+    # sort_order is not authoritative.  The actual WatchMeFly flight_number
+    # is the source of truth for the displayed competition flight number.
     flights=[dict(r) for r in c.execute(
         "SELECT * FROM flights WHERE competition_id=? ORDER BY sort_order",(eid,)
     ).fetchall()]
-    flight_ordinals={str(f["id"]):i for i,f in enumerate(flights,1)}
+    flight_ordinals={}
+    for f in flights:
+        if _flight_is_practice(f):
+            continue
+        number=str(_flight_value(f,"flight_number") or "").strip()
+        if not number.isdigit():
+            continue
+        flight_ordinals[str(f["id"])]=int(number)
 
     rs=c.execute("""SELECT r.*,t.task_number,t.name,t.status AS task_status,
              f.id AS flight_id,f.flight_number,f.date_label AS flight_date
@@ -917,10 +931,39 @@ def history_page(eid):
     e=event(eid); c=conn(eid); runs=[dict(r) for r in c.execute("SELECT * FROM import_runs WHERE competition_id=? ORDER BY imported_at DESC",(eid,)).fetchall()]; c.close(); return render_template("history.html",event=e,runs=runs)
 @app.get("/event/<eid>/flight/<flight_id>")
 def flight_page(eid,flight_id):
-    e=event(eid); c=conn(eid); f=c.execute("SELECT * FROM flights WHERE competition_id=? AND id=?",(eid,flight_id)).fetchone()
-    if not f: abort(404)
-    ts=c.execute("SELECT * FROM tasks WHERE competition_id=? AND flight_id=? ORDER BY task_number",(eid,flight_id)).fetchall(); flights=c.execute("SELECT * FROM flights WHERE competition_id=? ORDER BY sort_order",(eid,)).fetchall(); c.close()
-    return render_template("flight.html",event=e,flight=dict(f),tasks=[dict(t) for t in ts],flights=[dict(x) for x in flights])
+    e=event(eid); c=conn(eid)
+    f=c.execute("SELECT * FROM flights WHERE competition_id=? AND id=?",(eid,flight_id)).fetchone()
+    if not f: c.close(); abort(404)
+
+    ts=c.execute(
+        "SELECT * FROM tasks WHERE competition_id=? AND flight_id=? ORDER BY task_number",
+        (eid,flight_id)
+    ).fetchall()
+
+    # Navigation uses real competition flights in chronological order.  Keep
+    # cancelled competition flights identifiable, but never mix in practice
+    # flights or the UNKNOWN placeholder.
+    all_flights=c.execute(
+        "SELECT * FROM flights WHERE competition_id=?",
+        (eid,)
+    ).fetchall()
+    flights=[]
+    seen=set()
+    for row in all_flights:
+        if _flight_is_practice(row):
+            continue
+        number=str(_flight_value(row,"flight_number") or "").strip()
+        if not number.isdigit():
+            continue
+        key=(number,str(_flight_value(row,"date_label") or "").strip(),str(_flight_value(row,"time_label") or "").strip().upper())
+        if key in seen:
+            continue
+        seen.add(key)
+        flights.append(dict(row))
+    flights.sort(key=lambda row:(_flight_chronology_key(row),str(row.get("id", ""))))
+
+    c.close()
+    return render_template("flight.html",event=e,flight=dict(f),tasks=[dict(t) for t in ts],flights=flights)
 @app.get("/api/events")
 def api_events():
     if is_postgres():
