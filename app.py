@@ -557,6 +557,7 @@ def nation_ranking_data(eid,mode="official",start=None,end=None):
             continue
 
         groups.setdefault(country,[]).append({
+            "position": r["position"],
             "competition_number": r["competition_number"],
             "pilot": r["pilot"],
             "total": r["total"],
@@ -575,7 +576,7 @@ def nation_ranking_data(eid,mode="official",start=None,end=None):
             "total_sum": total_sum,
             "pilots": sorted(
                 pilots,
-                key=lambda p:(-float(p["total"] or 0),p["pilot"])
+                key=lambda p:(int(p["position"] or 999999),p["pilot"])
             ),
         })
 
