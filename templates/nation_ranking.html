@@ -71,11 +71,11 @@ function esc(value){return String(value ?? '').replace(/[&<>"']/g,m=>({'&':'&amp
 function fmt(value){if(value===null||value===undefined||value==='')return '—';return Number(value).toLocaleString('en-GB');}
 function qs(){const p=new URLSearchParams({mode:mode.value});if(from.value)p.set('from',from.value);if(to.value)p.set('to',to.value);return p;}
 function renderNation(data){
-  const count=Number(data.qualifying_nations||0), minimum=Number(data.minimum_nations||4);
+  const count=Number(data.qualifying_nations||0), minimum=Number(data.minimum_nations||4), minimumPilots=Number(data.minimum_pilots_per_nation||2);
   nationNote.className='nation-status '+(count>=minimum?'valid':'pending');
   nationNote.innerHTML=count>=minimum
-    ? `<strong>${count} nations</strong> currently meet the minimum requirement of ${minimum}. Ranking is provisional/live until the event is final.`
-    : `<strong>${count} nation${count===1?'':'s'}</strong> currently meet the minimum. At least ${minimum} qualifying nations are required for a valid Nation Ranking.`;
+    ? `<strong>${count} nations</strong> currently qualify. A valid Nation Ranking requires at least <strong>${minimum} NACs</strong>, with at least <strong>${minimumPilots} scored competitors from each NAC</strong>. Ranking is provisional/live until the event is final.`
+    : `<strong>${count} nation${count===1?'':'s'}</strong> currently qualify. A valid Nation Ranking requires at least <strong>${minimum} NACs</strong>, with at least <strong>${minimumPilots} scored competitors from each NAC</strong>.`;
   if(!data.rows?.length){nations.innerHTML='<div class="loading">No qualifying nations yet for this selection.</div>';return;}
   let h='<div class="table-scroll"><table class="nation-table"><thead><tr><th class="nation-rank">POS</th><th>NATION / NAC</th><th class="nation-pilots">SCORED PILOTS</th><th class="nation-average">AVERAGE TOTAL</th><th>PILOTS</th></tr></thead><tbody>';
   for(const r of data.rows){
