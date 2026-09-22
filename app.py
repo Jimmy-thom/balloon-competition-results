@@ -794,6 +794,21 @@ def nation_ranking_page(eid):
     )
     c.close()
     return render_template("nation_ranking.html",event=e,tasks_max=task_max)
+@app.get("/event/<eid>/progression")
+def progression_page(eid):
+    e=event(eid)
+    c=conn(eid)
+    task_max=max(
+        [r["task_number"] for r in c.execute(
+            "SELECT task_number FROM tasks WHERE competition_id=?",(eid,)
+        ).fetchall()] or [1]
+    )
+    c.close()
+    return render_template(
+        "progression.html",
+        event=e,
+        tasks_max=task_max
+    )
 @app.get("/event/<eid>/naughty-corner")
 def naughty_corner_page(eid):
     e=event(eid)
