@@ -10,11 +10,12 @@
   <a class="button" href="/event/{{event.id}}">← Event standings</a>
 </div>
 
-{% set ns = namespace(prev=None, next=None, found=False, current_num=None) %}
+{% set ns = namespace(prev=None, next=None, found=False, current_num=flight.flight_number) %}
 {% for f in flights %}
-  {% if ns.found and ns.next is none %}{% set ns.next = {'flight': f, 'num': loop.index} %}{% endif %}
-  {% if f.id == flight.id %}{% set ns.found = True %}{% set ns.current_num = loop.index %}{% endif %}
-  {% if not ns.found %}{% set ns.prev = {'flight': f, 'num': loop.index} %}{% endif %}
+  {% set fnum = (f.flight_number|string) %}
+  {% if ns.found and ns.next is none %}{% set ns.next = {'flight': f, 'num': fnum} %}{% endif %}
+  {% if f.id == flight.id %}{% set ns.found = True %}{% set ns.current_num = fnum %}{% endif %}
+  {% if not ns.found %}{% set ns.prev = {'flight': f, 'num': fnum} %}{% endif %}
 {% endfor %}
 
 <div class="flight-nav card">
