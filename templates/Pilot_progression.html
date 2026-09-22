@@ -1,0 +1,218 @@
+{% extends 'base.html' %}
+{% block title %}Ranking progression — #{{pilot.competition_number}} {{pilot.name}}{% endblock %}
+
+{% block content %}
+<style>
+  .pp-hero{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;margin-bottom:16px}
+  .pp-hero h1{margin:4px 0 6px}
+  .pp-actions{display:flex;gap:8px;flex-wrap:wrap}
+  .pp-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:16px}
+  .pp-stat{background:#f7f9fb;border:1px solid #dbe3ea;border-radius:10px;padding:12px 14px}
+  .pp-stat .label{font-size:10px;text-transform:uppercase;color:#71808f;font-weight:700;letter-spacing:.04em}
+  .pp-stat .value{font-size:22px;font-weight:800;margin-top:3px}
+  .pp-chart-wrap{position:relative;height:520px;min-height:420px}
+  .pp-table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+  .pp-table th,.pp-table td{padding:9px 10px;border-bottom:1px solid #e5ebf0;text-align:center;white-space:nowrap}
+  .pp-table th:first-child,.pp-table td:first-child{text-align:left}
+  .pp-table th{font-size:11px;text-transform:uppercase;letter-spacing:.03em;color:#647384;background:#f7f9fb}
+  .pp-table td{font-weight:750}
+  .pp-table .current{font-weight:900;background:#f1f6fa}
+  .pp-table .best{background:#eef8f1;color:#246b3a}
+  .pp-table .worst{background:#fff4ef;color:#9a4939}
+  .pp-note{margin:0 0 12px;color:#687789;font-size:13px}
+  .pp-loading{padding:24px 0;text-align:center;color:#71808f}
+  @media(max-width:800px){
+    .pp-hero{flex-direction:column}
+    .pp-summary{grid-template-columns:1fr 1fr}
+    .pp-chart-wrap{height:430px;min-height:360px}
+  }
+</style>
+
+<div class="pp-hero">
+  <div>
+    <div class="eyebrow">{{event.title}}</div>
+    <h1>📈 #{{pilot.competition_number}} — {{pilot.name}}</h1>
+    <p class="muted">Individual ranking progression through the championship</p>
+  </div>
+  <div class="pp-actions">
+    <a class="button" href="/event/{{event.id}}/pilot/{{pilot.competition_number}}">← Back to pilot</a>
+    <a class="button" href="/event/{{event.id}}/compare?pilots={{pilot.competition_number}}">Compare pilots</a>
+  </div>
+</div>
+
+<div class="card">
+  <div class="section-head">
+    <div>
+      <h2>Ranking progression</h2>
+      <p class="pp-note">Position after each task. A lower number is a better position, so 1st is shown at the top.</p>
+    </div>
+    <div class="controls">
+      <select id="mode">
+        <option value="official">Official only</option>
+        <option value="all" selected>Include provisional</option>
+      </select>
+      <label>From
+        <select id="from">
+          <option value="">1</option>
+          {% for n in range(2,tasks_max+1) %}<option>{{n}}</option>{% endfor %}
+        </select>
+      </label>
+      <label>To
+        <select id="to">
+          <option value="">Latest</option>
+          {% for n in range(1,tasks_max+1) %}<option>{{n}}</option>{% endfor %}
+        </select>
+      </label>
+    </div>
+  </div>
+
+  <div class="pp-summary">
+    <div class="pp-stat"><div class="label">Current position</div><div class="value" id="current-position">—</div></div>
+    <div class="pp-stat"><div class="label">Best position</div><div class="value" id="best-position">—</div></div>
+    <div class="pp-stat"><div class="label">Worst position</div><div class="value" id="worst-position">—</div></div>
+    <div class="pp-stat"><div class="label">Tasks shown</div><div class="value" id="tasks-shown">—</div></div>
+  </div>
+
+  <div id="status" class="pp-loading">Loading progression…</div>
+  <div class="pp-chart-wrap"><canvas id="chart"></canvas></div>
+</div>
+
+<div class="card" style="margin-top:20px;">
+  <div class="section-head">
+    <div>
+      <h2>Position by task</h2>
+      <p class="pp-note">The table shows the same progression as the graph, with the best and worst positions highlighted.</p>
+    </div>
+  </div>
+  <div style="overflow-x:auto;">
+    <table class="pp-table" id="position-table">
+      <thead></thead><tbody></tbody>
+    </table>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script>
+const eid={{event.id|tojson}};
+const pilotNumber={{pilot.competition_number|tojson}};
+const mode=document.getElementById('mode');
+const from=document.getElementById('from');
+const to=document.getElementById('to');
+const statusEl=document.getElementById('status');
+let chart=null;
+
+function qs(){
+  const p=new URLSearchParams({mode:mode.value});
+  if(from.value)p.set('from',from.value);
+  if(to.value)p.set('to',to.value);
+  return p;
+}
+
+function setStat(id,value){document.getElementById(id).textContent=value ?? '—';}
+
+function renderTable(points,positions){
+  const table=document.getElementById('position-table');
+  const thead=table.querySelector('thead');
+  const tbody=table.querySelector('tbody');
+  thead.innerHTML=''; tbody.innerHTML='';
+  if(!points.length){
+    tbody.innerHTML='<tr><td>No progression data available for this selection.</td></tr>';
+    return;
+  }
+
+  const hr=document.createElement('tr');
+  const h=document.createElement('th'); h.textContent='Position'; hr.appendChild(h);
+  points.forEach(p=>{const th=document.createElement('th'); th.textContent='T'+p.through_task; hr.appendChild(th);});
+  thead.appendChild(hr);
+
+  const tr=document.createElement('tr');
+  const label=document.createElement('td'); label.innerHTML='<strong>Overall position</strong>'; tr.appendChild(label);
+  const best=Math.min(...positions.filter(x=>x!=null));
+  const worst=Math.max(...positions.filter(x=>x!=null));
+  positions.forEach(pos=>{
+    const td=document.createElement('td');
+    td.textContent=pos ?? '—';
+    if(pos===best) td.className='best';
+    if(pos===worst) td.className='worst';
+    if(pos===positions.at(-1)) td.classList.add('current');
+    tr.appendChild(td);
+  });
+  tbody.appendChild(tr);
+}
+
+async function load(){
+  statusEl.textContent='Loading progression…';
+  try{
+    const response=await fetch(`/api/event/${eid}/progression?${qs()}`);
+    if(!response.ok) throw new Error('HTTP '+response.status);
+    const data=await response.json();
+    const points=data.progression || [];
+
+    const positions=points.map(point=>{
+      const row=(point.rows||[]).find(r=>String(r.competition_number)===String(pilotNumber));
+      return row ? row.position : null;
+    });
+
+    const valid=positions.filter(x=>x!=null);
+    if(!valid.length){
+      setStat('current-position','—');
+      setStat('best-position','—');
+      setStat('worst-position','—');
+      setStat('tasks-shown',0);
+      statusEl.textContent='No progression data is available for this pilot in the selected range.';
+      if(chart){chart.destroy();chart=null;}
+      renderTable([],[]);
+      return;
+    }
+
+    setStat('current-position',valid.at(-1));
+    setStat('best-position',Math.min(...valid));
+    setStat('worst-position',Math.max(...valid));
+    setStat('tasks-shown',valid.length);
+    statusEl.textContent=`Showing ${valid.length} task checkpoints.`;
+
+    const labels=points.map(p=>'T'+p.through_task);
+    const dataset={
+      label:'#'+pilotNumber+' — {{pilot.name|e}}',
+      data:positions,
+      tension:.25,
+      spanGaps:true,
+      pointRadius:5,
+      pointHoverRadius:7
+    };
+
+    if(chart)chart.destroy();
+    chart=new Chart(document.getElementById('chart'),{
+      type:'line',
+      data:{labels,datasets:[dataset]},
+      options:{
+        responsive:true,
+        maintainAspectRatio:false,
+        interaction:{mode:'index',intersect:false},
+        scales:{
+          y:{
+            reverse:true,
+            beginAtZero:false,
+            ticks:{precision:0,stepSize:1},
+            title:{display:true,text:'Overall position'}
+          },
+          x:{title:{display:true,text:'Task'}}
+        },
+        plugins:{
+          legend:{position:'bottom'},
+          tooltip:{callbacks:{label:c=>`Position ${c.parsed.y}`}}
+        }
+      }
+    });
+
+    renderTable(points,positions);
+  }catch(err){
+    console.error(err);
+    statusEl.textContent='Unable to load progression data.';
+  }
+}
+
+[mode,from,to].forEach(x=>x.addEventListener('change',load));
+load();
+</script>
+{% endblock %}
