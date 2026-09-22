@@ -53,7 +53,10 @@
 .nation-table summary:before{content:'▼';display:inline-block;margin-right:7px;font-size:10px}
 .nation-table details[open] summary:before{content:'▲'}
 .nation-table .pilot-list{margin:10px 0 4px;padding:0;list-style:none;color:#596777;font-size:13px}
-.nation-table .pilot-list li{display:flex;justify-content:space-between;gap:20px;padding:6px 10px;border-top:1px solid #e7edf3}
+.nation-table .pilot-list li{display:grid;grid-template-columns:58px minmax(0,1fr) 100px;align-items:center;gap:12px;padding:7px 10px;border-top:1px solid #e7edf3}
+.nation-table .pilot-list .pilot-pos{text-align:center;font-weight:850;color:#334e68}
+.nation-table .pilot-list .pilot-name{min-width:0;overflow:hidden;text-overflow:ellipsis}
+.nation-table .pilot-list .pilot-total{text-align:right;font-weight:850;color:#334e68}
 .nation-table tbody tr:hover>td{background:#f8fbfe}
 .nation-status{margin-bottom:12px;padding:10px 12px;border:1px solid #dbe5ee;border-radius:9px;background:#f5f8fb;color:#596777;font-size:13px}
 .nation-status.valid{border-color:#cfe5d6;background:#f1faf3}
@@ -76,7 +79,7 @@ function renderNation(data){
   if(!data.rows?.length){nations.innerHTML='<div class="loading">No qualifying nations yet for this selection.</div>';return;}
   let h='<div class="table-scroll"><table class="nation-table"><thead><tr><th class="nation-rank">POS</th><th>NATION / NAC</th><th class="nation-pilots">SCORED PILOTS</th><th class="nation-average">AVERAGE TOTAL</th><th>PILOTS</th></tr></thead><tbody>';
   for(const r of data.rows){
-    const pilots=(r.pilots||[]).map(p=>`<li><span>#${esc(p.competition_number)} — ${esc(p.pilot)}</span><strong>${fmt(p.total)}</strong></li>`).join('');
+    const pilots=(r.pilots||[]).map(p=>`<li><span class="pilot-pos">${fmt(p.position)}</span><span class="pilot-name">${esc(p.pilot)}</span><strong class="pilot-total">${fmt(p.total)}</strong></li>`).join('');
     h+=`<tr><td class="nation-rank">${fmt(r.position)}</td><td class="nation-name">${esc(r.nation)}</td><td class="nation-pilots">${fmt(r.pilot_count)}</td><td class="nation-average">${Number(r.average).toFixed(2)}</td><td><details><summary>Show pilots</summary><ul class="pilot-list">${pilots}</ul></details></td></tr>`;
   }
   h+='</tbody></table></div>'; nations.innerHTML=h;
