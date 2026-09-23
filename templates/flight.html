@@ -195,10 +195,9 @@ async function load(){
       const movementResponse=await fetch(`${base}&view=cumulative`);
       if(movementResponse.ok){
         const cumulative=await movementResponse.json();
-        d.movementByPilot={};
-        (cumulative.rows||[]).forEach(r=>{
-          d.movementByPilot[r.competition_number]=r.movement;
-        });
+        // The cumulative API returns movement as a top-level object,
+        // not as a field on each row.
+        d.movementByPilot=cumulative.movement||{};
       }
     }else{
       d.movementByPilot=d.movement||{};
