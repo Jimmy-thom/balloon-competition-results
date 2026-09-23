@@ -692,10 +692,141 @@ def penalty_tally_data(eid, mode="all"):
     return out
 
 def progression_data(eid,mode="official",start=None,end=None):
-    c=conn(eid); nums=[r["task_number"] for r in c.execute("SELECT DISTINCT task_number FROM tasks WHERE competition_id=? ORDER BY task_number",(eid,)).fetchall()]; c.close()
-    if start is not None: nums=[n for n in nums if n>=start]
-    if end is not None: nums=[n for n in nums if n<=end]
-    return [{"through_task":n,"rows":standings_data(eid,mode,start if start is not None else None,n)} for n in nums]
+    """Build cumulative progression efficiently from one database snapshot.
+
+    The previous implementation called standings_data() once per task. On
+    PostgreSQL that meant repeatedly opening a connection and re-running the
+    same task/result queries. Keep the same task-selection and latest-result
+    rules, but load the required data once and build each cumulative checkpoint
+    in memory.
+    """
+    statuses=mode_statuses(mode)
+    qs=','.join('?'*len(statuses))
+    c=conn(eid)
+
+    try:
+        nums=[r["task_number"] for r in c.execute(
+            "SELECT DISTINCT task_number FROM tasks WHERE competition_id=? ORDER BY task_number",
+            (eid,)
+        ).fetchall()]
+        if start is not None:
+            nums=[n for n in nums if n>=start]
+        if end is not None:
+            nums=[n for n in nums if n<=end]
+        if not nums:
+            return []
+
+        # Load all task occurrences needed by the requested progression once.
+        qnums=','.join('?'*len(nums))
+        task_rows=c.execute(f"""
+            SELECT t.id,t.task_number,t.status,t.published
+              FROM tasks t
+             WHERE t.competition_id=?
+               AND t.task_number IN ({qnums})
+        """,(eid,*nums)).fetchall()
+
+        # Determine which task occurrences have eligible results.
+        result_task_ids={r["task_id"] for r in c.execute(
+            f"SELECT DISTINCT task_id FROM results WHERE status IN ({qs})",
+            (*statuses,)
+        ).fetchall()}
+
+        status_rank={"FINAL":0,"OFFICIAL":1,"PROVISIONAL":2}
+        effective_by_num={}
+        for r in task_rows:
+            status=str(r["status"] or "").upper()
+            rank=status_rank.get(status,3)
+            candidate=(
+                1 if r["id"] in result_task_ids else 0,
+                -rank,
+                str(r["published"] or ""),
+                str(r["id"]),
+            )
+            current=effective_by_num.get(r["task_number"])
+            if current is None or candidate>current[0]:
+                effective_by_num[r["task_number"]]=(candidate,r["id"])
+
+        task_ids=[effective_by_num[n][1] for n in nums if n in effective_by_num]
+        if not task_ids:
+            return []
+
+        # Load the newest eligible result for every pilot/effective-task once.
+        qids=','.join('?'*len(task_ids))
+        result_rows=c.execute(f"""
+            SELECT p.competition_number,p.name,p.country,
+                   r.task_id,r.score,r.status,r.id
+              FROM results r
+              JOIN pilots p ON p.id=r.pilot_id
+             WHERE r.task_id IN ({qids})
+               AND r.status IN ({qs})
+               AND r.id=(
+                 SELECT r2.id
+                   FROM results r2
+                  WHERE r2.task_id=r.task_id
+                    AND r2.pilot_id=r.pilot_id
+                    AND r2.status IN ({qs})
+                  ORDER BY r2.id DESC
+                  LIMIT 1
+               )
+        """,(*task_ids,*statuses,*statuses)).fetchall()
+
+        # Map effective task ids back to task numbers.
+        id_to_num={task_id:num for num,(candidate,task_id) in effective_by_num.items()}
+
+        pilots={}
+        results_by_task={}
+        for r in result_rows:
+            n=r["competition_number"]
+            num=id_to_num.get(r["task_id"])
+            if num is None:
+                continue
+            clean_name,clean_country=_clean_pilot_name_country(r["name"],r["country"])
+            pilots[n]={
+                "competition_number":n,
+                "name":clean_name,
+                "country":clean_country,
+            }
+            results_by_task.setdefault(num,{})[n]={
+                "score":r["score"],
+                "status":r["status"],
+            }
+
+        # Build each cumulative checkpoint in memory using the same ordering
+        # and row shape as standings_data().
+        cumulative_totals={}
+        cumulative_scores={}
+        cumulative_statuses={}
+        progression=[]
+        for n in nums:
+            task_results=results_by_task.get(n,{})
+            for pilot_number,result in task_results.items():
+                score=result["score"] or 0
+                cumulative_totals[pilot_number]=cumulative_totals.get(pilot_number,0)+score
+                cumulative_scores.setdefault(pilot_number,{})[n]=result["score"]
+                cumulative_statuses.setdefault(pilot_number,{})[n]=result["status"]
+
+            ordered=sorted(
+                cumulative_totals,
+                key=lambda pilot_number:(
+                    -cumulative_totals[pilot_number],
+                    pilots[pilot_number]["name"],
+                )
+            )
+            rows=[{
+                "position":i,
+                "competition_number":pilot_number,
+                "pilot":pilots[pilot_number]["name"],
+                "country":pilots[pilot_number]["country"],
+                "total":cumulative_totals[pilot_number],
+                "tasks":cumulative_scores.get(pilot_number,{}).copy(),
+                "statuses":cumulative_statuses.get(pilot_number,{}).copy(),
+            } for i,pilot_number in enumerate(ordered,1)]
+            progression.append({"through_task":n,"rows":rows})
+
+        return progression
+    finally:
+        c.close()
+
 def common_filters():
     mode=request.args.get("mode","official"); start=request.args.get("from",type=int); end=request.args.get("to",type=int)
     if start is not None and end is not None and start>end: abort(400,description="from must be <= to")
