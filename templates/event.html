@@ -34,6 +34,15 @@
       <a class="button" href="/event/{{event.id}}/naughty-corner">View Naughty Corner</a>
     </div>
   </div>
+  <div class="card feature-card">
+    <div class="section-head">
+      <div>
+        <h2>Ranking progression</h2>
+        <p class="muted">See how the top eight pilots moved through the competition.</p>
+      </div>
+      <a class="button" href="/event/{{event.id}}/progression">View progression</a>
+    </div>
+  </div>
 </div>
 <div class="card">
   <div class="section-head">
@@ -74,15 +83,6 @@
 </div>
 
 <div class="card">
-  <div class="section-head">
-    <div>
-      <h2>Ranking progression</h2>
-      <p class="muted">See how the top eight pilots moved through the competition.</p>
-    </div>
-    <a class="button" href="/event/{{event.id}}/progression">View progression</a>
-  </div>
-</div>
-<div class="card">
   <h2>Tasks</h2>
   <div class="task-grid">
     {% for t in tasks %}
@@ -109,7 +109,7 @@
 <style>
 .feature-grid{
   display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
+  grid-template-columns:repeat(3,minmax(0,1fr));
   gap:16px;
 }
 .feature-card{
