@@ -120,8 +120,8 @@
             </a>
           </td>
           <td>
-            {% if r.flight_id and r.flight_ordinal %}
-              <a class="flight-link" href="/event/{{event.id}}/flight/{{r.flight_id}}">Flight {{r.flight_ordinal}}</a>
+            {% if r.flight_id and r.flight_number %}
+              <a class="flight-link" href="/event/{{event.id}}/flight/{{r.flight_id}}">{{r.flight_number}}</a>
             {% else %}
               <span class="flight-link">—</span>
             {% endif %}
