@@ -556,11 +556,22 @@ def nation_ranking_data(eid,mode="official",start=None,end=None):
         if len(pilots) < 2:
             continue
         total_sum=sum(float(p["total"] or 0) for p in pilots)
-        average=total_sum/len(pilots)
+        average_total=total_sum/len(pilots)
+
+        # Option B: report the national average as points per scored task.
+        # Use the effective task numbers represented in the selected standings,
+        # so cancelled/missing tasks are not included in the divisor.
+        task_numbers=set()
+        for row in pilot_rows:
+            task_numbers.update((row.get("tasks") or {}).keys())
+        task_count=len(task_numbers)
+        average=(average_total/task_count) if task_count else 0
+
         qualifying.append({
             "nation": country,
             "pilot_count": len(pilots),
             "average": average,
+            "average_total": average_total,
             "total_sum": total_sum,
             "pilots": sorted(
                 pilots,
@@ -577,6 +588,7 @@ def nation_ranking_data(eid,mode="official",start=None,end=None):
         "qualifying_nations": len(qualifying),
         "minimum_nations": 4,
         "minimum_pilots_per_nation": 2,
+        "task_count": task_count,
     }
 
 def penalty_tally_data(eid, mode="all"):
