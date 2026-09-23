@@ -910,8 +910,11 @@ def import_event(url, out_root):
         c = connect(dbp)
         c.executescript(SCHEMA)
 
-    # Existing PostgreSQL databases need the new flight columns.
-    ensure_flight_columns(c)
+    # PostgreSQL already has the flight metadata columns in the deployed
+    # database, so do not run ALTER TABLE during every automatic import.
+    # Keep the migration for SQLite/local databases.
+    if not is_postgres():
+        ensure_flight_columns(c)
 
     c.execute(
         """
@@ -996,11 +999,10 @@ def import_event(url, out_root):
         json.dumps(snapshot_payload, sort_keys=True, separators=(',', ':')).encode('utf-8')
     ).hexdigest()
 
-    # Existing installations already have snapshot_hash in PostgreSQL; make
-    # sure older/local databases get the same column before we compare runs.
-    if is_postgres():
-        c.execute('ALTER TABLE import_runs ADD COLUMN IF NOT EXISTS snapshot_hash TEXT')
-    else:
+    # PostgreSQL already has snapshot_hash in the deployed database.
+    # Do not run ALTER TABLE during every automatic import.
+    # Keep the migration for older/local SQLite databases.
+    if not is_postgres():
         columns = [row[1] for row in c.raw.execute('PRAGMA table_info(import_runs)').fetchall()]
         if 'snapshot_hash' not in columns:
             c.raw.execute('ALTER TABLE import_runs ADD COLUMN snapshot_hash TEXT')
