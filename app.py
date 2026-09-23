@@ -168,6 +168,46 @@ def _completed_competition_flights(c, eid):
     return [f for f in flights if _flight_is_completed(f)]
 
 
+def _competition_flights_for_navigation(c, eid):
+    """Return real competition flights for Previous/Next navigation.
+
+    Navigation must include genuine competition flights even when a flight was
+    cancelled or has no results yet, while excluding the UNKNOWN fallback and
+    all practice/training flights.
+    """
+    rows=c.execute(
+        """SELECT * FROM flights
+           WHERE competition_id=?
+             AND UPPER(COALESCE(flight_type,'')) NOT IN ('PRACTICE','TRAINING','UNKNOWN')
+             AND SUBSTR(UPPER(COALESCE(flight_number,'')),1,8) <> 'PRACTICE'
+             AND UPPER(COALESCE(flight_number,'')) NOT IN ('','UNKNOWN')
+        """,
+        (eid,)
+    ).fetchall()
+
+    grouped={}
+    for f in rows:
+        key=(
+            str(_flight_value(f,"flight_number","")).strip(),
+            str(_flight_value(f,"date_label","")).strip(),
+            str(_flight_value(f,"time_label","")).strip().upper()
+        )
+        candidate=(
+            1 if _flight_is_completed(f) else 0,
+            _flight_chronology_key(f),
+            str(_flight_value(f,"id",""))
+        )
+        if key not in grouped or candidate > grouped[key][0]:
+            grouped[key]=(candidate,f)
+
+    flights=[item[1] for item in grouped.values()]
+    flights.sort(key=lambda f:(
+        _flight_chronology_key(f),
+        str(_flight_value(f,"id",""))
+    ))
+    return flights
+
+
 def _effective_task_ids_through_flight(c, eid, flight_row, run_id, mode):
     """Select the effective scored occurrence of each task through a flight.
 
@@ -877,7 +917,14 @@ def history_page(eid):
 def flight_page(eid,flight_id):
     e=event(eid); c=conn(eid); f=c.execute("SELECT * FROM flights WHERE competition_id=? AND id=?",(eid,flight_id)).fetchone()
     if not f: abort(404)
-    ts=c.execute("SELECT * FROM tasks WHERE competition_id=? AND flight_id=? ORDER BY task_number",(eid,flight_id)).fetchall(); flights=c.execute("SELECT * FROM flights WHERE competition_id=? ORDER BY sort_order",(eid,)).fetchall(); c.close()
+    ts=c.execute("SELECT * FROM tasks WHERE competition_id=? AND flight_id=? ORDER BY task_number",(eid,flight_id)).fetchall()
+
+    # Previous/Next navigation must use real competition flights only.
+    # Exclude the UNKNOWN fallback and practice/training flights, but keep
+    # genuine competition flights such as a cancelled Flight 3.
+    flights=_competition_flights_for_navigation(c,eid)
+
+    c.close()
     return render_template("flight.html",event=e,flight=dict(f),tasks=[dict(t) for t in ts],flights=[dict(x) for x in flights])
 @app.get("/api/events")
 def api_events():
