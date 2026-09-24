@@ -845,16 +845,44 @@ def flight_standings(eid,flight_id,mode="all",cumulative=False):
     flight=c.execute("SELECT * FROM flights WHERE competition_id=? AND id=?",(eid,flight_id)).fetchone()
     if not flight: c.close(); abort(404)
     if cumulative:
-        tasks=c.execute("""SELECT t.id,t.task_number FROM tasks t JOIN flights f ON f.id=t.flight_id
-          WHERE t.competition_id=? AND f.sort_order<=? ORDER BY f.sort_order,t.task_number""",(eid,flight["sort_order"])).fetchall()
+        task_ids=_effective_task_ids_through_flight(c,eid,flight,run["id"],mode)
     else:
-        tasks=c.execute("SELECT id,task_number FROM tasks WHERE competition_id=? AND flight_id=? ORDER BY task_number",(eid,flight_id)).fetchall()
-    task_ids=[r["id"] for r in tasks]
+        # A flight can have several published versions of the same task
+        # (PROVISIONAL, OFFICIAL, FINAL).  Select one effective publication
+        # per task number for this flight before summing scores.  Otherwise
+        # every version of a task would be added together.
+        statuses=mode_statuses(mode)
+        qs=','.join('?'*len(statuses))
+        task_rows=c.execute(
+            f"""SELECT t.id,t.task_number,t.status,t.published
+                  FROM tasks t
+                 WHERE t.competition_id=? AND t.flight_id=?
+                   AND UPPER(COALESCE(t.status,'')) NOT IN ('CANCELLED','CANCELED')
+                   AND EXISTS (
+                       SELECT 1 FROM results r
+                        WHERE r.task_id=t.id AND r.status IN ({qs})
+                   )""",
+            (eid,flight_id,*statuses)
+        ).fetchall()
+        # Select the preferred publication for each task number:
+        # FINAL beats OFFICIAL, which beats PROVISIONAL; within the same
+        # status, use the newest publication.
+        selected={}
+        selected_rank={}
+        for row in task_rows:
+            status=str(row["status"] or "").upper()
+            priority=0 if status=="FINAL" else 1 if status=="OFFICIAL" else 2
+            rank=(priority, row["published"] or "", str(row["id"]))
+            n=row["task_number"]
+            if n not in selected or rank < selected_rank[n]:
+                selected[n]=row["id"]
+                selected_rank[n]=rank
+        task_ids=list(selected.values())
+
     if not task_ids: c.close(); return []
-    # The importer is now incremental: the latest import run may contain
-    # only newly published task results.  Flight standings therefore must
-    # use all stored result runs, selecting the newest eligible result for
-    # each pilot/task rather than restricting results to the latest run.
+    # The importer is incremental: the latest import run may contain only
+    # newly published task results.  Use all stored result runs while
+    # selecting the effective publication of each task above.
     rows=_standings_for_task_ids(c,eid,run["id"],task_ids,mode)
     for row in rows:
         row["country_code"]=country_code(row["country"])
