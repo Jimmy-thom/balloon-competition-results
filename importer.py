@@ -736,8 +736,76 @@ def import_event(url, out_root):
                 pass
 
     # ------------------------------------------------------------------
-    # Parse tasks while retaining their flight association.
+    # Parse only task publications that are not already in the database.
+    #
+    # WatchMeFly exposes each published version as a task-result URL.  The
+    # importer stores that exact source_url, so comparing URLs lets us skip
+    # old publications while still importing a newly published provisional,
+    # official, or final version of the same task.
+    #
+    # This is deliberately conservative: if the database lookup fails, do
+    # not skip anything.  The importer falls back to the previous full-fetch
+    # behaviour rather than risk missing a result publication.
     # ------------------------------------------------------------------
+
+    existing_task_urls = set()
+
+    try:
+        check_root = Path(out_root) / event_id
+
+        if is_postgres():
+            check_conn = connect()
+            init_postgres(check_conn)
+        else:
+            check_db = check_root / 'competition.db'
+            check_conn = connect(check_db) if check_db.exists() else None
+
+        if check_conn is not None:
+            rows = check_conn.execute(
+                """
+                SELECT source_url
+                FROM tasks
+                WHERE competition_id=?
+                  AND source_url IS NOT NULL
+                  AND source_url <> ''
+                """,
+                (event_id,)
+            ).fetchall()
+
+            existing_task_urls = {
+                row['source_url']
+                for row in rows
+                if row['source_url']
+            }
+
+            check_conn.close()
+
+    except Exception as e:
+        print(
+            f"  Incremental task check failed for {event_id}; "
+            f"falling back to full task fetch: {e}"
+        )
+        existing_task_urls = set()
+
+    total_task_links = sum(
+        len(f.get('task_links', []))
+        for f in flight_defs
+    )
+
+    new_task_links = sum(
+        1
+        for f in flight_defs
+        for link in f.get('task_links', [])
+        if link not in existing_task_urls
+    )
+
+    skipped_task_links = total_task_links - new_task_links
+
+    print(
+        f"  {event_id}: {total_task_links} task publications found; "
+        f"{skipped_task_links} already imported; "
+        f"{new_task_links} to fetch"
+    )
 
     parsed_flights = []
     errors = []
@@ -749,6 +817,11 @@ def import_event(url, out_root):
             flight_tasks = []
 
             for link in fdef['task_links']:
+
+                # An exact source URL means this publication has already
+                # been imported.  Do not download the old result page again.
+                if link in existing_task_urls:
+                    continue
 
                 try:
                     parsed = parse_task(
@@ -810,6 +883,10 @@ def import_event(url, out_root):
         fallback_tasks = []
 
         for link in links:
+
+            # Apply the same exact-publication check to the legacy fallback.
+            if link in existing_task_urls:
+                continue
 
             try:
                 parsed = parse_task(
