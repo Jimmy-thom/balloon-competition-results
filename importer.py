@@ -738,10 +738,10 @@ def import_event(url, out_root):
     # ------------------------------------------------------------------
     # Parse only task publications that are not already in the database.
     #
-    # WatchMeFly exposes each published version as a task-result URL.  The
-    # importer stores that exact source_url, so comparing URLs lets us skip
-    # old publications while still importing a newly published provisional,
-    # official, or final version of the same task.
+    # WatchMeFly exposes each published version as a task-result URL.
+    # FINAL publications can be skipped safely, but PROVISIONAL/OFFICIAL
+    # publications must remain live because WatchMeFly may revise scores or
+    # penalties in-place without changing the URL or publication timestamp.
     #
     # This is deliberately conservative: if the database lookup fails, do
     # not skip anything.  The importer falls back to the previous full-fetch
@@ -763,7 +763,7 @@ def import_event(url, out_root):
         if check_conn is not None:
             rows = check_conn.execute(
                 """
-                SELECT source_url
+                SELECT source_url, status
                 FROM tasks
                 WHERE competition_id=?
                   AND source_url IS NOT NULL
@@ -772,10 +772,16 @@ def import_event(url, out_root):
                 (event_id,)
             ).fetchall()
 
+            # FINAL publications are treated as locked and can be skipped.
+            # PROVISIONAL/OFFICIAL publications are deliberately re-checked:
+            # WatchMeFly can revise the scores or penalties in-place while
+            # keeping the same URL and publication timestamp.  Re-fetching
+            # these live publications lets those corrections reach the site.
             existing_task_urls = {
                 row['source_url']
                 for row in rows
                 if row['source_url']
+                and str(row['status'] or '').upper().startswith('FINAL')
             }
 
             check_conn.close()
