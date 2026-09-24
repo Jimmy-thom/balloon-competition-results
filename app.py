@@ -851,28 +851,14 @@ def flight_standings(eid,flight_id,mode="all",cumulative=False):
         tasks=c.execute("SELECT id,task_number FROM tasks WHERE competition_id=? AND flight_id=? ORDER BY task_number",(eid,flight_id)).fetchall()
     task_ids=[r["id"] for r in tasks]
     if not task_ids: c.close(); return []
-    qids=','.join('?'*len(task_ids)); qs=','.join('?'*len(statuses))
-    rows=c.execute(f"""SELECT r.score,p.competition_number,p.name,p.country
-      FROM results r JOIN pilots p ON p.id=r.pilot_id
-      WHERE r.import_run_id=? AND r.task_id IN ({qids}) AND r.status IN ({qs})""",
-      (run["id"],*task_ids,*statuses)).fetchall()
-    totals={}
-    for r in rows:
-        n=r["competition_number"]; totals[n]=totals.get(n,0)+(r["score"] or 0)
-    pilots={r["competition_number"]:dict(r) for r in c.execute("SELECT competition_number,name,country FROM pilots WHERE competition_id=?",(eid,)).fetchall()}
-    ordered=sorted(totals,key=lambda n:(-totals[n],pilots[n]["name"]))
-    out=[]
-    for i,n in enumerate(ordered,1):
-        clean_name, clean_country = clean_pilot_identity(pilots[n]["name"], pilots[n]["country"])
-        out.append({
-            "position":i,
-            "competition_number":n,
-            "pilot":clean_name,
-            "country":clean_country,
-            "country_code":country_code(clean_country),
-            "total":totals[n]
-        })
-    c.close(); return out
+    # The importer is now incremental: the latest import run may contain
+    # only newly published task results.  Flight standings therefore must
+    # use all stored result runs, selecting the newest eligible result for
+    # each pilot/task rather than restricting results to the latest run.
+    rows=_standings_for_task_ids(c,eid,run["id"],task_ids,mode)
+    for row in rows:
+        row["country_code"]=country_code(row["country"])
+    c.close(); return rows
 def task_navigation(c,eid,num):
     rows=c.execute("SELECT task_number,name,status FROM tasks WHERE competition_id=? ORDER BY task_number",(eid,)).fetchall()
     unique={}
